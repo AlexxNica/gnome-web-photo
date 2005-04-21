@@ -1,0 +1,26 @@
+<gconfschemafile>
+  <schemalist>
+    <schema>
+      <key>/schemas/desktop/gnome/thumbnailers/text@html/enable</key>
+      <applyto>/desktop/gnome/thumbnailers/text@html/enable</applyto>
+      <owner>gnome-web-photo</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Whether the HTML thumbnailer is enabled</short>
+        <long>Whether the HTML thumbnailer is enabled.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/desktop/gnome/thumbnailers/text@html/command</key>
+      <applyto>/desktop/gnome/thumbnailers/text@html/command</applyto>
+      <owner>gnome-web-photo</owner>
+      <type>string</type>
+      <default>gnome-web-thumbnail -s %s %u %o</default>
+      <locale name="C">
+        <short>The command to thumbnail HTML files</short>
+        <long>The command to thumbnail HTML files.</long>
+      </locale>
+   </schema>
+  </schemalist>
+</gconfschemafile>
