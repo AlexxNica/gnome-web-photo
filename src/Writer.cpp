@@ -546,7 +546,7 @@ ThumbnailWriter::Finish()
   }
 
   GdkPixbuf *scaled;
-  scaled = gdk_pixbuf_scale_simple (image, mSize, mSize, GDK_INTERP_HYPER);
+  scaled = gdk_pixbuf_scale_simple (image, mSize, mSize * mHeight / mWidth, GDK_INTERP_HYPER);
   g_object_unref (image);
   if (!scaled) return PR_FALSE;
 
