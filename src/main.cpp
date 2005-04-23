@@ -149,6 +149,13 @@ embed_net_stop (GtkMozEmbed *mozembed)
 static void
 embed_onload (Embed *embed)
 {
+  /* HACK!
+   * We need to unset the env var now, because otherwise mozilla will try
+   * to dump the image too (and it likes to crash when it does that, XBadAlloc).
+   * http://lxr.mozilla.org/seamonkey/source/layout/base/nsDocumentViewer.cpp#1017
+   */
+  g_unsetenv ("MOZ_FORCE_PAINT_AFTER_ONLOAD");
+
   embed->state |= 2;
   check_state (embed);
 }
@@ -294,6 +301,14 @@ main (int argc, char **argv)
     g_print ("Failed to initialise gecko!\n");
     return 1;
   };
+
+  /* HACK!
+   * Normally, mozilla fires net_stop before background images have loaded
+   * since they're loaded with LOAD_BACKGROUND. This env var makes mozilla
+   * delay onload until after background images have loaded.
+   * http://lxr.mozilla.org/seamonkey/source/layout/style/nsCSSValue.cpp#380
+   */
+  g_setenv ("MOZ_FORCE_PAINT_AFTER_ONLOAD", "-", TRUE);
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);

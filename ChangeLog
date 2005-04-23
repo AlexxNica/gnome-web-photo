@@ -1,6 +1,15 @@
 2005-04-23  Christian Persch  <chpe@cvs.gnome.org>
 
 	* configure.ac:
+	* src/main.cpp:
+
+	Hack to get background images to load before onload.
+	Many thanks to biesi for giving me the hint that made me
+	think of this hack!
+	
+2005-04-23  Christian Persch  <chpe@cvs.gnome.org>
+
+	* configure.ac:
 	* src/Makefile.am:
 	* src/Writer.cpp:
 	* src/Writer.h:
