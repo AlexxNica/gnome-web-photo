@@ -6,4 +6,4 @@
   which the frontend tells which files/pages to thumbnail.
 * Find out why it crashes on https:// sites
 * Find out why it crashes on http://slashdot.org/
-
+* Fix the output on framed pages
