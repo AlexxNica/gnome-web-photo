@@ -68,7 +68,7 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #define MAX_WIDTH		1 << 12
-#define MAX_HEIGHT		1 << 18
+#define MAX_HEIGHT		1 << 20
 #define THUMBNAIL_WIDTH		1 << 10
 #define THUMBNAIL_HEIGHT	1 << 10
 #define STRIPE			1 << 8
@@ -90,7 +90,6 @@ Writer::Writer(GtkMozEmbed *aEmbed,
 , mInitialised(PR_FALSE)
 , mHadError(PR_FALSE)
 {
-  LOG ("Writer ctor\n");
 }
 
 PRBool
