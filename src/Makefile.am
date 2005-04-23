@@ -16,6 +16,8 @@ mozilla_include_subdirs = \
 # -- Photographer -------------------------------------------------------------
 
 gnome_web_photo_SOURCES = \
+	Components.cpp	\
+	Components.h	\
 	Listener.cpp	\
 	Listener.h	\
 	Writer.cpp	\
@@ -44,6 +46,8 @@ gnome_web_photo_LDADD = \
 # -- Thumbnailer --------------------------------------------------------------
 
 gnome_web_thumbnail_SOURCES = \
+	Components.cpp	\
+	Components.h	\
 	Listener.cpp	\
 	Listener.h	\
 	Writer.cpp	\

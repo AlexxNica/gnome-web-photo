@@ -34,6 +34,7 @@
 #include <unistd.h>
 #include <stdio.h>
 
+#include "Components.h"
 #include "Listener.h"
 #include "Writer.h"
 
@@ -211,6 +212,8 @@ init_gecko (void)
 {
   gtk_moz_embed_set_comp_path (MOZILLA_HOME);
   gtk_moz_embed_push_startup ();
+
+  RegisterComponents ();
 
   nsresult rv;
   nsCOMPtr<nsIPrefService> prefService (do_GetService (NS_PREFSERVICE_CONTRACTID, &rv));
