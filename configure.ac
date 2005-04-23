@@ -75,56 +75,6 @@ PKG_CHECK_MODULES([DEPENDENCY], [\
 AC_SUBST([DEPENDENCY_CFLAGS])
 AC_SUBST([DEPENDENCY_LIBS])
 
-dnl JPEG checks
-dnl Note: libjpeg sucks---it doesn't have a .pc file!
-AC_ARG_ENABLE([jpeg],
-	[AS_HELP_STRING([--disable-jpeg], [Disable JPEG support])],
-	[enable_jpeg=$enableval],
-	[enable_jpeg=yes])
-
-if test "x$enable_jpeg" != "xno"; then
-	 AC_CHECK_LIB([jpeg],[jpeg_destroy_decompress],
-		[enable_jpeg=yes],
-		[enable_jpeg=no])
-fi
-if test "x$enable_jpeg" = "xyes"; then
-	AC_MSG_CHECKING([for jpeglib.h])
-	AC_PREPROC_IFELSE([AC_LANG_SOURCE(
-		[[#include <stdio.h>
-		  #undef PACKAGE
-		  #undef VERSION
-		  #undef HAVE_STDLIB_H
-		  #include <jpeglib.h>]])],
-		[enable_jpeg=yes],
-		[enable_jpeg=no])
-	AC_MSG_RESULT([$enable_jpeg])
-fi
-if test "x$enable_jpeg" = "xyes"; then
-	JPEG_LIBS="-ljpeg"
-	AC_SUBST([JPEG_LIBS])
-
-	AC_DEFINE([ENABLE_JPEG],[1],[Define if JPEG support is enabled])
-else
-	AC_MSG_WARN([JPEG support disabled])
-fi
-
-AM_CONDITIONAL([ENABLE_JPEG],[test "x$enable_jpeg" = "xyes"])
-
-dnl Specify the gconf configuration source, 
-dnl default to xml::$(sysconfdir)/gconf/gconf.xml.defaults
-
-AC_PATH_PROG([GCONFTOOL], [gconftool-2], [no])
-
-if test "x$GCONFTOOL" = xno; then
-	AC_MSG_ERROR([gconftool-2 not found])
-fi
-
-AM_GCONF_SOURCE_2
-
-dnl **************
-dnl Mozilla checks
-dnl **************
-
 dnl whether to build with DEBUG defined
 AC_ARG_WITH([mozilla-debug],
 	    AS_HELP_STRING([--mozilla-debug],[Whether mozilla is a debug build]),
@@ -137,6 +87,21 @@ AC_ARG_ENABLE([cpp-rtti],
 if test "x$enable_cpp_rtti" = "xno"; then
   AM_CXXFLAGS="-fno-rtti $AM_CXXFLAGS"
 fi
+
+dnl Specify the gconf configuration source, 
+dnl default to xml::$(sysconfdir)/gconf/gconf.xml.defaults
+
+AC_PATH_PROG([GCONFTOOL], [gconftool-2], [no])
+
+if test "x$GCONFTOOL" = xno; then
+	AC_MSG_ERROR([gconftool-2 not found])
+fi
+
+AM_GCONF_SOURCE_2
+
+dnl ******************
+dnl Mozilla name check
+dnl ******************
 
 AC_MSG_CHECKING([which mozilla to use])
 

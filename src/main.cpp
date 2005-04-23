@@ -53,24 +53,12 @@
 
 /* --- */
 
-enum
-{
-  PNG
-#ifdef ENABLE_JPEG
-  , JPEG
-#endif
-};
-
 static char **arguments = NULL;
 static int width = -1;
 static int size = -1;
 static gboolean thumbnail = FALSE;
 static char *filename;
 static int retval = 1;
-static char *type_string = NULL;
-static int type = PNG;
-static int quality = 100;
-static guint timeout;
 
 static GOptionEntry entries [] =
 {
@@ -79,10 +67,6 @@ static GOptionEntry entries [] =
 #else
   { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image"), "W" },
   { "thumbnail", 't', 0, G_OPTION_ARG_NONE, &thumbnail, N_("If given, writes a thumbnail instead of a full image"), NULL },
-#endif
-#if defined(ENABLE_JPEG) && !defined(THUMBNAILER)
-  { "quality", 'q', 0, G_OPTION_ARG_INT, &quality, N_("The desired quality of the JPEG image (1 .. 100)"), "Q" },
-  { "type", '\0', 0, G_OPTION_ARG_STRING, &type_string, N_("Which image type to write (PNG, JPEG)"), "T" },
 #endif
   { G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &arguments, "", NULL },
   { NULL }
@@ -125,16 +109,11 @@ embed_take_picture (Embed *embed)
 {
   GtkMozEmbed *mozembed = GTK_MOZ_EMBED (embed);
 
-  /* don't need this anymore */
-  g_source_remove (timeout);
-
-  Writer *writer = NULL;
+  Writer *writer;
   if (thumbnail) {
     writer = new ThumbnailWriter (mozembed, filename, size);
-  } else if (type == PNG) {
+  } else {
     writer = new PNGWriter (mozembed, filename);
-  } else if (type == JPEG) {
-    writer = new JPEGWriter (mozembed, filename, quality);
   }
   g_return_val_if_fail (writer, FALSE);
 
@@ -248,13 +227,10 @@ static void
 synopsis (void)
 {
 #ifdef THUMBNAILER
-  g_print (_("Usage: %s [--size=N] URL outfile\n"), g_get_prgname ());
-#elif defined(ENABLE_JPEG)
-  g_print (_("Usage: %s [--with=N] [--type=png|jpeg] [--quality=Q] URL outfile\n"), g_get_prgname ());
+  g_print (_("Usage: %s [-s size] URL outfile\n"), g_get_prgname ());
 #else
-  g_print (_("Usage: %s [--width=N] URL outfile\n"), g_get_prgname ());
+  g_print (_("Usage: %s [-w width] URL outfile\n"), g_get_prgname ());
 #endif
-  exit (1);
 }
 
 int
@@ -273,6 +249,7 @@ main (int argc, char **argv)
 
   if (!gtk_init_with_args (&argc, &argv, NULL, entries, GETTEXT_PACKAGE, &error)) {
     synopsis ();
+    return 1;
   }
 
 #ifdef THUMBNAILER
@@ -280,6 +257,7 @@ main (int argc, char **argv)
 
   if (size == -1) {
     synopsis ();
+    return 1;
   }
   if (size != 32 && size != 64 && size != 128 && size != 256) {
     g_print ("Thumbnail size has to be 32, 64, 128 or 256!\n");
@@ -290,6 +268,7 @@ main (int argc, char **argv)
 #else
   if (width == -1) {
     synopsis ();
+    return 1;
   }
   if (width < MIN_WIDTH || width > MAX_WIDTH) {
     g_print ("Width must be between %d and %d!\n", MIN_WIDTH, MAX_WIDTH);
@@ -297,25 +276,9 @@ main (int argc, char **argv)
   }
 #endif
 
-#ifdef ENABLE_JPEG
-  if (!type_string || g_ascii_strcasecmp (type_string, "PNG") == 0) {
-    type = PNG;
-  }
-  else if (g_ascii_strcasecmp (type_string, "JPEG") == 0) {
-    type = JPEG;
-  } else {
-    g_print ("Unknown image type '%s' specified!\n", type_string);
-    return 1;
-  }
-
-  if (quality < 1 || quality > 100) {
-    g_print ("Quality has to be between 1 and 100!\n");
-    return 1;
-  }
-#endif
-
   if (g_strv_length (arguments) != 2) {
     synopsis ();
+    return 1;
   }
 
   url = g_filename_to_utf8 (arguments[0], -1, NULL, NULL, NULL);
@@ -345,7 +308,7 @@ main (int argc, char **argv)
   gtk_moz_embed_load_url (GTK_MOZ_EMBED (embed), url);
 
   /* FIXME is there a way to guarantee a kill after TIMEOUT secs? */
-  timeout = g_timeout_add (TIMEOUT, (GSourceFunc) gtk_widget_destroy, window);
+  g_timeout_add (TIMEOUT, (GSourceFunc) gtk_widget_destroy, window);
 
   gtk_main ();
 
