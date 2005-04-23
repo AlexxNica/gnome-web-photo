@@ -160,6 +160,9 @@ Writer::Write()
   nscoord twipLimitH = NSIntPixelsToTwips(mHeight, p2t);
 
   nsRect r = view->GetBounds() - view->GetPosition();
+  /* sanity check */
+  if (r.IsEmpty()) return PR_FALSE;
+
   if (r.height > twipLimitH) {
     r.height = twipLimitH;
   }

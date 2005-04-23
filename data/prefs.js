@@ -81,3 +81,11 @@ pref("accessibility.typeaheadfind", true);
 
 // use system proxy prefs
 pref("config.use_system_prefs", true);
+
+// disble null plugin
+pref("plugin.default_plugin_disabled", true);
+
+// disable password manager and form fill
+pref("signon.rememberSignons", false);
+pref("browser.formfill.enable", false);
+

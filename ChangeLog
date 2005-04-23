@@ -1,5 +1,15 @@
 2005-04-23  Christian Persch  <chpe@cvs.gnome.org>
 
+	* data/prefs.js:
+
+	Disable formfill and password manager.
+
+	* src/Writer.cpp:
+
+	Sanity check.
+	
+2005-04-23  Christian Persch  <chpe@cvs.gnome.org>
+
 	* src/Writer.cpp:
 
 	Less debug output.
