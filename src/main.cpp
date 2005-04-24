@@ -170,10 +170,9 @@ embed_realize (GtkWidget *widget)
   GTK_WIDGET_CLASS (parent_class)->realize (widget);
 
   embed->listener = new Listener(mozembed);
-  if (NS_FAILED (embed->listener->Attach ()))
-    {
-      g_warning ("Couldn't attach the listener!\n");
-    }
+  if (NS_FAILED (embed->listener->Attach ())) {
+    g_warning ("Couldn't attach the listener!\n");
+  }
 }
 
 static void

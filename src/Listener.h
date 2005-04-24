@@ -49,6 +49,7 @@ public:
 
 private:
   GtkMozEmbed *mEmbed;
+  PRBool mAttached;
 };
 
 #endif

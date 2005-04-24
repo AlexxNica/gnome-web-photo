@@ -24,6 +24,7 @@
 #include "Listener.h"
 
 #include <nsIWebBrowser.h>
+#include <nsIWebBrowserSetup.h>
 #include <nsIDOMWindow.h>
 #include <nsIDOMWindow2.h>
 #include <nsIDOMEventTarget.h>
@@ -31,6 +32,7 @@
 
 Listener::Listener (GtkMozEmbed *aEmbed)
 : mEmbed(aEmbed)
+, mAttached(PR_FALSE)
 {
 }
 
@@ -59,7 +61,19 @@ Listener::Attach ()
   rv = domWin2->GetWindowRoot (getter_AddRefs (target));
   NS_ENSURE_SUCCESS (rv, rv);
 
-  return target->AddEventListener (NS_LITERAL_STRING ("load"), this, PR_TRUE);
+  rv = target->AddEventListener (NS_LITERAL_STRING ("load"), this, PR_TRUE);
+
+  mAttached = PR_TRUE;
+
+  nsCOMPtr<nsIWebBrowserSetup> setup (do_QueryInterface (browser, &rv));
+  NS_ENSURE_SUCCESS (rv, rv);
+
+  rv = setup->SetProperty (nsIWebBrowserSetup::SETUP_ALLOW_META_REDIRECTS, PR_FALSE);
+  /* set this for now, since sizing doesn't work right with frames */
+  rv |= setup->SetProperty (nsIWebBrowserSetup::SETUP_ALLOW_SUBFRAMES , PR_FALSE);
+  rv |= setup->SetProperty (nsIWebBrowserSetup::SETUP_USE_GLOBAL_HISTORY , PR_FALSE);
+
+  return rv;
 }
 
 NS_IMPL_ISUPPORTS2 (Listener, nsIDOMEventListener, nsIDOMLoadListener)

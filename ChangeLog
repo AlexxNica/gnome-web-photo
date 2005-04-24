@@ -1,5 +1,14 @@
 2005-04-24  Christian Persch  <chpe@cvs.gnome.org>
 
+	* src/Listener.cpp:
+	* src/Listener.h:
+	* src/main.cpp:
+
+	Use nsIWebBrowserSetup to disable global history and redirects,
+	as well as frames.
+
+2005-04-24  Christian Persch  <chpe@cvs.gnome.org>
+
 	* src/main.cpp:
 
 	Check for NULL arguments.
