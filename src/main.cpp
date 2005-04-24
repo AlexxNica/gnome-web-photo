@@ -39,12 +39,13 @@
 #include "Writer.h"
 
 #define MIN_WIDTH	64
-#define DEFAULT_SIZE	1024
-#define THUMBNAILERSIZE 1024
+#define THUMBNAIL_WIDTH	1024
 #define MAX_WIDTH	2048
-#define THUMB_SIZE_MAX	256
 #define HEIGHT		64
 #define TIMEOUT		60 * 1000 /* 60 seconds */
+
+#define DEFAULT_THUMBNAIL_SIZE	256
+#define DEFAULT_WIDTH		1024
 
 #ifdef GNOME_ENABLE_DEBUG
 #define LOG g_print
@@ -64,10 +65,9 @@ static int retval = 1;
 static GOptionEntry entries [] =
 {
 #ifdef THUMBNAILER
-  { "size", 's', 0, G_OPTION_ARG_INT, &size, N_("The thumbnail size"), "S" },
+  { "size", 's', 0, G_OPTION_ARG_INT, &size, N_("The thumbnail size (default: 256)"), "S" },
 #else
-  { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image"), "W" },
-  { "thumbnail", 't', 0, G_OPTION_ARG_NONE, &thumbnail, N_("If given, writes a thumbnail instead of a full image"), NULL },
+  { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image (default: 1024)"), "W" },
 #endif
   { G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &arguments, "", NULL },
   { NULL }
@@ -241,6 +241,7 @@ synopsis (void)
 #else
   g_print (_("Usage: %s [-w width] URL outfile\n"), g_get_prgname ());
 #endif
+  exit (1);
 }
 
 int
@@ -259,26 +260,22 @@ main (int argc, char **argv)
 
   if (!gtk_init_with_args (&argc, &argv, NULL, entries, GETTEXT_PACKAGE, &error)) {
     synopsis ();
-    return 1;
   }
 
 #ifdef THUMBNAILER
   thumbnail = TRUE;
 
   if (size == -1) {
-    synopsis ();
-    return 1;
+    size = DEFAULT_THUMBNAIL_SIZE;
   }
   if (size != 32 && size != 64 && size != 128 && size != 256) {
     g_print ("Thumbnail size has to be 32, 64, 128 or 256!\n");
-    return 1;
   }
 
-  width = THUMBNAILERSIZE;
+  width = THUMBNAIL_WIDTH;
 #else
   if (width == -1) {
-    synopsis ();
-    return 1;
+    width = DEFAULT_WIDTH;
   }
   if (width < MIN_WIDTH || width > MAX_WIDTH) {
     g_print ("Width must be between %d and %d!\n", MIN_WIDTH, MAX_WIDTH);
@@ -288,7 +285,6 @@ main (int argc, char **argv)
 
   if (g_strv_length (arguments) != 2) {
     synopsis ();
-    return 1;
   }
 
   url = g_filename_to_utf8 (arguments[0], -1, NULL, NULL, NULL);

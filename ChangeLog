@@ -1,3 +1,14 @@
+2005-04-24  Christian Persch  <chpe@cvs.gnome.org>
+
+	* src/Writer.cpp:
+
+	Fix rounding in thumbnail height calculation.
+
+	* src/main.cpp:
+
+	Remove --thumbnail option from gnome-web-photo, and add defaults to
+	--width and --size.
+
 2005-04-23  Christian Persch  <chpe@cvs.gnome.org>
 
 	* src/Components.cpp:
