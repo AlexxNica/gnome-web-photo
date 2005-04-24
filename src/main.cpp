@@ -283,7 +283,7 @@ main (int argc, char **argv)
   }
 #endif
 
-  if (g_strv_length (arguments) != 2) {
+  if (arguments == NULL || g_strv_length (arguments) != 2) {
     synopsis ();
   }
 

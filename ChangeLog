@@ -1,5 +1,11 @@
 2005-04-24  Christian Persch  <chpe@cvs.gnome.org>
 
+	* src/main.cpp:
+
+	Check for NULL arguments.
+
+2005-04-24  Christian Persch  <chpe@cvs.gnome.org>
+
 	* src/Writer.cpp:
 
 	Fix rounding in thumbnail height calculation.
