@@ -1,5 +1,11 @@
 2005-04-26  Christian Persch  <chpe@cvs.gnome.org>
 
+	* src/Writer.cpp:
+
+	Fix a mem leak, and simplify the code for little endian case.
+
+2005-04-26  Christian Persch  <chpe@cvs.gnome.org>
+
 	* data/thumbnailer.schemas.in:
 	* po/POTFILES.in:
 

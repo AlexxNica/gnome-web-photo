@@ -231,7 +231,7 @@ Writer::Write()
         context->DestroyDrawingSurface(surface);
       }
       cutout.MoveBy(0, twipStripe);
-      /* FIXME: I get link mHadError if I use ::IntersectRect, WTF? */
+      /* FIXME: I get a link error if I use ::IntersectRect, WTF? */
       if (cutout.y + cutout.height > r.y + r.height) {
         cutout.height = r.y + r.height - cutout.y;
       }
@@ -268,6 +268,9 @@ PNGWriter::~PNGWriter()
   }
   if (mText) {
     free (mText);
+  }
+  if (mRow) {
+    free (mRow);
   }
   if (mFile) {
     fclose (mFile);
@@ -403,10 +406,11 @@ PNGWriter::WriteSurface(nsIDrawingSurface *aSurface,
 #if defined(IS_BIG_ENDIAN)
           PRUint32 v = (src[0] << 24) | (src[1] << 16) || (src[2] << 8) | src[3];
           v >>= (32 - 8*bytesPerPix);
+//maybe like this:  PRUint32 v = *((PRUint32*) src) >> (32 - 8*bytesPerPix);
 #elif defined(IS_LITTLE_ENDIAN)
-          PRUint32 v = src[0] | (src[1] << 8) | (src[2] << 16) | (src[3] << 24);
+          PRUint32 v = *((PRUint32*) src);
 #else
-#mHadError Endianness not defined!
+#error Endianness not defined!
 #endif
 	  dest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
 	  dest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
@@ -518,9 +522,9 @@ ThumbnailWriter::WriteSurface(nsIDrawingSurface *aSurface,
           PRUint32 v = (src[0] << 24) | (src[1] << 16) || (src[2] << 8) | src[3];
           v >>= (32 - 8*bytesPerPix);
 #elif defined(IS_LITTLE_ENDIAN)
-          PRUint32 v = src[0] | (src[1] << 8) | (src[2] << 16) | (src[3] << 24);
+          PRUint32 v = *((PRUint32*) src);
 #else
-#mHadError Endianness not defined!
+#error Endianness not defined!
 #endif
 	  mDest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
 	  mDest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
