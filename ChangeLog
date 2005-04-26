@@ -1,3 +1,11 @@
+2005-04-26  Christian Persch  <chpe@cvs.gnome.org>
+
+	* data/thumbnailer.schemas.in:
+	* po/POTFILES.in:
+
+	Add schema file to POTFILES.in, and change a few strings in the
+	schema.
+
 2005-04-24  Christian Persch  <chpe@cvs.gnome.org>
 
 	* src/Listener.cpp:

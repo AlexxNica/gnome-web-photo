@@ -7,8 +7,8 @@
       <type>bool</type>
       <default>true</default>
       <locale name="C">
-        <short>Whether the HTML thumbnailer is enabled</short>
-        <long>Whether the HTML thumbnailer is enabled.</long>
+        <short>Whether to enable thumbnailing of HTML files</short>
+        <long>Whether to enable thumbnailing of HTML files.</long>
       </locale>
     </schema>
     <schema>
