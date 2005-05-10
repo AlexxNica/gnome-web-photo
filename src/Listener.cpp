@@ -114,3 +114,9 @@ Listener:: Error (nsIDOMEvent* aEvent)
 {
   return NS_OK;
 }
+
+NS_IMETHODIMP
+Listener::PageRestore (nsIDOMEvent* aEvent)
+{
+  return NS_OK;
+}
