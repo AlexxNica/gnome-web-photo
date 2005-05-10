@@ -1,5 +1,13 @@
 2005-05-10  Christian Persch  <chpe@cvs.gnome.org>
 
+	* data/Makefile.am:
+	* data/style.css:
+	* src/main.cpp: (init_gecko):
+
+	Add a stylesheet to remove the scrollbars.
+
+2005-05-10  Christian Persch  <chpe@cvs.gnome.org>
+
 	* src/Listener.cpp:
 	* src/Listener.h:
 

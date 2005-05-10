@@ -28,7 +28,10 @@
 #include <nsCOMPtr.h>
 #include <nsIPrefService.h>
 #include <nsIServiceManager.h>
+#include <nsIStyleSheetService.h>
 #include <nsILocalFile.h>
+#include <nsIURI.h>
+#include <nsNetUtil.h>
 
 #include <stdlib.h>
 #include <unistd.h>
@@ -219,12 +222,29 @@ init_gecko (void)
   NS_ENSURE_SUCCESS (rv, rv);
 
   /* read our predefined default prefs */
-  nsCOMPtr<nsILocalFile> file;
+  nsCOMPtr<nsILocalFile> prefsFile;
   rv = NS_NewNativeLocalFile(nsDependentCString(SHARE_DIR "/prefs.js"),
-			     PR_TRUE, getter_AddRefs(file));
+			     PR_TRUE, getter_AddRefs(prefsFile));
   NS_ENSURE_SUCCESS (rv, rv);
   
-  rv = prefService->ReadUserPrefs(file);
+  rv = prefService->ReadUserPrefs(prefsFile);
+  NS_ENSURE_SUCCESS (rv, rv);
+
+  nsCOMPtr<nsILocalFile> styleFile;
+  rv = NS_NewNativeLocalFile(nsDependentCString(SHARE_DIR "/style.css"),
+                             PR_TRUE, getter_AddRefs(styleFile));
+  NS_ENSURE_SUCCESS (rv, rv);
+  nsCOMPtr<nsIStyleSheetService> sheetService (do_GetService ("@mozilla.org/content/style-sheet-service;1", &rv));
+  NS_ENSURE_SUCCESS (rv, rv);
+
+  nsCOMPtr<nsIFile> file (do_QueryInterface (styleFile, &rv));
+  NS_ENSURE_SUCCESS (rv, rv);
+  
+  nsCOMPtr<nsIURI> styleURI;
+  rv = NS_NewFileURI (getter_AddRefs (styleURI), styleFile);
+  NS_ENSURE_SUCCESS (rv, rv);
+
+  rv = sheetService->LoadAndRegisterSheet (styleURI, nsIStyleSheetService::AGENT_SHEET);
   NS_ENSURE_SUCCESS (rv, rv);
 
   return rv;
