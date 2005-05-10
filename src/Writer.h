@@ -38,7 +38,7 @@ public:
 
   virtual PRBool Prepare(nsIDrawingSurface *) = 0;
   virtual PRBool Finish() = 0;
-  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32) = 0;
+  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32, PRInt32) = 0;
 
 protected:
   GtkMozEmbed *mEmbed;
@@ -62,7 +62,7 @@ public:
   virtual PRBool Prepare(nsIDrawingSurface *);
   virtual PRBool Finish();
 
-  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32);
+  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32, PRInt32);
 
   static void WarnCallback(png_structp, png_const_charp);
   static void ErrorCallback(png_structp, png_const_charp);
@@ -83,7 +83,7 @@ public:
 
   virtual PRBool Prepare(nsIDrawingSurface *);
   virtual PRBool Finish();
-  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32);
+  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32, PRInt32);
 
 private:
   GdkPixdata *mData;

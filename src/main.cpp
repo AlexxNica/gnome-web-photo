@@ -230,11 +230,12 @@ init_gecko (void)
   rv = prefService->ReadUserPrefs(prefsFile);
   NS_ENSURE_SUCCESS (rv, rv);
 
+  nsCOMPtr<nsIStyleSheetService> sheetService (do_GetService ("@mozilla.org/content/style-sheet-service;1", &rv));
+  NS_ENSURE_SUCCESS (rv, rv);
+
   nsCOMPtr<nsILocalFile> styleFile;
   rv = NS_NewNativeLocalFile(nsDependentCString(SHARE_DIR "/style.css"),
                              PR_TRUE, getter_AddRefs(styleFile));
-  NS_ENSURE_SUCCESS (rv, rv);
-  nsCOMPtr<nsIStyleSheetService> sheetService (do_GetService ("@mozilla.org/content/style-sheet-service;1", &rv));
   NS_ENSURE_SUCCESS (rv, rv);
 
   nsCOMPtr<nsIFile> file (do_QueryInterface (styleFile, &rv));

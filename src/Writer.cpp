@@ -173,7 +173,7 @@ Writer::Write()
   mWidth = NSTwipsToIntPixels(r.width, t2p);
   mHeight = NSTwipsToIntPixels(r.height, t2p);
 
-  PRUint32 stripe = (2 << 19) / mWidth;
+  PRUint32 stripe = (2 << 20) / mWidth;
   nscoord twipStripe = NSIntPixelsToTwips(stripe, p2t);
 
   nsRect cutout(r);
@@ -188,6 +188,9 @@ Writer::Write()
     PRBool failed = PR_FALSE;
     while (!cutout.IsEmpty() && !mHadError && !failed) {
       ++roundCount;
+
+      PRUint32 width = NSTwipsToIntPixels(cutout.width, t2p);
+      PRUint32 height = NSTwipsToIntPixels(cutout.height, t2p);
 
       nsCOMPtr<nsIRenderingContext> context;
       rv = viewManager->RenderOffscreen (view, cutout,
@@ -205,25 +208,27 @@ Writer::Write()
         } else {
           PRUint32 w, h;
           surface->GetDimensions(&w,&h);
-          PRUint32 width = NSTwipsToIntPixels(w, t2p);
-          PRUint32 height = NSTwipsToIntPixels(h, t2p);
+          /* these are computed from ScaleRoundOut(t2p) on cutout.Bounds(), and
+           * may be one pixel too wide and/or hight
+           */
 
-          if (width != mWidth) {
+          if (width > w || height > h) {
             failed = PR_TRUE;
-            status = "WIDTHMISMATCH";
+            status = "SIZEMISMATCH";
           } else if (!Prepare(surface)) {
             failed = PR_TRUE;
             status = "PNGPREPAREFAILED";
           } else {
             PRUint8* data;
             PRInt32 rowLen, rowSpan;
-            rv = surface->Lock(0, 0, width, height, (void**)&data, &rowSpan, &rowLen,
+            rv = surface->Lock(0, 0, w, h, (void**)&data, &rowSpan, &rowLen,
                                NS_LOCK_SURFACE_READ_ONLY);
             if (NS_FAILED(rv)) {
 	      failed = PR_TRUE;
               status = "FAILEDLOCK";
             } else {
-	      WriteSurface(surface, width, height, data, rowLen, rowSpan);
+              LOG (".");
+              WriteSurface(surface, width, height, data, rowLen, rowSpan, rowLen/w);
               surface->Unlock();
             }
           }
@@ -231,14 +236,11 @@ Writer::Write()
         context->DestroyDrawingSurface(surface);
       }
       cutout.MoveBy(0, twipStripe);
-      /* FIXME: I get a link error if I use ::IntersectRect, WTF? */
-      if (cutout.y + cutout.height > r.y + r.height) {
-        cutout.height = r.y + r.height - cutout.y;
-      }
+      cutout.IntersectRect(r, cutout);
     }
 
     retval = Finish();
-    status = retval ? "OK" : "FAILED";
+    status = status = retval ? "OK" : status[0] != '\0' ? status : "FAILED";
     LOG ("\n");
   }
 
@@ -252,9 +254,11 @@ Writer::Write()
 PNGWriter::PNGWriter(GtkMozEmbed *aEmbed,
 		     const char *aFilename)
 : Writer(aEmbed, aFilename)
+, mFile(NULL)
 , mPNG(NULL)
 , mInfo(NULL)
 , mText(NULL)
+, mRow(NULL)
 {
   LOG ("PNGWriter ctor\n");
 }
@@ -386,14 +390,12 @@ PNGWriter::WriteSurface(nsIDrawingSurface *aSurface,
 			PRUint32 aHeight,
 			PRUint8 *aData,
 			PRInt32 aRowLen,
-			PRInt32 aRowSpan)
+			PRInt32 aRowSpan,
+                        PRInt32 aPixelSpan)
 {
-  LOG (".");
-
   nsPixelFormat format;
   aSurface->GetPixelFormat(&format);
 
-  PRUint32 bytesPerPix = aRowLen/aWidth;
   PRUint8* buf = (PRUint8*) mRow;
   for (PRUint32 i = 0; i < aHeight; ++i)
     {
@@ -405,7 +407,7 @@ PNGWriter::WriteSurface(nsIDrawingSurface *aSurface,
           /* v is the pixel value */
 #if defined(IS_BIG_ENDIAN)
           PRUint32 v = (src[0] << 24) | (src[1] << 16) || (src[2] << 8) | src[3];
-          v >>= (32 - 8*bytesPerPix);
+          v >>= (32 - 8*aPixelSpan);
 //maybe like this:  PRUint32 v = *((PRUint32*) src) >> (32 - 8*bytesPerPix);
 #elif defined(IS_LITTLE_ENDIAN)
           PRUint32 v = *((PRUint32*) src);
@@ -415,7 +417,7 @@ PNGWriter::WriteSurface(nsIDrawingSurface *aSurface,
 	  dest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
 	  dest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
 	  dest[2] = ((v & format.mBlueMask) >> format.mBlueShift) << (8 - format.mBlueCount);
-	  src += bytesPerPix;
+          src += aPixelSpan;
 	  dest += 3;
         }
 
@@ -427,7 +429,12 @@ PNGWriter::WriteSurface(nsIDrawingSurface *aSurface,
 PRBool
 PNGWriter::Finish()
 {
-  png_write_end (mPNG, mInfo);
+  if (mPNG && mInfo) {
+    png_write_end (mPNG, mInfo);
+  } else {
+    mHadError = PR_TRUE;
+  }
+
   return !mHadError;
 }
 
@@ -504,14 +511,12 @@ ThumbnailWriter::WriteSurface(nsIDrawingSurface *aSurface,
 			      PRUint32 aHeight,
 			      PRUint8 *aData,
 			      PRInt32 aRowLen,
-			      PRInt32 aRowSpan)
+			      PRInt32 aRowSpan,
+                              PRInt32 aPixelSpan)
 {
-  LOG (".");
-
   nsPixelFormat format;
   aSurface->GetPixelFormat(&format);
 
-  PRUint32 bytesPerPix = aRowLen/aWidth;
   for (PRUint32 i = 0; i < aHeight; ++i)
     {
       PRUint8* src = aData + i*aRowSpan;
@@ -520,7 +525,7 @@ ThumbnailWriter::WriteSurface(nsIDrawingSurface *aSurface,
           /* v is the pixel value */
 #if defined(IS_BIG_ENDIAN)
           PRUint32 v = (src[0] << 24) | (src[1] << 16) || (src[2] << 8) | src[3];
-          v >>= (32 - 8*bytesPerPix);
+          v >>= (32 - 8*aPixelSpan);
 #elif defined(IS_LITTLE_ENDIAN)
           PRUint32 v = *((PRUint32*) src);
 #else
@@ -529,7 +534,7 @@ ThumbnailWriter::WriteSurface(nsIDrawingSurface *aSurface,
 	  mDest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
 	  mDest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
 	  mDest[2] = ((v & format.mBlueMask) >> format.mBlueShift) << (8 - format.mBlueCount);
-	  src += bytesPerPix;
+          src += aPixelSpan;
 	  mDest += 3;
         }
 

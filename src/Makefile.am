@@ -8,6 +8,7 @@ mozilla_include_subdirs = \
 	gfx		\
 	layout		\
 	locale		\
+	necko		\
 	view		\
 	webbrwsr	\
 	widget		\
@@ -41,6 +42,7 @@ gnome_web_photo_LDFLAGS = -R$(MOZILLA_HOME)
 gnome_web_photo_LDADD = \
 	$(DEPENDENCY_LIBS)	\
 	$(MOZILLA_LIBS)		\
+	-lgkgfx			\
 	$(AM_LDFLAGS)
 
 # -- Thumbnailer --------------------------------------------------------------
@@ -72,4 +74,5 @@ gnome_web_thumbnail_LDFLAGS = -R$(MOZILLA_HOME)
 gnome_web_thumbnail_LDADD = \
 	$(DEPENDENCY_LIBS)	\
 	$(MOZILLA_LIBS)		\
+	-lgkgfx			\
 	$(AM_LDFLAGS)
