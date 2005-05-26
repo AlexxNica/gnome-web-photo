@@ -75,18 +75,9 @@ PKG_CHECK_MODULES([DEPENDENCY], [\
 AC_SUBST([DEPENDENCY_CFLAGS])
 AC_SUBST([DEPENDENCY_LIBS])
 
-dnl whether to build with DEBUG defined
-AC_ARG_WITH([mozilla-debug],
-	    AS_HELP_STRING([--mozilla-debug],[Whether mozilla is a debug build]),
-	    [AM_CXXFLAGS="-DDEBUG $AM_CXXFLAGS"])
-
-AC_ARG_ENABLE([cpp-rtti],
-	      AS_HELP_STRING([--enable-cpp-rtti],[Enable C++ RTTI]),[],
-	      [enable_cpp_rtti=no])
-
-if test "x$enable_cpp_rtti" = "xno"; then
-  AM_CXXFLAGS="-fno-rtti $AM_CXXFLAGS"
-fi
+dnl *****
+dnl GConf
+dnl *****
 
 dnl Specify the gconf configuration source, 
 dnl default to xml::$(sysconfdir)/gconf/gconf.xml.defaults
@@ -99,9 +90,9 @@ fi
 
 AM_GCONF_SOURCE_2
 
-dnl ******************
-dnl Mozilla name check
-dnl ******************
+dnl *******
+dnl Mozilla
+dnl *******
 
 AC_MSG_CHECKING([which mozilla to use])
 
@@ -153,6 +144,14 @@ AC_SUBST([MOZILLA_HOME])
 MOZILLA_PREFIX="`$PKG_CONFIG --variable=prefix $MOZILLA-gtkmozembed`"
 AC_SUBST([MOZILLA_PREFIX])
 
+AC_ARG_ENABLE([cpp-rtti],
+	      AS_HELP_STRING([--enable-cpp-rtti],[Enable C++ RTTI]),[],
+	      [enable_cpp_rtti=no])
+
+if test "x$enable_cpp_rtti" = "xno"; then
+  AM_CXXFLAGS="-fno-rtti $AM_CXXFLAGS"
+fi
+
 dnl *************************************************************************
 dnl This is from Mozilla's configure.in. They set almost all the config stuff
 dnl they need in mozilla-config.h Except for this compiler flag, which can't
@@ -189,6 +188,30 @@ fi
 dnl **********************************
 dnl now tests for mozilla API variance
 dnl **********************************
+
+CPPFLAGS="$_SAVE_CPPFLAGS $AM_CPPFLAGS -I$MOZILLA_INCLUDE_ROOT `$PKG_CONFIG --cflags-only-I $MOZILLA-xpcom` -I$MOZILLA_INCLUDE_ROOT/necko"
+CXXFLAGS="$_SAVE_CXXFLAGS $AM_CXXFLAGS `$PKG_CONFIG --cflags-only-other $MOZILLA-xpcom`"
+
+dnl Check whether we have a mozilla debug build
+
+AC_MSG_CHECKING([[whether we have a mozilla debug build]])
+
+AC_PREPROC_IFELSE(
+	[AC_LANG_SOURCE(
+		[[#include <mozilla-config.h>
+		  #if !defined(MOZ_REFLOW_PERF) || !defined(MOZ_REFLOW_PERF_DSP)
+		  #error No
+		  #endif]]
+	)],
+	[AM_CXXFLAGS="-DDEBUG -D_DEBUG $AM_CXXFLAGS" have_mozilla_debug=yes],
+	[have_mozilla_debug=no])
+
+AC_MSG_RESULT([$have_mozilla_debug])
+
+dnl restore flags
+CPPFLAGS=$_SAVE_CPPFLAGS
+CXXFLAGS=$_SAVE_CXXFLAGS
+AC_LANG_POP([C++])
 
 dnl Needed since 1.8b2
 dnl Define this down here so it doesn't affect the API checks above
