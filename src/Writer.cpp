@@ -123,8 +123,8 @@ Writer::Write()
   rv = docShell->GetPresShell (getter_AddRefs (presShell));
   NS_ENSURE_SUCCESS (rv, retval);
 
-  nsCOMPtr<nsPresContext> presWriter;
-  rv = docShell->GetPresContext (getter_AddRefs (presWriter));
+  nsCOMPtr<nsPresContext> presContext;
+  rv = docShell->GetPresContext (getter_AddRefs (presContext));
   NS_ENSURE_SUCCESS (rv, retval);
 
   rv = NS_ERROR_NULL_POINTER;
@@ -152,8 +152,8 @@ Writer::Write()
   }
 
   /* Get conversion factors */
-  float p2t = presWriter->PixelsToTwips();
-  float t2p = presWriter->TwipsToPixels();
+  float p2t = presContext->PixelsToTwips();
+  float t2p = presContext->TwipsToPixels();
 
   /* Limit the bitmap size */
   nscoord twipLimitW = NSIntPixelsToTwips(mWidth, p2t);
@@ -406,7 +406,7 @@ PNGWriter::WriteSurface(nsIDrawingSurface *aSurface,
         {
           /* v is the pixel value */
 #if defined(IS_BIG_ENDIAN)
-          PRUint32 v = (src[0] << 24) | (src[1] << 16) || (src[2] << 8) | src[3];
+          PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
           v >>= (32 - 8*aPixelSpan);
 //maybe like this:  PRUint32 v = *((PRUint32*) src) >> (32 - 8*bytesPerPix);
 #elif defined(IS_LITTLE_ENDIAN)
@@ -524,7 +524,7 @@ ThumbnailWriter::WriteSurface(nsIDrawingSurface *aSurface,
         {
           /* v is the pixel value */
 #if defined(IS_BIG_ENDIAN)
-          PRUint32 v = (src[0] << 24) | (src[1] << 16) || (src[2] << 8) | src[3];
+          PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
           v >>= (32 - 8*aPixelSpan);
 #elif defined(IS_LITTLE_ENDIAN)
           PRUint32 v = *((PRUint32*) src);

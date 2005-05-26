@@ -1,5 +1,11 @@
 2005-05-26  Christian Persch  <chpe@cvs.gnome.org>
 
+	* src/Writer.cpp:
+
+	Minor fix from mozilla nsDocumentViewer.cpp.
+
+2005-05-26  Christian Persch  <chpe@cvs.gnome.org>
+
 	* data/style.css:
 
 	Only suppress scrollbars for some elements; using it for <div> breaks
