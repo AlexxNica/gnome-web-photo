@@ -1,3 +1,14 @@
+2005-06-02  Christian Persch  <chpe@cvs.gnome.org>
+
+	* data/prefs.js:
+
+	Don't persist cookies and passwords.
+
+	* src/main.cpp:
+
+	Enable profile, since gecko crashes otherwise on https sites and when
+	trying to access the password manager.
+
 2005-05-26  Christian Persch  <chpe@cvs.gnome.org>
 
 	* configure.ac:

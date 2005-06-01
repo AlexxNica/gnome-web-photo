@@ -76,8 +76,8 @@ pref("network.protocol-handler.external.webcal", true);
 // disable xpinstall
 pref("xpinstall.enabled", false);
 
-// enable typeahead find
-pref("accessibility.typeaheadfind", true);
+// disable typeahead find
+pref("accessibility.typeaheadfind", false);
 
 // use system proxy prefs
 pref("config.use_system_prefs", true);
@@ -89,3 +89,7 @@ pref("plugin.default_plugin_disabled", true);
 pref("signon.rememberSignons", false);
 pref("browser.formfill.enable", false);
 
+// downgrade all cookies to session cookies, and accept them 
+// only from originating site
+pref("network.cookie.lifetimePolicy", 2);
+pref("network.cookie.cookieBehavior", 2);

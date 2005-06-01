@@ -50,6 +50,9 @@
 #define DEFAULT_THUMBNAIL_SIZE	256
 #define DEFAULT_WIDTH		1024
 
+/* no need to depend on libgnome just for this define */
+#define GNOME_DOT_GNOME         ".gnome2"
+
 #ifdef GNOME_ENABLE_DEBUG
 #define LOG g_print
 #else
@@ -212,6 +215,15 @@ G_DEFINE_TYPE (Embed, embed, GTK_TYPE_MOZ_EMBED);
 static nsresult
 init_gecko (void)
 {
+  /* BUG ALERT! If we don't have a profile, Gecko will crash on https sites and
+   * when trying to open the password manager, if we don't have a profile. The
+   * prefs will be set up so that no cookies or passwords etc. will be persisted.
+   */
+  char *profile;
+  profile = g_build_filename (g_get_home_dir (), GNOME_DOT_GNOME, NULL);
+  gtk_moz_embed_set_profile_path (profile, "gnome-web-photo");
+  g_free (profile);
+
   gtk_moz_embed_set_comp_path (MOZILLA_HOME);
   gtk_moz_embed_push_startup ();
 
@@ -346,6 +358,5 @@ main (int argc, char **argv)
 
   gtk_main ();
 
-  LOG ("Retval: %d\n", retval);
   return retval;
 }
