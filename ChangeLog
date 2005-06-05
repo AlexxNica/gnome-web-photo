@@ -1,3 +1,9 @@
+2005-06-05  Christian Persch  <chpe@cvs.gnome.org>
+
+	* data/prefs.js:
+
+	Disable disk cache.
+
 2005-06-02  Christian Persch  <chpe@cvs.gnome.org>
 
 	* data/prefs.js:

@@ -93,3 +93,6 @@ pref("browser.formfill.enable", false);
 // only from originating site
 pref("network.cookie.lifetimePolicy", 2);
 pref("network.cookie.cookieBehavior", 2);
+
+// disable disk cache
+pref("browser.cache.disk.capacity", 0);
