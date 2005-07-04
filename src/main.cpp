@@ -1,19 +1,41 @@
 /*
  *  Copyright (C) 2005 Christian Persch
  *
- *  This program is free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2, or (at your option)
- *  any later version.
+ * ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
- *  This program is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
  *
- *  You should have received a copy of the GNU General Public License
- *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is GNOME Web Photo code.
+ *
+ * The Initial Developer of the Original Code is
+ * Christian Persch <chpe@gnome.org>.
+ * Portions created by the Initial Developer are Copyright (C) 2004, 2005
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK *****
  *
  *  $Id$
  */
@@ -122,7 +144,7 @@ embed_take_picture (Embed *embed)
   } else {
     writer = new PNGWriter (mozembed, filename);
   }
-  g_return_val_if_fail (writer, FALSE);
+  if (!writer) return FALSE;
 
   retval = writer->Write() != PR_TRUE;
   delete writer;
@@ -156,13 +178,6 @@ embed_net_stop (GtkMozEmbed *mozembed)
 static void
 embed_onload (Embed *embed)
 {
-  /* HACK!
-   * We need to unset the env var now, because otherwise mozilla will try
-   * to dump the image too (and it likes to crash when it does that, XBadAlloc).
-   * http://lxr.mozilla.org/seamonkey/source/layout/base/nsDocumentViewer.cpp#1017
-   */
-  g_unsetenv ("MOZ_FORCE_PAINT_AFTER_ONLOAD");
-
   embed->state |= 2;
   check_state (embed);
 }
@@ -216,8 +231,8 @@ static nsresult
 init_gecko (void)
 {
   /* BUG ALERT! If we don't have a profile, Gecko will crash on https sites and
-   * when trying to open the password manager, if we don't have a profile. The
-   * prefs will be set up so that no cookies or passwords etc. will be persisted.
+   * when trying to open the password manager. The prefs will be set up so that
+   * no cookies or passwords etc. will be persisted.
    */
   char *profile;
   profile = g_build_filename (g_get_home_dir (), GNOME_DOT_GNOME, NULL);
@@ -280,6 +295,7 @@ int
 main (int argc, char **argv)
 {
   GtkWidget *window, *embed;
+  GdkScreen *screen;
   GError *error = NULL;
   char *url;
 
@@ -339,7 +355,7 @@ main (int argc, char **argv)
    * delay onload until after background images have loaded.
    * http://lxr.mozilla.org/seamonkey/source/layout/style/nsCSSValue.cpp#380
    */
-  g_setenv ("MOZ_FORCE_PAINT_AFTER_ONLOAD", "-", TRUE);
+  g_setenv ("MOZ_FORCE_PAINT_AFTER_ONLOAD", "test", TRUE);
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
@@ -348,6 +364,11 @@ main (int argc, char **argv)
   gtk_widget_set_size_request (embed, width, HEIGHT);
   gtk_container_add (GTK_CONTAINER (window), embed);
 
+  /* Move the window off screen */
+  screen = gtk_widget_get_screen (GTK_WIDGET (window));
+  gtk_window_move (GTK_WINDOW (window),
+		   gdk_screen_get_width (screen) + 100,
+		   gdk_screen_get_height (screen) + 100);
   gtk_widget_show_all (window);
   gdk_window_hide (window->window);
 

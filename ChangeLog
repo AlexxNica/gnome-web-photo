@@ -1,3 +1,13 @@
+2005-07-05  Christian Persch  <chpe@cvs.gnome.org>
+
+	* NEWS:
+	* src/Listener.cpp:
+	* src/main.cpp:
+
+	Move env var unsetting to the onload handler, since it needs to be
+	done on the very first onload, not on the main DOM window's onload.
+	Move the main window offscreen before showing/withdrawing it.
+
 2005-06-05  Christian Persch  <chpe@cvs.gnome.org>
 
 	* data/prefs.js:

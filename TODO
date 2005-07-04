@@ -2,6 +2,5 @@
 * Improve thumbnail creation time
 * Thumbnailing service? I.e. background process (which exits after some time without requests),
   which the frontend tells which files/pages to thumbnail.
-* Find out why it crashes on https:// sites
-* Find out why it crashes on http://slashdot.org/
+* Find out why it crashes on https:// sites, and on http://slashdot.org/, if I disable the profile
 * Fix the output on framed pages
