@@ -90,39 +90,45 @@ fi
 
 AM_GCONF_SOURCE_2
 
+
 dnl *******
 dnl Mozilla
 dnl *******
 
-AC_MSG_CHECKING([which mozilla to use])
+AC_MSG_CHECKING([which gecko to use])
 
-MOZILLA=
 AC_ARG_WITH([mozilla],
-	AS_HELP_STRING([--with-mozilla@<:@=mozilla|firefox@:>@],
-		       [Whether to use mozilla, or firefox gtkmozembed (default: autodetect)]),
-	[MOZILLA="$withval"])
+	AS_HELP_STRING([--with-mozilla@<:@=mozilla|firefox|thunderbird@:>@],
+		       [Which gecko engine to use (default: autodetect)]))
 
-dnl try to autodetect: if mozilla exists, use it, else try firefox, then thunderbird
-if test "x$MOZILLA" = "x"; then
-	if $PKG_CONFIG --exists firefox-gtkmozembed; then
-		MOZILLA=firefox
-	elif $PKG_CONFIG --exists mozilla-gtkmozembed; then
-		MOZILLA=mozilla
-	else
-		AC_MSG_ERROR([no mozilla installation found])
-	fi
-elif test "x$with_mozilla" != "xmozilla" -a "x$with_mozilla" != "xfirefox"; then
-	AC_MSG_ERROR([unknown mozilla name ($MOZILLA)])
+GECKOS="firefox mozilla-firefox seamonkey"
+gecko=$with_mozilla
+
+if test "x$gecko" = "x"; then
+	dnl Autodetect gecko
+	for g in $GECKOS; do
+		if $PKG_CONFIG --exists $g-xpcom; then
+			gecko=$g
+			break;
+		fi
+	done
 fi
 
-AC_SUBST([MOZILLA])
+if test "x$gecko" = "x"; then
+	AC_MSG_ERROR([No gecko found])
+elif ! ( echo "$GECKOS" | egrep "(^| )$gecko(\$| )" > /dev/null); then
+	AC_MSG_ERROR([Unknown gecko "$gecko" specified])
+fi
 
-AC_MSG_RESULT([$MOZILLA])
+AC_MSG_RESULT([$gecko])
 
-case "$MOZILLA" in
-mozilla) min_version=1.8b2 flavour=mozilla ;;
-firefox) min_version="1.0+" flavour=toolkit ;;
+case "$gecko" in
+seamonkey) min_version=1.0 flavour=mozilla ;;
+*firefox) min_version=1.0+ flavour=toolkit ;;
 esac
+
+MOZILLA=$gecko
+AC_SUBST([MOZILLA])
 
 if ! $PKG_CONFIG --atleast-version=$min_version $MOZILLA-xpcom; then
 	AC_MSG_ERROR([You need a newer mozilla release!])
