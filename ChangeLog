@@ -1,3 +1,13 @@
+2005-07-15  Christian Persch  <chpe@cvs.gnome.org>
+
+	* data/prefs.js:
+	* src/Listener.cpp:
+	* src/main.cpp:
+
+	Remove the gross hack with setting/unsetting the env var now
+	that https://bugzilla.mozilla.org/show_bug.cgi?id=299681 is
+	checked in, and set the pref instead.
+
 2005-07-12  Christian Persch  <chpe@cvs.gnome.org>
 
 	* configure.ac:

@@ -96,3 +96,6 @@ pref("network.cookie.cookieBehavior", 2);
 
 // disable disk cache
 pref("browser.cache.disk.capacity", 0);
+
+// delay onload until background images have loaded
+pref("layout.fire_onload_after_image_background_loads", true);

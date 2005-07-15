@@ -349,14 +349,6 @@ main (int argc, char **argv)
     return 1;
   };
 
-  /* HACK!
-   * Normally, mozilla fires net_stop before background images have loaded
-   * since they're loaded with LOAD_BACKGROUND. This env var makes mozilla
-   * delay onload until after background images have loaded.
-   * http://lxr.mozilla.org/seamonkey/source/layout/style/nsCSSValue.cpp#380
-   */
-  g_setenv ("MOZ_FORCE_PAINT_AFTER_ONLOAD", "test", TRUE);
-
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
 

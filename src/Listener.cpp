@@ -109,14 +109,6 @@ Listener::HandleEvent (nsIDOMEvent* aDOMEvent)
 NS_IMETHODIMP
 Listener:: Load (nsIDOMEvent* aEvent)
 {
-  /* HACK!
-   * We need to unset the env var now, because otherwise mozilla will try
-   * to dump the image too.
-   * http://lxr.mozilla.org/seamonkey/source/layout/base/nsDocumentViewer.cpp#1017
-   * Do this on the first onload, not on the onload for the main DOM window!
-   */
-  g_unsetenv ("MOZ_FORCE_PAINT_AFTER_ONLOAD");
-
   g_signal_emit_by_name (mEmbed, "onload");
   return NS_OK;
 }
