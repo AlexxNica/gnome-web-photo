@@ -99,3 +99,7 @@ pref("browser.cache.disk.capacity", 0);
 
 // delay onload until background images have loaded
 pref("layout.fire_onload_after_image_background_loads", true);
+
+// we don't want an image of an error page
+pref("browser.xul.error_pages.enabled", false);
+
