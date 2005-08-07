@@ -51,10 +51,23 @@
 #include <nsIGenericFactory.h>
 #include <nsMemory.h>
 #include <nsEmbedCID.h>
+#include <nsIPromptService.h>
 #include <stdio.h>
 
 #define PROMPTER_CLASSNAME	"DummyPrompter"
 #define PROMPTER_CID		{ 0x228965b9, 0x95d5, 0x4ae2, {0xa6, 0x88, 0x6e, 0x1d, 0x34, 0xc7, 0x83, 0xab} }
+
+class Prompter : public nsIPromptService
+{
+public:
+  NS_DECL_ISUPPORTS
+  NS_DECL_NSIPROMPTSERVICE
+
+  Prompter () { };
+
+private:
+  ~Prompter () { };
+};
 
 NS_IMPL_ISUPPORTS1(Prompter, nsIPromptService)
 

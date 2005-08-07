@@ -21,19 +21,7 @@
 #ifndef COMPONENTS_H
 #define COMPONENTS_H
 
-#include <nsIPromptService.h>
-
-class Prompter : public nsIPromptService
-{
-public:
-  NS_DECL_ISUPPORTS
-  NS_DECL_NSIPROMPTSERVICE
-
-  Prompter () { };
-
-private:
-  ~Prompter () { };
-};
+#include <nspr.h>
 
 PRBool RegisterComponents ();
 
