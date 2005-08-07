@@ -195,7 +195,7 @@ Writer::Write()
 
       nsCOMPtr<nsIRenderingContext> context;
       rv = viewManager->RenderOffscreen (view, cutout,
-                                         PR_FALSE, NS_RGB(255, 255, 255),
+                                         PR_FALSE, PR_TRUE, NS_RGB(255, 255, 255),
                                          getter_AddRefs(context));
       if (NS_FAILED(rv)) {
         failed = PR_TRUE;
