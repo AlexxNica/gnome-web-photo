@@ -61,13 +61,16 @@
 
 #include "Components.h"
 #include "Listener.h"
+#ifdef PRINTER
+#include "Printer.h"
+#else
 #include "Writer.h"
+#endif
 
 #define MIN_WIDTH	64
 #define THUMBNAIL_WIDTH	1024
 #define MAX_WIDTH	2048
 #define HEIGHT		64
-#define TIMEOUT		60 * 1000 /* 60 seconds */
 
 #define DEFAULT_THUMBNAIL_SIZE	256
 #define DEFAULT_WIDTH		1024
@@ -86,17 +89,22 @@
 static char **arguments = NULL;
 static int width = -1;
 static int size = -1;
+static int timeout = 60;
+static gboolean force = FALSE;
 static gboolean thumbnail = FALSE;
 static char *filename;
 static int retval = 1;
 
 static GOptionEntry entries [] =
 {
-#ifdef THUMBNAILER
+#if defined(THUMBNAILER)
   { "size", 's', 0, G_OPTION_ARG_INT, &size, N_("The thumbnail size (default: 256)"), "S" },
+#elif defined(PRINTER)
 #else
   { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image (default: 1024)"), "W" },
 #endif
+  { "timeout", 't', 0, G_OPTION_ARG_INT, &timeout, N_("The timeout in seconds (default: 60)"), "T" },
+  { "force", 'f', 0, G_OPTION_ARG_NONE, &force, N_("Force output when timeout expires, even if the page isn't loaded fully"), NULL },
   { G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &arguments, "", NULL },
   { NULL }
 };
@@ -138,16 +146,34 @@ embed_take_picture (Embed *embed)
 {
   GtkMozEmbed *mozembed = GTK_MOZ_EMBED (embed);
 
+  embed->state = 8;
+
+#ifdef PRINTER
+  Printer *printer = new Printer(mozembed, filename);
+  if (!printer) {
+    return FALSE;
+  }
+
+  NS_ADDREF (printer);
+  nsresult rv = printer->Print();
+  NS_RELEASE (printer);
+  if (NS_SUCCEEDED (rv)) {
+    return FALSE;
+  }
+#else
   Writer *writer;
   if (thumbnail) {
     writer = new ThumbnailWriter (mozembed, filename, size);
   } else {
     writer = new PNGWriter (mozembed, filename);
   }
-  if (!writer) return FALSE;
+  if (!writer) {
+    return FALSE;
+  }
 
   retval = writer->Write() != PR_TRUE;
   delete writer;
+#endif
 
   g_idle_add ((GSourceFunc) gtk_widget_destroy,
 	      gtk_widget_get_toplevel (GTK_WIDGET (embed)));
@@ -284,17 +310,36 @@ static void
 synopsis (void)
 {
 #ifdef THUMBNAILER
-  g_print (_("Usage: %s [-s size] URL outfile\n"), g_get_prgname ());
+  g_print (_("Usage: %s [-s size] [-t timeout] [-f] URL outfile\n"), g_get_prgname ());
 #else
-  g_print (_("Usage: %s [-w width] URL outfile\n"), g_get_prgname ());
+  g_print (_("Usage: %s [-w width] [-t timeout] [-f] URL outfile\n"), g_get_prgname ());
 #endif
   exit (1);
+}
+  
+static GtkWidget *window;
+static GtkWidget *embed;
+
+static gboolean
+timeout_cb (void)
+{
+	if (force)
+	{
+		((Embed*)embed)->state = 8;
+		g_idle_add_full (G_PRIORITY_LOW,
+				 (GSourceFunc) embed_take_picture, embed, NULL);
+	}
+	else
+	{
+		gtk_widget_destroy (window);
+	}
+
+	return FALSE;
 }
 
 int
 main (int argc, char **argv)
 {
-  GtkWidget *window, *embed;
   GdkScreen *screen;
   GError *error = NULL;
   char *url;
@@ -367,7 +412,9 @@ main (int argc, char **argv)
   gtk_moz_embed_load_url (GTK_MOZ_EMBED (embed), url);
 
   /* FIXME is there a way to guarantee a kill after TIMEOUT secs? */
-  g_timeout_add (TIMEOUT, (GSourceFunc) gtk_widget_destroy, window);
+  g_print ("timeout: %d\n", timeout);
+  g_timeout_add (CLAMP (timeout, 1, 60 * 60 * 24) * 1000,
+		 (GSourceFunc) timeout_cb, window);
 
   gtk_main ();
 

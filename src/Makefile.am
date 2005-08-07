@@ -1,4 +1,4 @@
-bin_PROGRAMS = gnome-web-photo gnome-web-thumbnail
+bin_PROGRAMS = gnome-web-photo gnome-web-thumbnail gnome-web-print
 
 mozilla_include_subdirs = \
 	.		\
@@ -72,6 +72,38 @@ gnome_web_thumbnail_CXXFLAGS = \
 gnome_web_thumbnail_LDFLAGS = -R$(MOZILLA_HOME)
 
 gnome_web_thumbnail_LDADD = \
+	$(DEPENDENCY_LIBS)	\
+	$(MOZILLA_LIBS)		\
+	-lgkgfx			\
+	$(AM_LDFLAGS)
+
+# -- Printer --------------------------------------------------------------
+
+gnome_web_print_SOURCES = \
+	Components.cpp	\
+	Components.h	\
+	Listener.cpp	\
+	Listener.h	\
+	Printer.cpp	\
+	Printer.h	\
+	main.cpp
+
+gnome_web_print_CPPFLAGS = \
+	$(addprefix -I$(MOZILLA_INCLUDE_ROOT)/,$(mozilla_include_subdirs))	\
+	-DPRINTER				\
+	-DSHARE_DIR=\"$(pkgdatadir)\"   	\
+	-DMOZILLA_HOME=\"$(MOZILLA_HOME)\"	\
+	-DMOZILLA_PREFIX=\"$(MOZILLA_PREFIX)\"	\
+	$(AM_CPPFLAGS)
+
+gnome_web_print_CXXFLAGS = \
+	$(DEPENDENCY_CFLAGS) 	\
+	$(MOZILLA_CFLAGS)	\
+	$(AM_CXXFLAGS)
+
+gnome_web_print_LDFLAGS = -R$(MOZILLA_HOME)
+
+gnome_web_print_LDADD = \
 	$(DEPENDENCY_LIBS)	\
 	$(MOZILLA_LIBS)		\
 	-lgkgfx			\
