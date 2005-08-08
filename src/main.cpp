@@ -283,6 +283,9 @@ init_gecko (void)
   rv = prefService->ReadUserPrefs(prefsFile);
   NS_ENSURE_SUCCESS (rv, rv);
 
+#ifndef PRINTER
+  /* This prevents us from printing all pages, so only do it for photo/thumbnail */
+  
   nsCOMPtr<nsIStyleSheetService> sheetService (do_GetService ("@mozilla.org/content/style-sheet-service;1", &rv));
   NS_ENSURE_SUCCESS (rv, rv);
 
@@ -300,6 +303,7 @@ init_gecko (void)
 
   rv = sheetService->LoadAndRegisterSheet (styleURI, nsIStyleSheetService::AGENT_SHEET);
   NS_ENSURE_SUCCESS (rv, rv);
+#endif
 
   return rv;
 }

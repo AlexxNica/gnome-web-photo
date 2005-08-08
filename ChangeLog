@@ -1,3 +1,10 @@
+2005-08-08  Christian Persch  <chpe@cvs.gnome.org>
+
+	* src/main.cpp:
+
+	Don't load the scrollbar-preventing stylesheet for print mode, since
+	it prevents us from printing all pages.
+
 2005-08-07  Christian Persch  <chpe@cvs.gnome.org>
 
 	* src/Makefile.am:
