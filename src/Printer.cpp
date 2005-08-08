@@ -113,12 +113,12 @@ nsresult
 Printer::SetSettings(nsIPrintSettings *aSettings)
 {
 	aSettings->SetPrinterName (NS_LITERAL_STRING("PostScript/default").get());
-//#if 0
+#if 0
 	aSettings->SetPrintRange (nsIPrintSettings::kRangeSpecifiedPageRange);
 	aSettings->SetStartPageRange (1);
-	aSettings->SetEndPageRange (99999);
-//#endif
-	//aSettings->SetPrintRange (nsIPrintSettings::kRangeAllPages);
+	aSettings->SetEndPageRange (9999);
+#endif
+	aSettings->SetPrintRange (nsIPrintSettings::kRangeAllPages);
 	aSettings->SetPaperSize (nsIPrintSettings::kPaperSizeDefined);
 	aSettings->SetPaperSizeUnit (nsIPrintSettings::kPaperSizeMillimeters);
 	aSettings->SetPaperWidth (210.0);
