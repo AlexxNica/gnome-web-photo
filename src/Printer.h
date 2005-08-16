@@ -40,7 +40,7 @@ public:
   NS_DECL_NSIWEBPROGRESSLISTENER
   NS_DECL_NSIPRINTPROGRESSPARAMS
 
-  Printer(GtkMozEmbed*, const char*);
+  Printer(GtkMozEmbed*, const char*, PRBool);
   virtual ~Printer();
 
   nsresult Print();
@@ -49,6 +49,7 @@ public:
 private:
   GtkMozEmbed *mEmbed;
   nsAutoString mFilename;
+  PRBool mPrintBG;
 };
 
 #endif

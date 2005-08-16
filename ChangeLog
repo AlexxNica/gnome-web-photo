@@ -1,3 +1,13 @@
+2005-08-16  Christian Persch  <chpe@cvs.gnome.org>
+
+	* src/Printer.cpp:
+	* src/Printer.h:
+	* src/main.cpp:
+
+	Implement --print-background for gnome-web-print (based losely on a
+	patch by Steinar H. Gunderson), and fix the case of a relative output
+	filename.
+
 2005-08-08  Christian Persch  <chpe@cvs.gnome.org>
 
 	* src/Printer.cpp:

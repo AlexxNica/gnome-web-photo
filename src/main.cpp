@@ -94,12 +94,14 @@ static gboolean force = FALSE;
 static gboolean thumbnail = FALSE;
 static char *filename;
 static int retval = 1;
+static gboolean print_background = FALSE;
 
 static GOptionEntry entries [] =
 {
 #if defined(THUMBNAILER)
   { "size", 's', 0, G_OPTION_ARG_INT, &size, N_("The thumbnail size (default: 256)"), "S" },
 #elif defined(PRINTER)
+  { "print-background", 0, 0, G_OPTION_ARG_NONE, &print_background, N_("Print background images and colours"), NULL },
 #else
   { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image (default: 1024)"), "W" },
 #endif
@@ -149,7 +151,7 @@ embed_take_picture (Embed *embed)
   embed->state = 8;
 
 #ifdef PRINTER
-  Printer *printer = new Printer(mozembed, filename);
+  Printer *printer = new Printer(mozembed, filename, print_background);
   if (!printer) {
     return FALSE;
   }
@@ -313,8 +315,10 @@ init_gecko (void)
 static void
 synopsis (void)
 {
-#ifdef THUMBNAILER
+#if defined(THUMBNAILER)
   g_print (_("Usage: %s [-s size] [-t timeout] [-f] URL outfile\n"), g_get_prgname ());
+#elif defined(PRINTER)
+  g_print (_("Usage: %s [-t timeout] [-f] [--print-background] URL outfile\n"), g_get_prgname ());
 #else
   g_print (_("Usage: %s [-w width] [-t timeout] [-f] URL outfile\n"), g_get_prgname ());
 #endif

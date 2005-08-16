@@ -60,10 +60,18 @@
 #endif
 
 Printer::Printer (GtkMozEmbed *aEmbed,
-                  const char *aFilename)
+                  const char *aFilename,
+		  PRBool aPrintBG)
 : mEmbed(aEmbed)
+, mPrintBG(aPrintBG)
 {
-  NS_CopyNativeToUnicode (nsDependentCString(aFilename), mFilename);
+  if (aFilename[0] == '/') {
+    NS_CopyNativeToUnicode (nsDependentCString(aFilename), mFilename);
+  } else {
+    char *path = g_build_filename (g_get_current_dir(), aFilename, NULL);
+    NS_CopyNativeToUnicode (nsDependentCString(path), mFilename);
+    g_free(path);
+  }
 }
 
 Printer::~Printer()
@@ -113,11 +121,6 @@ nsresult
 Printer::SetSettings(nsIPrintSettings *aSettings)
 {
 	aSettings->SetPrinterName (NS_LITERAL_STRING("PostScript/default").get());
-#if 0
-	aSettings->SetPrintRange (nsIPrintSettings::kRangeSpecifiedPageRange);
-	aSettings->SetStartPageRange (1);
-	aSettings->SetEndPageRange (9999);
-#endif
 	aSettings->SetPrintRange (nsIPrintSettings::kRangeAllPages);
 	aSettings->SetPaperSize (nsIPrintSettings::kPaperSizeDefined);
 	aSettings->SetPaperSizeUnit (nsIPrintSettings::kPaperSizeMillimeters);
@@ -126,9 +129,8 @@ Printer::SetSettings(nsIPrintSettings *aSettings)
 	aSettings->SetPaperName (NS_LITERAL_STRING("a4").get());
 	// aSettings->SetOrientation (nsIPrintSettings::kLandscapeOrientation);
 	aSettings->SetOrientation (nsIPrintSettings::kPortraitOrientation);
-	aSettings->SetPrintInColor (PR_TRUE);
-	aSettings->SetPrintBGColors (PR_FALSE);
-	aSettings->SetPrintBGImages (PR_FALSE);
+	aSettings->SetPrintBGColors (mPrintBG);
+	aSettings->SetPrintBGImages (mPrintBG);
 	// SetStartPageRange
 	// SetEndPageRange
 	// SetHeaderStrLeft
