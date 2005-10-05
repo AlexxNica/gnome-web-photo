@@ -124,7 +124,7 @@ AC_MSG_RESULT([$gecko])
 
 case "$gecko" in
 seamonkey) min_version=1.0 flavour=mozilla ;;
-*firefox) min_version=1.0+ flavour=toolkit ;;
+*firefox) min_version=1.4 flavour=toolkit ;;
 esac
 
 MOZILLA=$gecko
