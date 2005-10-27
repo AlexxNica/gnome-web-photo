@@ -196,13 +196,12 @@ dnl **********************************
 dnl now tests for mozilla API variance
 dnl **********************************
 
-CPPFLAGS="$_SAVE_CPPFLAGS $AM_CPPFLAGS -I$MOZILLA_INCLUDE_ROOT `$PKG_CONFIG --cflags-only-I $MOZILLA-xpcom` -I$MOZILLA_INCLUDE_ROOT/necko"
+CPPFLAGS="$_SAVE_CPPFLAGS $AM_CPPFLAGS -I$MOZILLA_INCLUDE_ROOT `$PKG_CONFIG --cflags-only-I $MOZILLA-xpcom` -I$MOZILLA_INCLUDE_ROOT/necko -I$MOZILLA_INCLUDE_ROOT/pipnss"
 CXXFLAGS="$_SAVE_CXXFLAGS $AM_CXXFLAGS `$PKG_CONFIG --cflags-only-other $MOZILLA-xpcom`"
 
 dnl Check whether we have a mozilla debug build
 
 AC_MSG_CHECKING([[whether we have a mozilla debug build]])
-
 AC_PREPROC_IFELSE(
 	[AC_LANG_SOURCE(
 		[[#include <mozilla-config.h>
@@ -212,8 +211,22 @@ AC_PREPROC_IFELSE(
 	)],
 	[AM_CXXFLAGS="-DDEBUG -D_DEBUG $AM_CXXFLAGS" have_mozilla_debug=yes],
 	[have_mozilla_debug=no])
-
 AC_MSG_RESULT([$have_mozilla_debug])
+
+dnl Check for PSM headers
+
+AC_MSG_CHECKING([for mozilla security compoment])
+AC_COMPILE_IFELSE(
+        [AC_LANG_PROGRAM(
+                [[#include <nsIX509Cert.h>]],
+                [[nsIX509Cert *c;
+                  c->GetIssuer (nsnull);]]
+        )],
+        [AC_DEFINE([HAVE_MOZILLA_PSM], [1],[Define if you have the mozilla NSS headers installed]) have_psm=yes],
+        [have_psm=no])
+AC_MSG_RESULT([$have_psm])
+
+AM_CONDITIONAL([HAVE_MOZILLA_PSM],[test "x$have_psm" = "xyes"])
 
 dnl restore flags
 CPPFLAGS=$_SAVE_CPPFLAGS

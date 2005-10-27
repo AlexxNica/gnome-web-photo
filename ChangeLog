@@ -1,5 +1,16 @@
 2005-10-27  Christian Persch  <chpe@cvs.gnome.org>
 
+	* configure.ac:
+
+	Check for NSS/PSM headers.
+
+	* src/Components.cpp:
+
+	Add a nsIBadCertListener implementation which accepts the
+	cert for this session.
+
+2005-10-27  Christian Persch  <chpe@cvs.gnome.org>
+
 	Patch by Robert O'Callahan <rocallahan@novell.com>:
 
 	* configure.ac:
