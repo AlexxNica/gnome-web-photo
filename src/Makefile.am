@@ -37,13 +37,12 @@ gnome_web_photo_CXXFLAGS = \
 	$(MOZILLA_CFLAGS)	\
 	$(AM_CXXFLAGS)
 
-gnome_web_photo_LDFLAGS = -R$(MOZILLA_HOME)
+gnome_web_photo_LDFLAGS = -R$(MOZILLA_HOME) $(AM_LDFLAGS)
 
 gnome_web_photo_LDADD = \
 	$(DEPENDENCY_LIBS)	\
 	$(MOZILLA_LIBS)		\
-	-lgkgfx			\
-	$(AM_LDFLAGS)
+	$(GFX_LIBS)
 
 # -- Thumbnailer --------------------------------------------------------------
 
@@ -69,13 +68,12 @@ gnome_web_thumbnail_CXXFLAGS = \
 	$(MOZILLA_CFLAGS)	\
 	$(AM_CXXFLAGS)
 
-gnome_web_thumbnail_LDFLAGS = -R$(MOZILLA_HOME)
+gnome_web_thumbnail_LDFLAGS = -R$(MOZILLA_HOME) $(AM_LDFLAGS)
 
 gnome_web_thumbnail_LDADD = \
 	$(DEPENDENCY_LIBS)	\
 	$(MOZILLA_LIBS)		\
-	-lgkgfx			\
-	$(AM_LDFLAGS)
+	$(GFX_LIBS)
 
 # -- Printer --------------------------------------------------------------
 
@@ -101,10 +99,9 @@ gnome_web_print_CXXFLAGS = \
 	$(MOZILLA_CFLAGS)	\
 	$(AM_CXXFLAGS)
 
-gnome_web_print_LDFLAGS = -R$(MOZILLA_HOME)
+gnome_web_print_LDFLAGS = -R$(MOZILLA_HOME) $(AM_LDFLAGS)
 
 gnome_web_print_LDADD = \
 	$(DEPENDENCY_LIBS)	\
 	$(MOZILLA_LIBS)		\
-	-lgkgfx			\
-	$(AM_LDFLAGS)
+	$(GFX_LIBS)

@@ -159,6 +159,14 @@ if test "x$enable_cpp_rtti" = "xno"; then
   AM_CXXFLAGS="-fno-rtti $AM_CXXFLAGS"
 fi
 
+dnl In xulrunner, gkgfx is in libxul; for all others we need to 
+dnl explicitly link against it
+
+if test "x$MOZILLA" != "xxulrunner"; then
+  GFX_LIBS="-lgkgfx"
+  AC_SUBST([GFX_LIBS])
+fi
+
 dnl *************************************************************************
 dnl This is from Mozilla's configure.in. They set almost all the config stuff
 dnl they need in mozilla-config.h Except for this compiler flag, which can't

@@ -1,6 +1,13 @@
 2005-10-27  Christian Persch  <chpe@cvs.gnome.org>
 
 	* configure.ac:
+	* src/Makefile.am:
+
+	Only add -lgkgfx when not building against xulrunner.
+
+2005-10-27  Christian Persch  <chpe@cvs.gnome.org>
+
+	* configure.ac:
 
 	Check for NSS/PSM headers.
 
