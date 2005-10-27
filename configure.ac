@@ -101,7 +101,7 @@ AC_ARG_WITH([mozilla],
 	AS_HELP_STRING([--with-mozilla@<:@=mozilla|firefox|thunderbird@:>@],
 		       [Which gecko engine to use (default: autodetect)]))
 
-GECKOS="firefox mozilla-firefox seamonkey"
+GECKOS="firefox mozilla-firefox seamonkey xulrunner"
 gecko=$with_mozilla
 
 if test "x$gecko" = "x"; then
@@ -125,6 +125,7 @@ AC_MSG_RESULT([$gecko])
 case "$gecko" in
 seamonkey) min_version=1.0 flavour=mozilla ;;
 *firefox) min_version=1.4 flavour=toolkit ;;
+xulrunner) min_version=1.8 flavour=toolkit ;;
 esac
 
 MOZILLA=$gecko
