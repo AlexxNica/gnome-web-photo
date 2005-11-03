@@ -4,3 +4,5 @@
   which the frontend tells which files/pages to thumbnail.
 * Find out why it crashes on https:// sites, and on http://slashdot.org/, if I disable the profile
 * Fix the output on framed pages
+* Use <canvas> and drawWindow() instead of the low-level stuff (<canvas> can operate without a document,
+  so we don't need to put it in an embed)
