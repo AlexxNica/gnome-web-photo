@@ -1,3 +1,10 @@
+2005-11-10  Christian Persch  <chpe@cvs.gnome.org>
+
+	* configure.ac:
+	A m4/gecko.m4:
+
+	Use the gecko macro package from Epiphany.
+
 2005-10-27  Christian Persch  <chpe@cvs.gnome.org>
 
 	* configure.ac:

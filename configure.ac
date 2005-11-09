@@ -23,6 +23,7 @@ AC_PREREQ([2.59])
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([configure.ac])
+AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([dist-bzip2 no-dist-gzip])
 
@@ -95,69 +96,24 @@ dnl *******
 dnl Mozilla
 dnl *******
 
-AC_MSG_CHECKING([which gecko to use])
+GECKO_INIT([MOZILLA])
 
-AC_ARG_WITH([mozilla],
-	AS_HELP_STRING([--with-mozilla@<:@=mozilla|firefox|thunderbird@:>@],
-		       [Which gecko engine to use (default: autodetect)]))
-
-GECKOS="firefox mozilla-firefox seamonkey xulrunner"
-gecko=$with_mozilla
-
-if test "x$gecko" = "x"; then
-	dnl Autodetect gecko
-	for g in $GECKOS; do
-		if $PKG_CONFIG --exists $g-xpcom; then
-			gecko=$g
-			break;
-		fi
-	done
-fi
-
-if test "x$gecko" = "x"; then
-	AC_MSG_ERROR([No gecko found])
-elif ! ( echo "$GECKOS" | egrep "(^| )$gecko(\$| )" > /dev/null); then
-	AC_MSG_ERROR([Unknown gecko "$gecko" specified])
-fi
-
-AC_MSG_RESULT([$gecko])
-
-case "$gecko" in
-seamonkey) min_version=1.0 flavour=mozilla ;;
-*firefox) min_version=1.4 flavour=toolkit ;;
-xulrunner) min_version=1.8 flavour=toolkit ;;
-esac
-
-MOZILLA=$gecko
 AC_SUBST([MOZILLA])
-
-if ! $PKG_CONFIG --atleast-version=$min_version $MOZILLA-xpcom; then
-	AC_MSG_ERROR([You need a newer mozilla release!])
-fi
-
-MOZILLA_FLAVOUR=$flavour
 AC_SUBST([MOZILLA_FLAVOUR])
-
-PKG_CHECK_MODULES([MOZILLA], [$MOZILLA-gtkmozembed $MOZILLA-xpcom])
-AC_SUBST([MOZILLA_CFLAGS])
-AC_SUBST([MOZILLA_LIBS])
-
-MOZILLA_INCLUDE_ROOT="`$PKG_CONFIG --variable=includedir $MOZILLA-gtkmozembed`"
 AC_SUBST([MOZILLA_INCLUDE_ROOT])
-
-MOZILLA_HOME="`$PKG_CONFIG --variable=libdir $MOZILLA-gtkmozembed`"
 AC_SUBST([MOZILLA_HOME])
-
-MOZILLA_PREFIX="`$PKG_CONFIG --variable=prefix $MOZILLA-gtkmozembed`"
 AC_SUBST([MOZILLA_PREFIX])
 
-AC_ARG_ENABLE([cpp-rtti],
-	      AS_HELP_STRING([--enable-cpp-rtti],[Enable C++ RTTI]),[],
-	      [enable_cpp_rtti=no])
+case "$MOZILLA" in
+seamonkey) min_version=1.0 ;;
+*firefox) min_version=1.4 ;;
+xulrunner) min_version=1.8 ;;
+esac
 
-if test "x$enable_cpp_rtti" = "xno"; then
-  AM_CXXFLAGS="-fno-rtti $AM_CXXFLAGS"
-fi
+
+PKG_CHECK_MODULES([MOZILLA], [$MOZILLA-gtkmozembed $MOZILLA-xpcom >= $min_version])
+AC_SUBST([MOZILLA_CFLAGS])
+AC_SUBST([MOZILLA_LIBS])
 
 dnl In xulrunner, gkgfx is in libxul; for all others we need to 
 dnl explicitly link against it
@@ -167,59 +123,11 @@ if test "x$MOZILLA" != "xxulrunner"; then
   AC_SUBST([GFX_LIBS])
 fi
 
-dnl *************************************************************************
-dnl This is from Mozilla's configure.in. They set almost all the config stuff
-dnl they need in mozilla-config.h Except for this compiler flag, which can't
-dnl go in mozilla-config.h So we check the flag too and now we can include
-dnl mozilla-config.h without breaking epiphany.
-dnl This is really gcc-only
-dnl Do this test using CXX only since some versions of gcc
-dnl 2.95-2.97 have a signed wchar_t in c++ only and some versions
-dnl only have short-wchar support for c++.
-
 AC_LANG_PUSH([C++])
-
 _SAVE_CPPFLAGS=$CPPFLAGS
 _SAVE_CXXFLAGS=$CXXFLAGS
-_SAVE_AM_CXXFLAGS=$AM_CXXFLAGS
-AM_CXXFLAGS="$AM_CXXFLAGS -fshort-wchar"
-CXXFLAGS="$CXXFLAGS $AM_CXXFLAGS"
-
-AC_CACHE_CHECK([for compiler -fshort-wchar option],
-	ac_cv_have_usable_wchar_option,
-	[AC_RUN_IFELSE([AC_LANG_SOURCE(
-		[[#include <stddef.h>
-		  int main () {
-		    return (sizeof(wchar_t) != 2) || (wchar_t)-1 < (wchar_t) 0 ;
-		  } ]])],
-		[ac_cv_have_usable_wchar_option="yes"],
-		[ac_cv_have_usable_wchar_option="no"],
-		[ac_cv_have_usable_wchar_option="maybe"])])
-
-if test "$ac_cv_have_usable_wchar_option" != "yes"; then
-    AM_CXXFLAGS=$_SAVE_AM_CXXFLAGS
-fi
-
-dnl **********************************
-dnl now tests for mozilla API variance
-dnl **********************************
-
-CPPFLAGS="$_SAVE_CPPFLAGS $AM_CPPFLAGS -I$MOZILLA_INCLUDE_ROOT `$PKG_CONFIG --cflags-only-I $MOZILLA-xpcom` -I$MOZILLA_INCLUDE_ROOT/necko -I$MOZILLA_INCLUDE_ROOT/pipnss"
-CXXFLAGS="$_SAVE_CXXFLAGS $AM_CXXFLAGS `$PKG_CONFIG --cflags-only-other $MOZILLA-xpcom`"
-
-dnl Check whether we have a mozilla debug build
-
-AC_MSG_CHECKING([[whether we have a mozilla debug build]])
-AC_PREPROC_IFELSE(
-	[AC_LANG_SOURCE(
-		[[#include <mozilla-config.h>
-		  #if !defined(MOZ_REFLOW_PERF) || !defined(MOZ_REFLOW_PERF_DSP)
-		  #error No
-		  #endif]]
-	)],
-	[AM_CXXFLAGS="-DDEBUG -D_DEBUG $AM_CXXFLAGS" have_mozilla_debug=yes],
-	[have_mozilla_debug=no])
-AC_MSG_RESULT([$have_mozilla_debug])
+CPPFLAGS="$CPPFLAGS $AM_CPPFLAGS -I$MOZILLA_INCLUDE_ROOT $($PKG_CONFIG --cflags-only-I $MOZILLA-xpcom) -I$MOZILLA_INCLUDE_ROOT/necko -I$MOZILLA_INCLUDE_ROOT/pipnss"
+CXXFLAGS="$CXXFLAGS $AM_CXXFLAGS $($PKG_CONFIG --cflags-only-other $MOZILLA-xpcom)"
 
 dnl Check for PSM headers
 
@@ -237,8 +145,8 @@ AC_MSG_RESULT([$have_psm])
 AM_CONDITIONAL([HAVE_MOZILLA_PSM],[test "x$have_psm" = "xyes"])
 
 dnl restore flags
-CPPFLAGS=$_SAVE_CPPFLAGS
-CXXFLAGS=$_SAVE_CXXFLAGS
+CPPFLAGS="$_SAVE_CPPFLAGS"
+CXXFLAGS="$_SAVE_CXXFLAGS"
 AC_LANG_POP([C++])
 
 dnl Needed since 1.8b2
