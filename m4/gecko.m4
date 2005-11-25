@@ -111,6 +111,8 @@ AC_CACHE_CHECK([for compiler -fshort-wchar option],
 
 CXXFLAGS="$_SAVE_CXXFLAGS"
 
+AC_LANG_POP([C++])
+
 if test "$_GECKO_cv_have_usable_wchar_option" = "yes"; then
 	CXXFLAGS="$CXXFLAGS -fshort-wchar"
 	AM_CXXFLAGS="$AM_CXXFLAGS -fshort-wchar"
@@ -126,7 +128,7 @@ AC_ARG_ENABLE([cpp-rtti],
 	[],[enable_cpp_rtti=no])
 AC_MSG_RESULT([$enable_cpp_rtti])
 
-if test "x$enable_cpp_rtti" = "xno"; then
+if test "$enable_cpp_rtti" = "no"; then
 	CXXFLAGS="-fno-rtti $CXXFLAGS"
 	AM_CXXFLAGS="-fno-rtti $AM_CXXFLAGS"
 fi
@@ -136,6 +138,7 @@ dnl Various tests
 dnl *************
 
 AC_LANG_PUSH([C++])
+
 _SAVE_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS -I$_GECKO_INCLUDE_ROOT"
 
@@ -166,9 +169,10 @@ AC_PREPROC_IFELSE(
 AC_MSG_RESULT([$gecko_cv_have_debug])
 
 CPPFLAGS="$_SAVE_CPPFLAGS"
+
 AC_LANG_POP([C++])
 
-if test "$gecko_cv_have_debug" = "xyes"; then
+if test "$gecko_cv_have_debug" = "yes"; then
 	CXXFLAGS="-DDEBUG -D_DEBUG $CXXFLAGS"
 	AM_CXXFLAGS="-DDEBUG -D_DEBUG $AM_CXXFLAGS"
 fi
@@ -200,26 +204,44 @@ LDFLAGS="$LDFLAGS $($PKG_CONFIG --libs $_GECKO-xpcom) -Wl,--rpath=$_GECKO_HOME"
 
 AC_RUN_IFELSE([AC_LANG_PROGRAM([
 #include <stdlib.h>
+#include <stdio.h>
 #include <nsXPCOM.h>
 #include <nsCOMPtr.h>
-#include <nsISupports.h>
+#include <nsILocalFile.h>
 #include <nsIServiceManager.h>
+#include <nsIComponentRegistrar.h>
+#include <nsString.h>
 ],[
-nsCOMPtr<nsIServiceManager> serviceManager;
-nsresult rv = NS_InitXPCOM2 (getter_AddRefs (serviceManager), nsnull, nsnull);
-if (NS_FAILED (rv) || !serviceManager) {
+// redirect unwanted mozilla debug output
+freopen ("/dev/null", "w", stdout);
+freopen ("/dev/null", "w", stderr);
+
+nsresult rv;
+nsCOMPtr<nsILocalFile> directory;
+rv = NS_NewNativeLocalFile (NS_LITERAL_CSTRING("$_GECKO_HOME"), PR_FALSE, getter_AddRefs (directory));
+if (NS_FAILED (rv) || !directory) {
 	exit (EXIT_FAILURE);
 }
 
-nsCOMPtr<nsISupports> service;
-rv = serviceManager->GetServiceByContractID ("$2", NS_GET_IID (nsISupports), getter_AddRefs (service));
-if (NS_FAILED (rv) || !service) {
+nsCOMPtr<nsIServiceManager> sm;
+rv = NS_InitXPCOM2 (getter_AddRefs (sm), directory, nsnull);
+if (NS_FAILED (rv)) {
+	exit (EXIT_FAILURE);
+}
+
+nsCOMPtr<nsIComponentRegistrar> registar (do_QueryInterface (sm, &rv));
+sm = nsnull; // release service manager
+if (NS_FAILED (rv)) {
 	NS_ShutdownXPCOM (nsnull);
 	exit (EXIT_FAILURE);
 }
 
+PRBool isRegistered = PR_FALSE;
+rv = registar->IsContractIDRegistered ("$2", &isRegistered);
+registar = nsnull; // release registar before shutdown
+	
 NS_ShutdownXPCOM (nsnull);
-exit (EXIT_SUCCESS);
+exit (isRegistered ? EXIT_SUCCESS : EXIT_FAILURE);
 ])
 ],
 [gecko_cv_xpcom_contractid_[]$1[]=present],
