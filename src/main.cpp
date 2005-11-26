@@ -113,7 +113,11 @@ parse_mode (const gchar *option_name,
             gpointer data,
             GError **error)
 {
-  if (!value) return FALSE;
+  if (!value) {
+    *error = g_error_new (G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
+                          _("No mode specified!"));
+    return FALSE;
+  }
 
   guint i;
   for (i = 0; i < MODE_LAST; ++i) {
@@ -123,7 +127,13 @@ parse_mode (const gchar *option_name,
     }
   }
 
-  return mode < MODE_LAST;
+  if (mode == MODE_LAST) {
+    *error = g_error_new (G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
+                          _("Unknown mode '%s'"), value);
+    return FALSE;
+  }
+
+  return TRUE;
 }
 
 static GOptionEntry entries [] =

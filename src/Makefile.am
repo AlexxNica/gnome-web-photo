@@ -1,6 +1,6 @@
 bin_PROGRAMS = gnome-web-photo
 
-mozilla_include_subdirs = \
+gecko_include_subdirs = \
 	.		\
 	content		\
 	docshell	\
@@ -28,7 +28,7 @@ gnome_web_photo_SOURCES = \
 	main.cpp
 
 gnome_web_photo_CPPFLAGS = \
-	$(addprefix -I$(GECKO_INCLUDE_ROOT)/,$(mozilla_include_subdirs))	\
+	$(addprefix -I$(GECKO_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
 	-DSHARE_DIR=\"$(pkgdatadir)\"   	\
 	-DLOCALEDIR=\"$(datadir)/locale\"	\
 	-DGECKO_HOME=\"$(GECKO_HOME)\"	\

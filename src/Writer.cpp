@@ -245,7 +245,7 @@ Writer::Write()
     }
 
     retval = Finish();
-    status = status = retval ? "OK" : status[0] != '\0' ? status : "FAILED";
+    status = retval ? "OK" : status[0] != '\0' ? status : "FAILED";
     LOG ("\n");
   }
 
