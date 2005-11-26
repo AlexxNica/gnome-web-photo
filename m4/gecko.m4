@@ -20,13 +20,13 @@ dnl
 dnl Checks for gecko, and aborts if it's not found
 dnl
 dnl Checks for -fshort-wchar compiler variable, and adds it to
-dnl CXXFLAGS and AM_CXXFLAGS if found
+dnl AM_CXXFLAGS if found
 dnl
 dnl Checks whether RTTI is enabled, and adds -fno-rtti to 
-dnl CXXFLAGS and AM_CXXFLAGS otherwise
+dnl AM_CXXFLAGS otherwise
 dnl
 dnl Checks whether the gecko build is a debug build, and adds
-dnl debug flags to CXXFLAGS and AM_CXXFLAGS if it is.
+dnl debug flags to AM_CXXFLAGS if it is.
 dnl
 dnl Expanded variables:
 dnl VARIABLE: Which gecko was found (e.g. "xulrunnner", "seamonkey", ...)
@@ -93,10 +93,15 @@ dnl 2.95-2.97 have a signed wchar_t in c++ only and some versions
 dnl only have short-wchar support for c++.
 dnl **************************************************************
 
+_GECKO_EXTRA_CPPFLAGS=
+_GECKO_EXTRA_CFLAGS=
+_GECKO_EXTRA_CXXFLAGS=
+_GECKO_EXTRA_LDFLAGS=
+
 AC_LANG_PUSH([C++])
 
 _SAVE_CXXFLAGS=$CXXFLAGS
-CXXFLAGS="$CXXFLAGS -fshort-wchar"
+CXXFLAGS="$CXXFLAGS $_GECKO_EXTRA_CXXFLAGS -fshort-wchar"
 
 AC_CACHE_CHECK([for compiler -fshort-wchar option],
 	gecko_cv_have_usable_wchar_option,
@@ -114,7 +119,7 @@ CXXFLAGS="$_SAVE_CXXFLAGS"
 AC_LANG_POP([C++])
 
 if test "$gecko_cv_have_usable_wchar_option" = "yes"; then
-	CXXFLAGS="$CXXFLAGS -fshort-wchar"
+	_GECKO_EXTRA_CXXFLAGS="-fshort-wchar"
 	AM_CXXFLAGS="$AM_CXXFLAGS -fshort-wchar"
 fi
 
@@ -129,7 +134,7 @@ AC_ARG_ENABLE([cpp-rtti],
 AC_MSG_RESULT([$enable_cpp_rtti])
 
 if test "$enable_cpp_rtti" = "no"; then
-	CXXFLAGS="-fno-rtti $CXXFLAGS"
+	_GECKO_EXTRA_CXXFLAGS="-fno-rtti $_GECKO_EXTRA_CXXFLAGS"
 	AM_CXXFLAGS="-fno-rtti $AM_CXXFLAGS"
 fi
 
@@ -140,7 +145,7 @@ dnl *************
 AC_LANG_PUSH([C++])
 
 _SAVE_CPPFLAGS="$CPPFLAGS"
-CPPFLAGS="$CPPFLAGS -I$_GECKO_INCLUDE_ROOT"
+CPPFLAGS="$CPPFLAGS $_GECKO_EXTRA_CPPFLAGS -I$_GECKO_INCLUDE_ROOT"
 
 AC_MSG_CHECKING([[whether we have a gtk 2 gecko build]])
 AC_RUN_IFELSE(
@@ -173,7 +178,7 @@ CPPFLAGS="$_SAVE_CPPFLAGS"
 AC_LANG_POP([C++])
 
 if test "$gecko_cv_have_debug" = "yes"; then
-	CXXFLAGS="-DDEBUG -D_DEBUG $CXXFLAGS"
+	_GECKO_EXTRA_CXXFLAGS="$_GECKO_EXTRA_CXXFLAGS -DDEBUG -D_DEBUG"
 	AM_CXXFLAGS="-DDEBUG -D_DEBUG $AM_CXXFLAGS"
 fi
 
@@ -185,6 +190,8 @@ dnl ***************************************************************************
 
 dnl GECKO_CHECK_CONTRACTID(IDENTIFIER, CONTRACTID, [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
 dnl
+dnl Checks wheter CONTRACTID is a registered contract ID
+
 AC_DEFUN([GECKO_CHECK_CONTRACTID],
 [AC_REQUIRE([GECKO_INIT])dnl
 
@@ -196,11 +203,11 @@ gecko_cv_xpcom_contractid_[]$1[]=no
 AC_LANG_PUSH([C++])
 
 _SAVE_CPPFLAGS="$CPPFLAGS"
-_SAVE_CXXFLAGS="$CFLAGS"
+_SAVE_CXXFLAGS="$CXXFLAGS"
 _SAVE_LDFLAGS="$LDFLAGS"
-CPPFLAGS="$CPPFLAGS -I$_GECKO_INCLUDE_ROOT $($PKG_CONFIG --cflags-only-I $_GECKO-xpcom)"
-CXXFLAGS="$CXXFLAGS $($PKG_CONFIG --cflags-only-other $_GECKO-xpcom)"
-LDFLAGS="$LDFLAGS $($PKG_CONFIG --libs $_GECKO-xpcom) -Wl,--rpath=$_GECKO_HOME"
+CPPFLAGS="$CPPFLAGS $_GECKO_EXTRA_CPPFLAGS -I$_GECKO_INCLUDE_ROOT $($PKG_CONFIG --cflags-only-I $_GECKO-xpcom)"
+CXXFLAGS="$CXXFLAGS $_GECKO_EXTRA_CXXFLAGS $($PKG_CONFIG --cflags-only-other $_GECKO-xpcom)"
+LDFLAGS="$LDFLAGS $_GECKO_EXTRA_LDFLAGS $($PKG_CONFIG --libs $_GECKO-xpcom) -Wl,--rpath=$_GECKO_HOME"
 
 AC_RUN_IFELSE([AC_LANG_PROGRAM([
 #include <stdlib.h>

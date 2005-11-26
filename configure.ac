@@ -36,10 +36,10 @@ if test "x$enable_maintainer_mode" = "xyes"; then
 	enable_debug=yes
 	MORE_WARN_FLAGS=
         DEPRECATION_FLAGS="-DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGCONF_DISABLE_DEPRECATED -DGNOME_VFS_DISABLE_DEPRECATED -DBONOBO_UI_DISABLE_DEPRECATED -DBONOBO_DISABLE_DEPRECATED -DLIBGLADE_DISABLE_DEPRECATED -DPANGO_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED"
-	MOZILLA_WARN_CXXFLAGS="-Wall -Wconversion -Wpointer-arith -Wcast-align -Woverloaded-virtual -Wsynth -Wno-ctor-dtor-privacy -Wno-non-virtual-dtor"
+	GECKO_WARN_CXXFLAGS="-Wall -Wconversion -Wpointer-arith -Wcast-align -Woverloaded-virtual -Wsynth -Wno-ctor-dtor-privacy -Wno-non-virtual-dtor"
 fi
 
-AC_PROG_INTLTOOL([0.29])
+IT_PROG_INTLTOOL([0.34])
 
 GLIB_REQUIRED=2.6.0
 GTK_REQUIRED=2.6.3
@@ -53,6 +53,8 @@ AC_LIBTOOL_DLOPEN
 AM_PROG_LIBTOOL
 
 AC_ISC_POSIX
+
+AC_PROG_LN_S
 AC_PROG_CC
 AC_PROG_CXX
 AM_PROG_CC_STDC
@@ -96,38 +98,37 @@ dnl *******
 dnl Mozilla
 dnl *******
 
-GECKO_INIT([MOZILLA])
+GECKO_INIT([GECKO])
 
-AC_SUBST([MOZILLA])
-AC_SUBST([MOZILLA_FLAVOUR])
-AC_SUBST([MOZILLA_INCLUDE_ROOT])
-AC_SUBST([MOZILLA_HOME])
-AC_SUBST([MOZILLA_PREFIX])
+AC_SUBST([GECKO])
+AC_SUBST([GECKO_FLAVOUR])
+AC_SUBST([GECKO_INCLUDE_ROOT])
+AC_SUBST([GECKO_HOME])
+AC_SUBST([GECKO_PREFIX])
 
-case "$MOZILLA" in
+case "$GECKO" in
 seamonkey) min_version=1.0 ;;
 *firefox) min_version=1.4 ;;
 xulrunner) min_version=1.8 ;;
 esac
 
-
-PKG_CHECK_MODULES([MOZILLA], [$MOZILLA-gtkmozembed $MOZILLA-xpcom >= $min_version])
-AC_SUBST([MOZILLA_CFLAGS])
-AC_SUBST([MOZILLA_LIBS])
+PKG_CHECK_MODULES([GECKO], [$GECKO-gtkmozembed $GECKO-xpcom >= $min_version])
+AC_SUBST([GECKO_CFLAGS])
+AC_SUBST([GECKO_LIBS])
 
 dnl In xulrunner, gkgfx is in libxul; for all others we need to 
 dnl explicitly link against it
 
-if test "x$MOZILLA" != "xxulrunner"; then
-  GFX_LIBS="-lgkgfx"
-  AC_SUBST([GFX_LIBS])
+if test "$GECKO" != "xulrunner"; then
+	GFX_LIBS="-lgkgfx"
+	AC_SUBST([GFX_LIBS])
 fi
 
 AC_LANG_PUSH([C++])
 _SAVE_CPPFLAGS=$CPPFLAGS
 _SAVE_CXXFLAGS=$CXXFLAGS
-CPPFLAGS="$CPPFLAGS $AM_CPPFLAGS -I$MOZILLA_INCLUDE_ROOT $($PKG_CONFIG --cflags-only-I $MOZILLA-xpcom) -I$MOZILLA_INCLUDE_ROOT/necko -I$MOZILLA_INCLUDE_ROOT/pipnss"
-CXXFLAGS="$CXXFLAGS $AM_CXXFLAGS $($PKG_CONFIG --cflags-only-other $MOZILLA-xpcom)"
+CPPFLAGS="$CPPFLAGS $AM_CPPFLAGS -I$GECKO_INCLUDE_ROOT $($PKG_CONFIG --cflags-only-I $GECKO-xpcom) -I$GECKO_INCLUDE_ROOT/necko -I$GECKO_INCLUDE_ROOT/pipnss"
+CXXFLAGS="$CXXFLAGS $AM_CXXFLAGS $($PKG_CONFIG --cflags-only-other $GECKO-xpcom)"
 
 dnl Check for PSM headers
 
@@ -138,11 +139,11 @@ AC_COMPILE_IFELSE(
                 [[nsIX509Cert *c;
                   c->GetIssuer (nsnull);]]
         )],
-        [AC_DEFINE([HAVE_MOZILLA_PSM], [1],[Define if you have the mozilla NSS headers installed]) have_psm=yes],
+        [AC_DEFINE([HAVE_PSM], [1],[Define if you have the mozilla NSS headers installed]) have_psm=yes],
         [have_psm=no])
 AC_MSG_RESULT([$have_psm])
 
-AM_CONDITIONAL([HAVE_MOZILLA_PSM],[test "x$have_psm" = "xyes"])
+AM_CONDITIONAL([HAVE_PSM],[test "x$have_psm" = "xyes"])
 
 dnl restore flags
 CPPFLAGS="$_SAVE_CPPFLAGS"
@@ -203,7 +204,6 @@ dnl ********************
 
 dnl Translators: new languages must be added to the po/LINGUAS file
 ALL_LINGUAS="`cat "$srcdir/po/LINGUAS" | grep -v '^#'`"
-
 AC_SUBST([CONFIG_STATUS_DEPENDENCIES],['$(top_srcdir)/po/LINGUAS'])
 
 GETTEXT_PACKAGE=gnome-web-photo

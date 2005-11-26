@@ -161,14 +161,18 @@ Writer::Write()
   nscoord twipLimitH = NSIntPixelsToTwips(mHeight, p2t);
 
   nsRect r = view->GetBounds() - view->GetPosition();
-  /* sanity check */
-  if (r.IsEmpty()) return PR_FALSE;
 
   if (r.height > twipLimitH) {
     r.height = twipLimitH;
   }
   if (r.width > twipLimitW) {
     r.width = twipLimitW;
+  }
+
+  /* sanity check */
+  if (r.IsEmpty()) {
+    LOG ("Rect is empty!\n");
+    return PR_FALSE;
   }
 
   mWidth = NSTwipsToIntPixels(r.width, t2p);

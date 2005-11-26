@@ -159,7 +159,7 @@ NS_IMETHODIMP Prompter::Select(nsIDOMWindow *aParent, const PRUnichar *aDialogTi
   return NS_OK;
 }
 
-#ifdef HAVE_MOZILLA_PSM
+#ifdef HAVE_PSM
 
 #include <nsIBadCertListener.h>
 
@@ -224,13 +224,13 @@ NSSDialogs::NotifyCrlNextupdate(nsIInterfaceRequestor *socketInfo,
   return NS_OK;
 }
 
-#endif /* HAVE_MOZILLA_PSM */
+#endif /* HAVE_PSM */
 
 /* -------------------------------------------------------------------------- */
 
 NS_GENERIC_FACTORY_CONSTRUCTOR(Prompter)
 
-#ifdef HAVE_MOZILLA_PSM
+#ifdef HAVE_PSM
 NS_GENERIC_FACTORY_CONSTRUCTOR(NSSDialogs)
 #endif
 
@@ -242,14 +242,14 @@ static const nsModuleComponentInfo sAppComps[] =
     NS_PROMPTSERVICE_CONTRACTID,
     PrompterConstructor
   },
-#ifdef HAVE_MOZILLA_PSM
+#ifdef HAVE_PSM
   {
     NSSDIALOGS_CLASSNAME,
     NSSDIALOGS_CID,
     NS_BADCERTLISTENER_CONTRACTID,
     NSSDialogsConstructor
   },
-#endif /* HAVE_MOZILLA_PSM */
+#endif /* HAVE_PSM */
 };
 
 PRBool

@@ -48,7 +48,6 @@
 #include <gtk/gtk.h>
 #include <gtkmozembed.h>
 #include <nsCOMPtr.h>
-#include <nsIPrefService.h>
 #include <nsIServiceManager.h>
 #include <nsIStyleSheetService.h>
 #include <nsILocalFile.h>
@@ -61,11 +60,9 @@
 
 #include "Components.h"
 #include "Listener.h"
-#ifdef PRINTER
+#include "Prefs.h"
 #include "Printer.h"
-#else
 #include "Writer.h"
-#endif
 
 #define MIN_WIDTH	64
 #define THUMBNAIL_WIDTH	1024
@@ -84,30 +81,62 @@
 #define LOG //
 #endif
 
+#define DEBUG_SHOW_WINDOW
+
+enum
+{
+  MODE_PHOTO,
+  MODE_THUMBNAIL,
+  MODE_PRINT,
+  MODE_LAST,
+  MODE_INVALID = MODE_LAST
+};
+
+static const char *modes[] = { "photo", "thumbnail", "print" };
+
 /* --- */
 
-static char **arguments = NULL;
-static int width = -1;
-static int size = -1;
+static int mode = MODE_INVALID;
 static int timeout = 60;
 static gboolean force = FALSE;
-static gboolean thumbnail = FALSE;
-static char *filename;
-static int retval = 1;
+static int width = -1;
+static int size = -1;
 static gboolean print_background = FALSE;
+static char *url = NULL;
+static char *infile = NULL;
+static char *outfile = NULL;
+static int retval = 1;
+
+static gboolean
+parse_mode (const gchar *option_name,
+            const gchar *value,
+            gpointer data,
+            GError **error)
+{
+  if (!value) return FALSE;
+
+  guint i;
+  for (i = 0; i < MODE_LAST; ++i) {
+    if (g_ascii_strcasecmp (value, modes[i]) == 0) {
+      mode = i;
+      break;
+    }
+  }
+
+  return mode < MODE_LAST;
+}
 
 static GOptionEntry entries [] =
 {
-#if defined(THUMBNAILER)
-  { "size", 's', 0, G_OPTION_ARG_INT, &size, N_("The thumbnail size (default: 256)"), "S" },
-#elif defined(PRINTER)
-  { "print-background", 0, 0, G_OPTION_ARG_NONE, &print_background, N_("Print background images and colours"), NULL },
-#else
-  { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image (default: 1024)"), "W" },
-#endif
+  { "mode", 'm', 0, G_OPTION_ARG_CALLBACK, (void*) parse_mode, N_("Operation mode [photo|thumbnail|print]"), NULL },
   { "timeout", 't', 0, G_OPTION_ARG_INT, &timeout, N_("The timeout in seconds (default: 60)"), "T" },
   { "force", 'f', 0, G_OPTION_ARG_NONE, &force, N_("Force output when timeout expires, even if the page isn't loaded fully"), NULL },
-  { G_OPTION_REMAINING, '\0', 0, G_OPTION_ARG_FILENAME_ARRAY, &arguments, "", NULL },
+  { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image (default: 1024)"), "W" },
+  { "size", 's', 0, G_OPTION_ARG_INT, &size, N_("The thumbnail size (default: 256)"), "S" },
+  { "print-background", 0, 0, G_OPTION_ARG_NONE, &print_background, N_("Print background images and colours (default: false)"), NULL },
+  { "url", 'u', 0, G_OPTION_ARG_STRING, &url, N_("The URL"), N_("URL") },
+  { "file", 'f', 0, G_OPTION_ARG_FILENAME, &infile, N_("The input file"), N_("FILE") },
+  { "output-filename", 'o', 0, G_OPTION_ARG_FILENAME, &outfile, N_("The output file"), N_("FILE") },
   { NULL }
 };
 
@@ -150,32 +179,32 @@ embed_take_picture (Embed *embed)
 
   embed->state = 8;
 
-#ifdef PRINTER
-  Printer *printer = new Printer(mozembed, filename, print_background);
-  if (!printer) {
-    return FALSE;
-  }
-
-  NS_ADDREF (printer);
-  nsresult rv = printer->Print();
-  NS_RELEASE (printer);
-  if (NS_SUCCEEDED (rv)) {
-    return FALSE;
-  }
-#else
-  Writer *writer;
-  if (thumbnail) {
-    writer = new ThumbnailWriter (mozembed, filename, size);
+  if (mode == MODE_PRINT) {
+    Printer *printer = new Printer(mozembed, outfile, print_background);
+    if (!printer) {
+      return FALSE;
+    }
+    
+    NS_ADDREF (printer);
+    nsresult rv = printer->Print();
+    NS_RELEASE (printer);
+    if (NS_SUCCEEDED (rv)) {
+      return FALSE;
+    }
   } else {
-    writer = new PNGWriter (mozembed, filename);
+    Writer *writer = nsnull;
+    if (mode == MODE_PHOTO) {
+      writer = new PNGWriter (mozembed, outfile);
+    } else if (mode == MODE_THUMBNAIL) {
+      writer = new ThumbnailWriter (mozembed, outfile, size);
+    }
+    if (!writer) {
+      return FALSE;
+    }
+    
+    retval = writer->Write() != PR_TRUE;
+    delete writer;
   }
-  if (!writer) {
-    return FALSE;
-  }
-
-  retval = writer->Write() != PR_TRUE;
-  delete writer;
-#endif
 
   g_idle_add ((GSourceFunc) gtk_widget_destroy,
 	      gtk_widget_get_toplevel (GTK_WIDGET (embed)));
@@ -199,6 +228,8 @@ embed_net_stop (GtkMozEmbed *mozembed)
 {
   Embed *embed = EMBED (mozembed);
 
+  LOG ("net_stop\n");
+
   embed->state |= 1;
   check_state (embed);
 }
@@ -206,6 +237,8 @@ embed_net_stop (GtkMozEmbed *mozembed)
 static void
 embed_onload (Embed *embed)
 {
+  LOG ("onload\n");
+
   embed->state |= 2;
   check_state (embed);
 }
@@ -267,63 +300,66 @@ init_gecko (void)
   gtk_moz_embed_set_profile_path (profile, "gnome-web-photo");
   g_free (profile);
 
-  gtk_moz_embed_set_comp_path (MOZILLA_HOME);
+  gtk_moz_embed_set_comp_path (GECKO_HOME);
   gtk_moz_embed_push_startup ();
 
   if (!RegisterComponents ()) {
     return NS_ERROR_FAILURE;
   }
 
-  nsresult rv;
-  nsCOMPtr<nsIPrefService> prefService (do_GetService (NS_PREFSERVICE_CONTRACTID, &rv));
-  NS_ENSURE_SUCCESS (rv, rv);
+  if (!InitPrefs ()) {
+    return NS_ERROR_FAILURE;
+  }
 
-  /* read our predefined default prefs */
-  nsCOMPtr<nsILocalFile> prefsFile;
-  rv = NS_NewNativeLocalFile(nsDependentCString(SHARE_DIR "/prefs.js"),
-			     PR_TRUE, getter_AddRefs(prefsFile));
-  NS_ENSURE_SUCCESS (rv, rv);
+  nsresult rv = NS_OK;
+
+  if (mode != MODE_PRINT) {
+    /* This prevents us from printing all pages, so only do it for photo/thumbnail */
+    nsCOMPtr<nsIStyleSheetService> sheetService (do_GetService ("@mozilla.org/content/style-sheet-service;1", &rv));
+    NS_ENSURE_SUCCESS (rv, rv);
   
-  rv = prefService->ReadUserPrefs(prefsFile);
-  NS_ENSURE_SUCCESS (rv, rv);
-
-#ifndef PRINTER
-  /* This prevents us from printing all pages, so only do it for photo/thumbnail */
+    nsCOMPtr<nsILocalFile> styleFile;
+    rv = NS_NewNativeLocalFile(nsDependentCString(SHARE_DIR "/style.css"),
+                              PR_TRUE, getter_AddRefs(styleFile));
+    NS_ENSURE_SUCCESS (rv, rv);
   
-  nsCOMPtr<nsIStyleSheetService> sheetService (do_GetService ("@mozilla.org/content/style-sheet-service;1", &rv));
-  NS_ENSURE_SUCCESS (rv, rv);
-
-  nsCOMPtr<nsILocalFile> styleFile;
-  rv = NS_NewNativeLocalFile(nsDependentCString(SHARE_DIR "/style.css"),
-                             PR_TRUE, getter_AddRefs(styleFile));
-  NS_ENSURE_SUCCESS (rv, rv);
-
-  nsCOMPtr<nsIFile> file (do_QueryInterface (styleFile, &rv));
-  NS_ENSURE_SUCCESS (rv, rv);
+    nsCOMPtr<nsIFile> file (do_QueryInterface (styleFile, &rv));
+    NS_ENSURE_SUCCESS (rv, rv);
+    
+    nsCOMPtr<nsIURI> styleURI;
+    rv = NS_NewFileURI (getter_AddRefs (styleURI), styleFile);
+    NS_ENSURE_SUCCESS (rv, rv);
   
-  nsCOMPtr<nsIURI> styleURI;
-  rv = NS_NewFileURI (getter_AddRefs (styleURI), styleFile);
-  NS_ENSURE_SUCCESS (rv, rv);
-
-  rv = sheetService->LoadAndRegisterSheet (styleURI, nsIStyleSheetService::AGENT_SHEET);
-  NS_ENSURE_SUCCESS (rv, rv);
-#endif
+    rv = sheetService->LoadAndRegisterSheet (styleURI, nsIStyleSheetService::AGENT_SHEET);
+    NS_ENSURE_SUCCESS (rv, rv);
+  }
 
   return rv;
 }
 
 /* --- */
 
-static void
+static void G_GNUC_NORETURN
 synopsis (void)
 {
-#if defined(THUMBNAILER)
-  g_print (_("Usage: %s [-s size] [-t timeout] [-f] URL outfile\n"), g_get_prgname ());
-#elif defined(PRINTER)
-  g_print (_("Usage: %s [-t timeout] [-f] [--print-background] URL outfile\n"), g_get_prgname ());
-#else
-  g_print (_("Usage: %s [-w width] [-t timeout] [-f] URL outfile\n"), g_get_prgname ());
-#endif
+  char *name = g_get_prgname ();
+
+  g_print (_("Usage: %s [--mode=photo|thumbnail|print] [...]\n"), name);
+
+  switch (mode) {
+    case MODE_PHOTO:
+      g_print (_("Usage: %s [-t timeout] [-f] [-w width] -u URL -o FILENAME\n"), name);
+      break;
+    case MODE_THUMBNAIL:
+      g_print (_("Usage: %s [-t timeout] [-f] [-w width] -s SIZE -u URL -o FILENAME\n"), name);
+      break;
+    case MODE_PRINT:
+      g_print (_("Usage: %s [-t timeout] [-f] [-w width] [--print-background] -u URL -o FILENAME\n"), name);
+      break;
+    default:
+      break;
+  }
+
   exit (1);
 }
   
@@ -333,18 +369,15 @@ static GtkWidget *embed;
 static gboolean
 timeout_cb (void)
 {
-	if (force)
-	{
-		((Embed*)embed)->state = 8;
-		g_idle_add_full (G_PRIORITY_LOW,
-				 (GSourceFunc) embed_take_picture, embed, NULL);
-	}
-	else
-	{
-		gtk_widget_destroy (window);
-	}
+  if (force) {
+    ((Embed*)embed)->state = 8;
+    g_idle_add_full (G_PRIORITY_LOW,
+                      (GSourceFunc) embed_take_picture, embed, NULL);
+  } else {
+    gtk_widget_destroy (window);
+  }
 
-	return FALSE;
+  return FALSE;
 }
 
 int
@@ -352,51 +385,92 @@ main (int argc, char **argv)
 {
   GdkScreen *screen;
   GError *error = NULL;
-  char *url;
 
 #ifdef ENABLE_NLS
   /* Initialize the i18n stuff */
-  bindtextdomain (GETTEXT_PACKAGE, GNOMELOCALEDIR);
+  bindtextdomain (GETTEXT_PACKAGE, LOCALEDIR);
   bind_textdomain_codeset (GETTEXT_PACKAGE, "UTF-8");
   textdomain (GETTEXT_PACKAGE);
 #endif
 
   if (!gtk_init_with_args (&argc, &argv, NULL, entries, GETTEXT_PACKAGE, &error)) {
+    g_print ("%s\n", error->message);
+    g_error_free (error);
     synopsis ();
   }
 
-#ifdef THUMBNAILER
-  thumbnail = TRUE;
+  /* Mode not explicitly specified, derive from invocation filename */
+  if (mode == MODE_INVALID) {
+    char *program = g_get_prgname ();
+    g_assert (program != NULL);
 
-  if (size == -1) {
-    size = DEFAULT_THUMBNAIL_SIZE;
-  }
-  if (size != 32 && size != 64 && size != 128 && size != 256) {
-    g_print ("Thumbnail size has to be 32, 64, 128 or 256!\n");
+    if (g_ascii_strcasecmp (program, "gnome-web-thumbnail") == 0) {
+      mode = MODE_THUMBNAIL;
+    } else if (g_ascii_strcasecmp (program, "gnome-web-print") == 0) {
+      mode = MODE_PRINT;
+    } else {
+      mode = MODE_PHOTO;
+    }
+  
+    LOG ("Mode detection: %s -> %d\n", program, mode);
   }
 
-  width = THUMBNAIL_WIDTH;
-#else
+  /* Check size */
+  if (mode == MODE_THUMBNAIL) {
+    if (size == -1) {
+      size = DEFAULT_THUMBNAIL_SIZE;
+    }
+    if (size != 32 && size != 64 && size != 96 && size != 128 && size != 256) {
+      g_print ("--size can only be 32, 64, 96, 128 or 256!\n");
+    }
+  } else if (size != -1) {
+    g_print ("--size is only available in thumbnail mode!\n");
+    synopsis ();
+  }
+
+  /* Check width */
   if (width == -1) {
-    width = DEFAULT_WIDTH;
+    if (mode == MODE_THUMBNAIL) {
+      width = THUMBNAIL_WIDTH;
+    } else {
+      width = DEFAULT_WIDTH;
+    }
   }
   if (width < MIN_WIDTH || width > MAX_WIDTH) {
-    g_print ("Width must be between %d and %d!\n", MIN_WIDTH, MAX_WIDTH);
+    g_print ("--width out of bounds; must be between %d and %d!\n", MIN_WIDTH, MAX_WIDTH);
     return 1;
   }
-#endif
+  if (mode == MODE_THUMBNAIL && (width % 32) != 0) {
+    g_print ("--width must be a multiple of 32 in thumbnail mode!\n");
+    return 1;
+  }
 
-  if (arguments == NULL || g_strv_length (arguments) != 2) {
+  /* Check --print-background */
+  if (mode != MODE_PRINT && print_background) {
+    g_print ("--print-background is only available in print mode!\n");
     synopsis ();
   }
 
-  url = g_filename_to_utf8 (arguments[0], -1, NULL, NULL, NULL);
-  filename = arguments[1];
-
-  if (url == NULL) {
-    g_print ("Could not convert URL to UTF-8!\n");
-    return 1;
+  /* Check url/input filename */
+  if ((url == NULL && infile == NULL) || (url != NULL && infile != NULL)) {
+    synopsis ();
   }
+
+  if (infile != NULL) {
+    url = g_filename_to_uri (infile, NULL, NULL);
+    if (url == NULL) {
+      g_print ("Could not convert filename '%s' to URL!\n", infile);
+      return 1;
+    }
+  }
+
+  /* Check output filename */
+  if (outfile == NULL) {
+    g_print ("--output-filename must be specified!\n");
+    synopsis ();
+  }
+
+  /* Arg checking complete, now let's get started! */
 
   /* Initialised gecko */
   if (NS_FAILED (init_gecko ())) {
@@ -404,13 +478,19 @@ main (int argc, char **argv)
     return 1;
   };
 
+  /* Create window */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
+
+  gtk_window_set_role (GTK_WINDOW (window), "gnome-web-photo-hidden-window");
+  gtk_window_set_skip_taskbar_hint (GTK_WINDOW (window), TRUE);
+  gtk_window_set_skip_pager_hint (GTK_WINDOW (window), TRUE);
 
   embed = GTK_WIDGET (g_object_new (TYPE_EMBED, NULL));
   gtk_widget_set_size_request (embed, width, HEIGHT);
   gtk_container_add (GTK_CONTAINER (window), embed);
 
+#ifndef DEBUG_SHOW_WINDOW
   /* Move the window off screen */
   screen = gtk_widget_get_screen (GTK_WIDGET (window));
   gtk_window_move (GTK_WINDOW (window),
@@ -418,12 +498,15 @@ main (int argc, char **argv)
 		   gdk_screen_get_height (screen) + 100);
   gtk_widget_show_all (window);
   gdk_window_hide (window->window);
+#else
+  gtk_widget_show_all (window);
+#endif
 
   gtk_moz_embed_load_url (GTK_MOZ_EMBED (embed), url);
 
   /* FIXME is there a way to guarantee a kill after TIMEOUT secs? */
   g_print ("timeout: %d\n", timeout);
-  g_timeout_add (CLAMP (timeout, 1, 60 * 60 * 24) * 1000,
+  g_timeout_add (CLAMP (timeout, 1, 3600) * 1000,
 		 (GSourceFunc) timeout_cb, window);
 
   gtk_main ();

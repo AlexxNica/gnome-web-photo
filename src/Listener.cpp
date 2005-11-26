@@ -52,6 +52,12 @@
 #include <nsIDOMEventTarget.h>
 #include <gtkmozembed_internal.h>
 
+#ifdef GNOME_ENABLE_DEBUG
+#define LOG g_print
+#else
+#define LOG //
+#endif
+
 Listener::Listener (GtkMozEmbed *aEmbed)
 : mEmbed(aEmbed)
 , mAttached(PR_FALSE)
@@ -84,6 +90,7 @@ Listener::Attach ()
   NS_ENSURE_SUCCESS (rv, rv);
 
   rv = target->AddEventListener (NS_LITERAL_STRING ("load"), this, PR_TRUE);
+  NS_ENSURE_SUCCESS (rv, rv);
 
   mAttached = PR_TRUE;
 
@@ -109,6 +116,7 @@ Listener::HandleEvent (nsIDOMEvent* aDOMEvent)
 NS_IMETHODIMP
 Listener:: Load (nsIDOMEvent* aEvent)
 {
+  LOG ("onload\n");
   g_signal_emit_by_name (mEmbed, "onload");
   return NS_OK;
 }
@@ -116,24 +124,28 @@ Listener:: Load (nsIDOMEvent* aEvent)
 NS_IMETHODIMP
 Listener:: BeforeUnload (nsIDOMEvent* aEvent)
 {
+  LOG ("onbeforeunload\n");
   return NS_OK;
 }
 
 NS_IMETHODIMP
 Listener:: Unload (nsIDOMEvent* aEvent)
 {
+  LOG ("onunload\n");
   return NS_OK;
 }
 
 NS_IMETHODIMP
 Listener:: Abort (nsIDOMEvent* aEvent)
 {
+  LOG ("onabort\n");
   return NS_OK;
 }
 
 NS_IMETHODIMP
 Listener:: Error (nsIDOMEvent* aEvent)
 {
+  LOG ("onerror\n");
   return NS_OK;
 }
 

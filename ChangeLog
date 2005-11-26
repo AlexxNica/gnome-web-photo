@@ -1,3 +1,35 @@
+2005-11-26  Christian Persch  <chpe@cvs.gnome.org>
+
+	* data/prefs.js:
+	* src/Prefs.cpp:
+	* src/Prefs.h:
+
+        Load font preferences from desktop and Epiphany prefs.
+
+	* configure.ac:
+
+        Misc cleanups, and check for ln -s.
+
+	* data/Makefile.am:
+	* data/thumbnailer.schemas.in:
+
+	Fix the thumbnailer command, and fix the gconf schema install rule.
+
+	* m4/gecko.m4:
+
+	Don't pollute CXXFLAGS.
+
+	* src/Writer.cpp:
+
+	Add sanity check for empty display rect, instead of crashing with
+	div-by-zero.
+
+	* src/Makefile.am:
+	* src/main.cpp:
+	Don't build 3 separate programs for photo, thumbnail and print; instead
+	build just gnome-web-photo and symlink gnome-web-thumbnail/print to it.
+	Detect the mode with --mode argument or by invocation.
+
 2005-11-12  Christian Persch  <chpe@cvs.gnome.org>
 
 	* Makefile.am:
