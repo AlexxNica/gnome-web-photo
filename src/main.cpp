@@ -113,11 +113,7 @@ parse_mode (const gchar *option_name,
             gpointer data,
             GError **error)
 {
-  if (!value) {
-    *error = g_error_new (G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
-                          _("No mode specified!"));
-    return FALSE;
-  }
+  g_assert (value != NULL);
 
   guint i;
   for (i = 0; i < MODE_LAST; ++i) {
