@@ -15,7 +15,7 @@ dnl You should have received a copy of the GNU General Public License along
 dnl with this program; if not, write to the Free Software Foundation, Inc.,
 dnl 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 
-AC_INIT([GNOME Web Photo],[0.1],[mailto:chpe@gnome.org],[gnome-web-photo])
+AC_INIT([GNOME Web Photo],[0.2],[mailto:chpe@gnome.org],[gnome-web-photo])
 
 GNOME_COMMON_INIT
 
@@ -25,7 +25,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE([dist-bzip2 no-dist-gzip])
+AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip])
 
 dnl AC_SUBST([ACLOCAL_AMFLAGS], ["-I $ac_macro_dir \${ACLOCAL_FLAGS}"])
 AC_SUBST([ACLOCAL_AMFLAGS], ["\${ACLOCAL_FLAGS}"])
