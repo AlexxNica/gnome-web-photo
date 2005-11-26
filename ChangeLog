@@ -1,5 +1,11 @@
 2005-11-26  Christian Persch  <chpe@cvs.gnome.org>
 
+	* src/Makefile.am:
+
+	Clean up on uninstall.
+
+2005-11-26  Christian Persch  <chpe@cvs.gnome.org>
+
 	* data/prefs.js:
 	* src/Prefs.cpp:
 	* src/Prefs.h:

@@ -55,3 +55,7 @@ install-exec-hook: gnome-web-photo
 	rm -f gnome-web-thumbnail gnome-web-print && \
 	$(LN_S) -f gnome-web-photo gnome-web-thumbnail && \
 	$(LN_S) -f gnome-web-photo gnome-web-print
+
+uninstall-hook:
+	cd $(DESTDIR)$(bindir) && \
+	rm -f gnome-web-thumbnail gnome-web-print
