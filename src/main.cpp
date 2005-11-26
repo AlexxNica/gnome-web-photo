@@ -136,7 +136,7 @@ static GOptionEntry entries [] =
 {
   { "mode", 'm', 0, G_OPTION_ARG_CALLBACK, (void*) parse_mode, N_("Operation mode [photo|thumbnail|print]"), NULL },
   { "timeout", 't', 0, G_OPTION_ARG_INT, &timeout, N_("The timeout in seconds (default: 60)"), "T" },
-  { "force", 'f', 0, G_OPTION_ARG_NONE, &force, N_("Force output when timeout expires, even if the page isn't loaded fully"), NULL },
+  { "force", 0, 0, G_OPTION_ARG_NONE, &force, N_("Force output when timeout expires, even if the page isn't loaded fully"), NULL },
   { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image (default: 1024)"), "W" },
   { "size", 's', 0, G_OPTION_ARG_INT, &size, N_("The thumbnail size (default: 256)"), "S" },
   { "print-background", 0, 0, G_OPTION_ARG_NONE, &print_background, N_("Print background images and colours (default: false)"), NULL },
@@ -375,6 +375,7 @@ static GtkWidget *embed;
 static gboolean
 timeout_cb (void)
 {
+  g_print ("Loading timed out; maybe try --force or increase the timeout with --timeout=N\n");
   if (force) {
     ((Embed*)embed)->state = 8;
     g_idle_add_full (G_PRIORITY_LOW,
