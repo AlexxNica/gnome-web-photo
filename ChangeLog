@@ -1,5 +1,11 @@
 2005-11-26  Christian Persch  <chpe@cvs.gnome.org>
 
+	* data/Makefile.am:
+
+	Fix schemas install rule.
+
+2005-11-26  Christian Persch  <chpe@cvs.gnome.org>
+
 	* src/Writer.cpp:
 
 	Fix compile warning.
