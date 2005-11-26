@@ -81,7 +81,7 @@
 #define LOG //
 #endif
 
-#define DEBUG_SHOW_WINDOW
+// #define DEBUG_SHOW_WINDOW
 
 enum
 {

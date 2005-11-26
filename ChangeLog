@@ -1,5 +1,13 @@
 2005-11-26  Christian Persch  <chpe@cvs.gnome.org>
 
+	=== Release 0.1 ===
+
+	* src/main.cpp:
+
+	Uncomment debug define.
+
+2005-11-26  Christian Persch  <chpe@cvs.gnome.org>
+
 	* src/Makefile.am:
 
 	Clean up on uninstall.
