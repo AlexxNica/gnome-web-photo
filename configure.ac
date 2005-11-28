@@ -1,19 +1,19 @@
-dnl Copyright (C) 2000-2004 Marco Pesenti Gritti
-dnl Copyright (C) 2003, 2004, 2005 Christian Persch
-dnl
-dnl This program is free software; you can redistribute it and/or modify it
-dnl under the terms of the GNU General Public License as published by the
-dnl Free Software Foundation; either version 2 of the License, or (at your
-dnl option) any later version.
-dnl
-dnl This program is distributed in the hope that it will be useful, but
-dnl WITHOUT ANY WARRANTY; without even the implied warranty of
-dnl MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-dnl General Public License for more details.
-dnl
-dnl You should have received a copy of the GNU General Public License along
-dnl with this program; if not, write to the Free Software Foundation, Inc.,
-dnl 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+# Copyright (C) 2000-2004 Marco Pesenti Gritti
+# Copyright (C) 2003, 2004, 2005 Christian Persch
+#
+# This program is free software; you can redistribute it and/or modify it
+# under the terms of the GNU General Public License as published by the
+# Free Software Foundation; either version 2 of the License, or (at your
+# option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License along
+# with this program; if not, write to the Free Software Foundation, Inc.,
+# 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 
 AC_INIT([GNOME Web Photo],[0.2],[mailto:epiphany-list@gnome.org],[gnome-web-photo])
 
@@ -27,7 +27,7 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip])
 
-dnl AC_SUBST([ACLOCAL_AMFLAGS], ["-I $ac_macro_dir \${ACLOCAL_FLAGS}"])
+# AC_SUBST([ACLOCAL_AMFLAGS], ["-I $ac_macro_dir \${ACLOCAL_FLAGS}"])
 AC_SUBST([ACLOCAL_AMFLAGS], ["\${ACLOCAL_FLAGS}"])
 
 AM_MAINTAINER_MODE
@@ -60,8 +60,8 @@ AC_PROG_CXX
 AM_PROG_CC_STDC
 AC_HEADER_STDC
 
-dnl AC_PATH_PROG([GLIB_GENMARSHAL],[glib-genmarshal])
-dnl AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
+# AC_PATH_PROG([GLIB_GENMARSHAL],[glib-genmarshal])
+# AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 
 GNOME_DEBUG_CHECK
 GNOME_COMPILE_WARNINGS([maximum])
@@ -78,12 +78,12 @@ PKG_CHECK_MODULES([DEPENDENCY], [\
 AC_SUBST([DEPENDENCY_CFLAGS])
 AC_SUBST([DEPENDENCY_LIBS])
 
-dnl *****
-dnl GConf
-dnl *****
+# *****
+# GConf
+# *****
 
-dnl Specify the gconf configuration source, 
-dnl default to xml::$(sysconfdir)/gconf/gconf.xml.defaults
+# Specify the gconf configuration source, 
+# default to xml::$(sysconfdir)/gconf/gconf.xml.defaults
 
 AC_PATH_PROG([GCONFTOOL], [gconftool-2], [no])
 
@@ -94,9 +94,9 @@ fi
 AM_GCONF_SOURCE_2
 
 
-dnl *******
-dnl Mozilla
-dnl *******
+# *******
+# Mozilla
+# *******
 
 GECKO_INIT([GECKO])
 
@@ -116,24 +116,18 @@ PKG_CHECK_MODULES([GECKO], [$GECKO-gtkmozembed $GECKO-xpcom >= $min_version])
 AC_SUBST([GECKO_CFLAGS])
 AC_SUBST([GECKO_LIBS])
 
-dnl In xulrunner, gkgfx is in libxul; for all others we need to 
-dnl explicitly link against it
+# In xulrunner, gkgfx is in libxul; for all others we need to 
+# explicitly link against it
 
 if test "$GECKO" != "xulrunner"; then
 	GFX_LIBS="-lgkgfx"
 	AC_SUBST([GFX_LIBS])
 fi
 
-AC_LANG_PUSH([C++])
-_SAVE_CPPFLAGS=$CPPFLAGS
-_SAVE_CXXFLAGS=$CXXFLAGS
-CPPFLAGS="$CPPFLAGS $AM_CPPFLAGS -I$GECKO_INCLUDE_ROOT $($PKG_CONFIG --cflags-only-I $GECKO-xpcom) -I$GECKO_INCLUDE_ROOT/necko -I$GECKO_INCLUDE_ROOT/pipnss"
-CXXFLAGS="$CXXFLAGS $AM_CXXFLAGS $($PKG_CONFIG --cflags-only-other $GECKO-xpcom)"
-
-dnl Check for PSM headers
+# Check for PSM headers
 
 AC_MSG_CHECKING([for mozilla security compoment])
-AC_COMPILE_IFELSE(
+GECKO_COMPILE_IFELSE([pipnss],
         [AC_LANG_PROGRAM(
                 [[#include <nsIX509Cert.h>]],
                 [[nsIX509Cert *c;
@@ -145,27 +139,20 @@ AC_MSG_RESULT([$have_psm])
 
 AM_CONDITIONAL([HAVE_PSM],[test "x$have_psm" = "xyes"])
 
-dnl restore flags
-CPPFLAGS="$_SAVE_CPPFLAGS"
-CXXFLAGS="$_SAVE_CXXFLAGS"
-AC_LANG_POP([C++])
-
-dnl Needed since 1.8b2
-dnl Define this down here so it doesn't affect the API checks above
+# Needed since 1.8b2
+# Define this down here so it doesn't affect the API checks above
 
 AC_DEFINE([MOZILLA_INTERNAL_API],[1],[Define for access to internal mozilla API])
 
-dnl ******************
-dnl Portability checks
-dnl ******************
+# ******************
+# Portability checks
+# ******************
 
 if test "x$enable_maintainer_mode" = "xyes"; then
 
 	AC_LANG_PUSH([C])
 	FLAGS="-Wdeclaration-after-statement"
-	_SAVE_AM_CFLAGS=$AM_CFLAGS
 	_SAVE_CFLAGS=$CFLAGS
-	AM_CFLAGS="$AM_CFLAGS $FLAGS"
 	CFLAGS="$CFLAGS $AM_CFLAGS"
 
 	AC_CACHE_CHECK([for compiler $FLAGS option],
@@ -179,16 +166,15 @@ if test "x$enable_maintainer_mode" = "xyes"; then
 	if test "x$ac_cv_have_declaration_after_statement" = "xyes"; then
 		MORE_WARN_FLAGS="$MORE_WARN_FLAGS $FLAGS"
 	fi
-	AM_CFLAGS="$_SAVE_AM_CFLAGS"
 	CFLAGS="$_SAVE_CFLAGS"
 	AC_LANG_POP([C])
 fi
 
 SUPPRESSION_CXXFLAGS="-Wconversion -Wpointer-arith -Wcast-align -Woverloaded-virtual -Wsynth -Wno-ctor-dtor-privacy -Wno-non-virtual-dtor"
 
-dnl *****************
-dnl Add warning flags
-dnl *****************
+# *****************
+# Add warning flags
+# *****************
 
 AM_CPPFLAGS="$AM_CPPFLAGS $DEPRECATION_FLAGS"
 AM_CFLAGS="$AM_CFLAGS $WARN_CFLAGS $MORE_WARN_FLAGS"
@@ -198,11 +184,11 @@ AC_SUBST([AM_CFLAGS])
 AC_SUBST([AM_CXXFLAGS])
 AC_SUBST([AM_LDFLAGS])
 
-dnl ********************
-dnl Internationalisation
-dnl ********************
+# ********************
+# Internationalisation
+# ********************
 
-dnl Translators: new languages must be added to the po/LINGUAS file
+# Translators: new languages must be added to the po/LINGUAS file
 ALL_LINGUAS="`cat "$srcdir/po/LINGUAS" | grep -v '^#'`"
 AC_SUBST([CONFIG_STATUS_DEPENDENCIES],['$(top_srcdir)/po/LINGUAS'])
 
@@ -212,9 +198,9 @@ AC_DEFINE_UNQUOTED([GETTEXT_PACKAGE],["$GETTEXT_PACKAGE"],[Gettext package])
 AM_GLIB_GNU_GETTEXT
 AM_GLIB_DEFINE_LOCALEDIR([GNOMELOCALEDIR])
 
-dnl ************
-dnl Output files
-dnl ************
+# ************
+# Output files
+# ************
 
 AC_CONFIG_FILES([
 Makefile
