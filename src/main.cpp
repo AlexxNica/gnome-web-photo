@@ -170,11 +170,11 @@ parse_format (const gchar *option_name,
 static GOptionEntry entries [] =
 {
   { "mode", 'm', 0, G_OPTION_ARG_CALLBACK, (void*) parse_mode, N_("Operation mode [photo|thumbnail|print]"), NULL },
-  { "timeout", 't', 0, G_OPTION_ARG_INT, &timeout, N_("The timeout in seconds (default: 60)"), "T" },
+  { "timeout", 't', 0, G_OPTION_ARG_INT, &timeout, N_("The timeout in seconds, or 0 to disable timeout (default: 60)"), "T" },
   { "force", 0, 0, G_OPTION_ARG_NONE, &force, N_("Force output when timeout expires, even if the page isn't loaded fully"), NULL },
   { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image (default: 1024)"), "W" },
   { "size", 's', 0, G_OPTION_ARG_INT, &size, N_("The thumbnail size (default: 256)"), "S" },
-  { "format", 0, 0, G_OPTION_ARG_CALLBACK, (void*) parse_format, N_("File format for output. Supported are 'png' and 'ppm' (default:png)"), NULL },
+  { "format", 0, 0, G_OPTION_ARG_CALLBACK, (void*) parse_format, N_("File format for output. Supported are 'png' and 'ppm' (default:png)"), N_("FORMAT") },
   { "print-background", 0, 0, G_OPTION_ARG_NONE, &print_background, N_("Print background images and colours (default: false)"), NULL },
   { "url", 'u', 0, G_OPTION_ARG_STRING, &url, N_("The URL"), N_("URL") },
   { "file", 'f', 0, G_OPTION_ARG_FILENAME, &infile, N_("The input file"), N_("FILE") },
@@ -578,9 +578,10 @@ main (int argc, char **argv)
   gtk_moz_embed_load_url (GTK_MOZ_EMBED (embed), url);
 
   /* FIXME is there a way to guarantee a kill after TIMEOUT secs? */
-  g_print ("timeout: %d\n", timeout);
-  g_timeout_add (CLAMP (timeout, 1, 3600) * 1000,
-		 (GSourceFunc) timeout_cb, window);
+  if (timeout > 0) {
+    g_timeout_add (CLAMP (timeout, 1, 3600) * 1000,
+                   (GSourceFunc) timeout_cb, window);
+  }
 
   gtk_main ();
 
