@@ -133,7 +133,7 @@ parse_mode (const gchar *option_name,
     }
   }
 
-  if (mode == MODE_INVALID) {
+  if (i == MODE_INVALID) {
     *error = g_error_new (G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
                           _("Unknown mode '%s'"), value);
     return FALSE;
@@ -158,7 +158,7 @@ parse_format (const gchar *option_name,
     }
   }
 
-  if (format == FORMAT_INVALID) {
+  if (i == FORMAT_INVALID) {
     *error = g_error_new (G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
                           _("Unknown format '%s'"), value);
     return FALSE;
