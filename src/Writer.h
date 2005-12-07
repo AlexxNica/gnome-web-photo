@@ -75,6 +75,22 @@ private:
   png_bytep mRow;
 };
 
+class PPMWriter : public Writer
+{
+public:
+  PPMWriter (GtkMozEmbed*, const char *);
+  virtual ~PPMWriter();
+
+  virtual PRBool Prepare(nsIDrawingSurface *);
+  virtual PRBool Finish();
+
+  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32, PRInt32);
+
+private:
+  FILE *mFile;
+  unsigned char* mRow;
+};
+
 class ThumbnailWriter : public Writer
 {
 public:

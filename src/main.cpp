@@ -92,7 +92,16 @@ enum
   MODE_INVALID = MODE_LAST
 };
 
+enum
+{
+  FORMAT_PNG,
+  FORMAT_PPM,
+  FORMAT_LAST,
+  FORMAT_INVALID = FORMAT_LAST
+};
+
 static const char *modes[] = { "photo", "thumbnail", "print" };
+static const char *formats[] = { "png", "ppm" };
 
 /* --- */
 
@@ -101,6 +110,7 @@ static int timeout = 60;
 static gboolean force = FALSE;
 static int width = -1;
 static int size = -1;
+static int format = FORMAT_PNG;
 static gboolean print_background = FALSE;
 static char *url = NULL;
 static char *infile = NULL;
@@ -123,9 +133,34 @@ parse_mode (const gchar *option_name,
     }
   }
 
-  if (mode == MODE_LAST) {
+  if (mode == MODE_INVALID) {
     *error = g_error_new (G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
                           _("Unknown mode '%s'"), value);
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+static gboolean
+parse_format (const gchar *option_name,
+              const gchar *value,
+              gpointer data,
+              GError **error)
+{
+  g_assert (value != NULL);
+
+  guint i;
+  for (i = 0; i < FORMAT_LAST; ++i) {
+    if (g_ascii_strcasecmp (value, formats[i]) == 0) {
+      format = i;
+      break;
+    }
+  }
+
+  if (format == FORMAT_INVALID) {
+    *error = g_error_new (G_OPTION_ERROR, G_OPTION_ERROR_BAD_VALUE,
+                          _("Unknown format '%s'"), value);
     return FALSE;
   }
 
@@ -139,6 +174,7 @@ static GOptionEntry entries [] =
   { "force", 0, 0, G_OPTION_ARG_NONE, &force, N_("Force output when timeout expires, even if the page isn't loaded fully"), NULL },
   { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image (default: 1024)"), "W" },
   { "size", 's', 0, G_OPTION_ARG_INT, &size, N_("The thumbnail size (default: 256)"), "S" },
+  { "format", 0, 0, G_OPTION_ARG_CALLBACK, (void*) parse_format, N_("File format for output. Supported are 'png' and 'ppm' (default:png)"), NULL },
   { "print-background", 0, 0, G_OPTION_ARG_NONE, &print_background, N_("Print background images and colours (default: false)"), NULL },
   { "url", 'u', 0, G_OPTION_ARG_STRING, &url, N_("The URL"), N_("URL") },
   { "file", 'f', 0, G_OPTION_ARG_FILENAME, &infile, N_("The input file"), N_("FILE") },
@@ -200,7 +236,16 @@ embed_take_picture (Embed *embed)
   } else {
     Writer *writer = nsnull;
     if (mode == MODE_PHOTO) {
-      writer = new PNGWriter (mozembed, outfile);
+      switch (format) {
+        case FORMAT_PNG:
+          writer = new PNGWriter (mozembed, outfile);
+          break;
+        case FORMAT_PPM:
+          writer = new PPMWriter (mozembed, outfile);
+          break;
+        default:
+          g_assert_not_reached ();
+      }
     } else if (mode == MODE_THUMBNAIL) {
       writer = new ThumbnailWriter (mozembed, outfile, size);
     }
@@ -354,13 +399,13 @@ synopsis (void)
 
   switch (mode) {
     case MODE_PHOTO:
-      g_print (_("Usage: %s [-t timeout] [-f] [-w width] -u URL -o FILENAME\n"), name);
+      g_print (_("Usage: %s [-t timeout] [-f] [-p] [-w width] [-u URL|-f file] -o FILENAME\n"), name);
       break;
     case MODE_THUMBNAIL:
-      g_print (_("Usage: %s [-t timeout] [-f] [-w width] -s SIZE -u URL -o FILENAME\n"), name);
+      g_print (_("Usage: %s [-t timeout] [-f] [-p] [-w width] -s SIZE [-u URL|-f file] -o FILENAME\n"), name);
       break;
     case MODE_PRINT:
-      g_print (_("Usage: %s [-t timeout] [-f] [-w width] [--print-background] -u URL -o FILENAME\n"), name);
+      g_print (_("Usage: %s [-t timeout] [-f] [-w width] [--print-background] [-u URL|-f file] -o FILENAME\n"), name);
       break;
     default:
       break;
@@ -422,6 +467,26 @@ main (int argc, char **argv)
     LOG ("Mode detection: %s -> %d\n", program, mode);
   }
 
+  /* Check format */
+  if (mode != MODE_PHOTO && format != FORMAT_PNG) {
+    g_print ("--format can only be used with --mode=photo\n");
+    return 1;
+  }
+  if (mode == MODE_INVALID) {
+    char *program = g_get_prgname ();
+    g_assert (program != NULL);
+
+    if (g_ascii_strcasecmp (program, "gnome-web-thumbnail") == 0) {
+      mode = MODE_THUMBNAIL;
+    } else if (g_ascii_strcasecmp (program, "gnome-web-print") == 0) {
+      mode = MODE_PRINT;
+    } else {
+      mode = MODE_PHOTO;
+    }
+  
+    LOG ("Mode detection: %s -> %d\n", program, mode);
+  }
+
   /* Check size */
   if (mode == MODE_THUMBNAIL) {
     if (size == -1) {
@@ -429,6 +494,7 @@ main (int argc, char **argv)
     }
     if (size != 32 && size != 64 && size != 96 && size != 128 && size != 256) {
       g_print ("--size can only be 32, 64, 96, 128 or 256!\n");
+      return 1;
     }
   } else if (size != -1) {
     g_print ("--size is only available in thumbnail mode!\n");

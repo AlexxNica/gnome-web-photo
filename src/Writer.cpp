@@ -1,5 +1,6 @@
 /* 
  * Copyright (C) 2005 Christian Persch
+ * Copyright (C) 2005 Robert O'Callahan
  *
  * ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
@@ -462,6 +463,95 @@ PNGWriter::ErrorCallback(png_structp mPNG,
   writer->mHadError = PR_TRUE;
 
   /* FIXME: jumpbuf stuff? */
+}
+
+/* PPM Writer */
+
+PPMWriter::PPMWriter(GtkMozEmbed *aEmbed,
+                     const char *aFilename)
+: Writer(aEmbed, aFilename)
+, mFile(NULL)
+, mRow(NULL)
+{
+  LOG ("PPMWriter ctor\n");
+}
+
+PPMWriter::~PPMWriter()
+{
+  LOG ("PPMWriter dtor\n");
+
+  if (mFile) {
+    fclose (mFile);
+  }
+  free (mRow);
+};
+
+PRBool
+PPMWriter::Prepare(nsIDrawingSurface *aSurface)
+{
+  if (mInitialised) return PR_TRUE;
+
+  mFile = fopen (mFilename.get(), "wb");
+  if (!mFile) return PR_FALSE;
+
+  fprintf(mFile, "P6 %d %d 255\n", mWidth, mHeight);
+
+  mRow = (unsigned char*) malloc(mWidth*3);
+  if (!mRow) return PR_FALSE;
+  
+  mInitialised = PR_TRUE;
+
+  return PR_TRUE;
+}
+
+void
+PPMWriter::WriteSurface(nsIDrawingSurface *aSurface,
+                        PRUint32 aWidth,
+                        PRUint32 aHeight,
+                        PRUint8 *aData,
+                        PRInt32 aRowLen,
+                        PRInt32 aRowSpan,
+                        PRInt32 aPixelSpan)
+{
+  nsPixelFormat format;
+  aSurface->GetPixelFormat(&format);
+
+  PRUint8* buf = (PRUint8*) mRow;
+  for (PRUint32 i = 0; i < aHeight; ++i)
+    {
+      PRUint8* src = aData + i*aRowSpan;
+
+      PRUint8* dest = mRow;
+      for (PRUint32 j = 0; j < aWidth; ++j)
+        {
+          /* v is the pixel value */
+#if defined(IS_BIG_ENDIAN)
+          PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
+          v >>= (32 - 8*aPixelSpan);
+//maybe like this:  PRUint32 v = *((PRUint32*) src) >> (32 - 8*bytesPerPix);
+#elif defined(IS_LITTLE_ENDIAN)
+          PRUint32 v = *((PRUint32*) src);
+#else
+#error Endianness not defined!
+#endif
+          dest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
+          dest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
+          dest[2] = ((v & format.mBlueMask) >> format.mBlueShift) << (8 - format.mBlueCount);
+          src += aPixelSpan;
+          dest += 3;
+        }
+
+      if (fwrite(mRow, 3, mWidth, mFile) != mWidth) {
+        mHadError = PR_TRUE;
+        break;
+      }
+    }
+}
+
+PRBool
+PPMWriter::Finish()
+{
+  return !mHadError;
 }
 
 /* GdkGdkPixData context */
