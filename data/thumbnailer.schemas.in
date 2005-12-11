@@ -16,7 +16,7 @@
       <applyto>/desktop/gnome/thumbnailers/text@html/command</applyto>
       <owner>gnome-web-photo</owner>
       <type>string</type>
-      <default>gnome-web-photo --mode=thumbnail --timeout=16 --size=%s --url=%u --output-file=%o</default>
+      <default>gnome-web-photo --mode=thumbnail --timeout=16 --size=%s %u %o</default>
       <locale name="C">
         <short>The command to thumbnail HTML files</short>
         <long>The command to thumbnail HTML files.</long>

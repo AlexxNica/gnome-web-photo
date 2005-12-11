@@ -59,6 +59,7 @@
 #include <stdio.h>
 
 #include "Components.h"
+#include "Embed.h"
 #include "Listener.h"
 #include "Prefs.h"
 #include "Printer.h"
@@ -100,10 +101,30 @@ enum
   FORMAT_INVALID = FORMAT_LAST
 };
 
-static const char *modes[] = { "photo", "thumbnail", "print" };
-static const char *formats[] = { "png", "ppm" };
+typedef enum
+{
+  STATE_CLEAN,
+  STATE_END,
+  STATE_ERROR,
+  STATE_NEXT,
+  STATE_PRINT,
+  STATE_WAIT,
+  STATE_WORK,
+} StateType;
+
+#ifdef GNOME_ENABLE_DEBUG
+static const char *STATES[] =  { "CLEAN", "END", "ERROR", "NEXT", "PRINT", "WAIT", "WORK" };
+#endif
+
+static StateType state;
+static void state_change (StateType);
+
+static Embed *embed;
 
 /* --- */
+
+static const char *modes[] = { "photo", "thumbnail", "print" };
+static const char *formats[] = { "png", "ppm" };
 
 static int mode = MODE_INVALID;
 static int timeout = 60;
@@ -112,10 +133,10 @@ static int width = -1;
 static int size = -1;
 static int format = FORMAT_PNG;
 static gboolean print_background = FALSE;
-static char *url = NULL;
-static char *infile = NULL;
-static char *outfile = NULL;
-static int retval = 1;
+static char **arguments;
+static char *uri;
+static char *outfile;
+static gboolean is_file;
 
 static gboolean
 parse_mode (const gchar *option_name,
@@ -169,69 +190,51 @@ parse_format (const gchar *option_name,
 
 static GOptionEntry entries [] =
 {
-  { "mode", 'm', 0, G_OPTION_ARG_CALLBACK, (void*) parse_mode, N_("Operation mode [photo|thumbnail|print]"), NULL },
-  { "timeout", 't', 0, G_OPTION_ARG_INT, &timeout, N_("The timeout in seconds, or 0 to disable timeout (default: 60)"), "T" },
-  { "force", 0, 0, G_OPTION_ARG_NONE, &force, N_("Force output when timeout expires, even if the page isn't loaded fully"), NULL },
-  { "width", 'w', 0, G_OPTION_ARG_INT, &width, N_("The desired width of the image (default: 1024)"), "W" },
-  { "size", 's', 0, G_OPTION_ARG_INT, &size, N_("The thumbnail size (default: 256)"), "S" },
-  { "format", 0, 0, G_OPTION_ARG_CALLBACK, (void*) parse_format, N_("File format for output. Supported are 'png' and 'ppm' (default:png)"), N_("FORMAT") },
-  { "print-background", 0, 0, G_OPTION_ARG_NONE, &print_background, N_("Print background images and colours (default: false)"), NULL },
-  { "url", 'u', 0, G_OPTION_ARG_STRING, &url, N_("The URL"), N_("URL") },
-  { "file", 'f', 0, G_OPTION_ARG_FILENAME, &infile, N_("The input file"), N_("FILE") },
-  { "output-filename", 'o', 0, G_OPTION_ARG_FILENAME, &outfile, N_("The output file"), N_("FILE") },
+  { "mode", 'm', 0, G_OPTION_ARG_CALLBACK, (void*) parse_mode,
+    N_("Operation mode [photo|thumbnail|print]"), NULL },
+  { "timeout", 't', 0, G_OPTION_ARG_INT, &timeout,
+    N_("The timeout in seconds, or 0 to disable timeout (default: 60)"), "T" },
+  { "force", 'f', 0, G_OPTION_ARG_NONE, &force,
+    N_("Force output when timeout expires, even if the page isn't loaded fully"), NULL },
+  { "width", 'w', 0, G_OPTION_ARG_INT, &width,
+    N_("The desired width of the image (default: 1024)"), "W" },
+  { "size", 's', 0, G_OPTION_ARG_INT, &size,
+    N_("The thumbnail size (default: 256)"), "S" },
+  { "format", 0, 0, G_OPTION_ARG_CALLBACK, (void*) parse_format,
+    N_("File format for output. Supported are 'png' and 'ppm' (default:png)"), N_("FORMAT") },
+  { "print-background", 0, 0, G_OPTION_ARG_NONE, &print_background,
+    N_("Print background images and colours (default: false)"), NULL },
+  { "files", 0, 0, G_OPTION_ARG_NONE, &is_file,
+    "", },
+  { G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &arguments, "", NULL },
   { NULL }
 };
 
 /* --- */
 
-#define TYPE_EMBED (embed_get_type ())
-#define EMBED(o)   (G_TYPE_CHECK_INSTANCE_CAST ((o), TYPE_EMBED, Embed))
+static guint timeout_id;
 
-GType embed_get_type (void);
-
-typedef struct _Embed      Embed;
-typedef struct _EmbedClass EmbedClass;
-
-struct _Embed
-{
-  GtkMozEmbed parent_instance;
-  Listener *listener;
-  guint state;
-};
-
-struct _EmbedClass
-{
-  GtkMozEmbedClass parent_class;
-  void (* onload) (Embed *embed);
-};
-
-enum
-{
-  LOAD,
-  LAST_SIGNAL
-};
-
-static guint signals[LAST_SIGNAL] = { 0 };
-static GObjectClass *parent_class = NULL;
-
-static gboolean
-embed_take_picture (Embed *embed)
+static void
+take_picture (Embed *embed)
 {
   GtkMozEmbed *mozembed = GTK_MOZ_EMBED (embed);
-
-  embed->state = 8;
+  gboolean success = FALSE;
 
   if (mode == MODE_PRINT) {
     Printer *printer = new Printer(mozembed, outfile, print_background);
-    if (!printer) {
-      return FALSE;
-    }
-    
-    NS_ADDREF (printer);
-    nsresult rv = printer->Print();
-    NS_RELEASE (printer);
-    if (NS_SUCCEEDED (rv)) {
-      return FALSE;
+    if (printer) {
+      NS_ADDREF (printer);
+      nsresult rv = printer->Print();
+      NS_RELEASE (printer);
+      if (NS_SUCCEEDED (rv)) {
+        success = TRUE;
+
+        /* FIXME: add another timeout while waiting for print-done? */
+
+        state_change (STATE_PRINT);
+      } else {
+        state_change (STATE_ERROR);
+      }
     }
   } else {
     Writer *writer = nsnull;
@@ -249,98 +252,120 @@ embed_take_picture (Embed *embed)
     } else if (mode == MODE_THUMBNAIL) {
       writer = new ThumbnailWriter (mozembed, outfile, size);
     }
-    if (!writer) {
-      return FALSE;
+
+    if (writer) {
+      success = writer->Write();
+      delete writer;
+
+      state_change (STATE_CLEAN);
+    } else {
+      state_change (STATE_ERROR);
     }
-    
-    retval = writer->Write() != PR_TRUE;
-    delete writer;
   }
 
-  g_idle_add ((GSourceFunc) gtk_widget_destroy,
-	      gtk_widget_get_toplevel (GTK_WIDGET (embed)));
+  if (!success) {
+    g_print ("Failed to take picture of uri '%s'\n", uri);
+  }
+}
+
+static void
+embed_ready_cb (Embed *embed)
+{
+  if (timeout_id != 0) {
+    g_source_remove (timeout_id);
+    timeout_id = 0;
+  }
+
+  if (state == STATE_CLEAN) {
+    state_change (STATE_NEXT);
+  } else {
+    state_change (STATE_WORK);
+  }
+}
+
+static void
+print_done_cb (Embed *embed,
+               gboolean success)
+{
+  if (!success) {
+    g_warning ("Failed to print '%s'\n", uri);
+  }
+
+  state_change (STATE_CLEAN);
+}
+
+static gboolean
+timeout_cb (void)
+{
+  timeout_id = 0;
+
+  if (force) {
+    g_print ("Load timed out; consider increasing the timeout (use 0 for no timeout)\n");
+    state_change (STATE_WORK);
+  } else {
+    g_print ("Load timed out; consider using --force or increasing the timeout (use 0 for no timeout)\n");
+    state_change (STATE_CLEAN);
+  }
+
+  return FALSE;
+}
+
+static gboolean
+state_dispatch (void)
+{
+  LOG ("Dispatch state %s\n", STATES[state]);
+
+  switch (state) {
+    case STATE_NEXT:
+      if (*arguments) {
+        uri = *(arguments++);
+        outfile = *(arguments++);
+        g_assert (uri && outfile);
+
+        LOG ("Now processing: URI '%s' => output file '%s'\n", uri, outfile);
+
+        state = STATE_WAIT;
+        embed_load (embed, uri);
+
+        if (timeout > 0) {
+          timeout_id = g_timeout_add (timeout * 1000, (GSourceFunc) timeout_cb, NULL);
+        }
+      } else {
+        state_change (STATE_END);
+      }
+      break;
+    case STATE_WORK:
+      take_picture (embed);
+      break;
+    case STATE_CLEAN:
+      embed_load (embed, "about:blank");
+      break;
+    case STATE_WAIT:
+    case STATE_PRINT:
+      break;
+    case STATE_END:
+    case STATE_ERROR:
+      gtk_main_quit ();
+      break;
+    default:
+      g_assert_not_reached ();      
+  }
 
   /* don't run again */
   return FALSE;
 }
 
 static void
-check_state (Embed *embed)
+state_change (StateType new_state)
 {
-  if (embed->state == 3)
-    {
-      embed->state = 4;
-      g_idle_add_full (G_PRIORITY_LOW, (GSourceFunc) embed_take_picture, embed, NULL);
-    }
+  LOG ("state_change old-state %s new-state %s\n", STATES[state], STATES[new_state]);
+
+  state = new_state;
+  g_idle_add ((GSourceFunc) state_dispatch, NULL);
 }
-
-static void
-embed_net_stop (GtkMozEmbed *mozembed)
-{
-  Embed *embed = EMBED (mozembed);
-
-  LOG ("net_stop\n");
-
-  embed->state |= 1;
-  check_state (embed);
-}
-
-static void
-embed_onload (Embed *embed)
-{
-  LOG ("onload\n");
-
-  embed->state |= 2;
-  check_state (embed);
-}
-
-static void
-embed_realize (GtkWidget *widget)
-{
-  GtkMozEmbed *mozembed = GTK_MOZ_EMBED (widget);
-  Embed *embed = EMBED (widget);
-
-  GTK_WIDGET_CLASS (parent_class)->realize (widget);
-
-  embed->listener = new Listener(mozembed);
-  if (NS_FAILED (embed->listener->Attach ())) {
-    g_warning ("Couldn't attach the listener!\n");
-  }
-}
-
-static void
-embed_init (Embed *embed)
-{
-}
-
-static void
-embed_class_init (EmbedClass *klass)
-{
-    GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
-    GtkMozEmbedClass *moz_embed_class = GTK_MOZ_EMBED_CLASS (klass);
-
-    parent_class = (GObjectClass *) g_type_class_peek_parent (klass);
-
-    widget_class->realize = embed_realize;
-    moz_embed_class->net_stop = embed_net_stop;
-    klass->onload = embed_onload;
-
-    signals[LOAD] =
-	g_signal_new ("onload",
-		      G_TYPE_FROM_CLASS (klass),
-		      G_SIGNAL_RUN_LAST,
-		      G_STRUCT_OFFSET (EmbedClass, onload),
-		      NULL, NULL,
-		      g_cclosure_marshal_VOID__VOID,
-		      G_TYPE_NONE, 0);
-}
-
-G_DEFINE_TYPE (Embed, embed, GTK_TYPE_MOZ_EMBED);
-
-/* --- */
 
 static nsresult
-init_gecko (void)
+gecko_startup (void)
 {
   /* BUG ALERT! If we don't have a profile, Gecko will crash on https sites and
    * when trying to open the password manager. The prefs will be set up so that
@@ -352,6 +377,8 @@ init_gecko (void)
   g_free (profile);
 
   gtk_moz_embed_set_comp_path (GECKO_HOME);
+
+  /* Fire up the beast! */
   gtk_moz_embed_push_startup ();
 
   if (!RegisterComponents ()) {
@@ -388,6 +415,12 @@ init_gecko (void)
   return rv;
 }
 
+static void
+gecko_shutdown (void)
+{
+  gtk_moz_embed_pop_startup ();
+}
+
 /* --- */
 
 static void G_GNUC_NORETURN
@@ -399,13 +432,13 @@ synopsis (void)
 
   switch (mode) {
     case MODE_PHOTO:
-      g_print (_("Usage: %s [-t timeout] [-f] [-p] [-w width] [-u URL|-f file] -o FILENAME\n"), name);
+      g_print (_("Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|FILE OUTFILE [...]\n"), name);
       break;
     case MODE_THUMBNAIL:
-      g_print (_("Usage: %s [-t timeout] [-f] [-p] [-w width] -s SIZE [-u URL|-f file] -o FILENAME\n"), name);
+      g_print (_("Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE OUTFILE [...]\n"), name);
       break;
     case MODE_PRINT:
-      g_print (_("Usage: %s [-t timeout] [-f] [-w width] [--print-background] [-u URL|-f file] -o FILENAME\n"), name);
+      g_print (_("Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] URI|FILE OUTFILE [...]\n"), name);
       break;
     default:
       break;
@@ -413,30 +446,14 @@ synopsis (void)
 
   exit (1);
 }
-  
-static GtkWidget *window;
-static GtkWidget *embed;
-
-static gboolean
-timeout_cb (void)
-{
-  g_print ("Loading timed out; maybe try --force or increase the timeout with --timeout=N\n");
-  if (force) {
-    ((Embed*)embed)->state = 8;
-    g_idle_add_full (G_PRIORITY_LOW,
-                      (GSourceFunc) embed_take_picture, embed, NULL);
-  } else {
-    gtk_widget_destroy (window);
-  }
-
-  return FALSE;
-}
 
 int
 main (int argc, char **argv)
 {
+  GtkWidget *window;
   GdkScreen *screen;
   GError *error = NULL;
+  int i, len;
 
 #ifdef ENABLE_NLS
   /* Initialize the i18n stuff */
@@ -471,20 +488,6 @@ main (int argc, char **argv)
   if (mode != MODE_PHOTO && format != FORMAT_PNG) {
     g_print ("--format can only be used with --mode=photo\n");
     return 1;
-  }
-  if (mode == MODE_INVALID) {
-    char *program = g_get_prgname ();
-    g_assert (program != NULL);
-
-    if (g_ascii_strcasecmp (program, "gnome-web-thumbnail") == 0) {
-      mode = MODE_THUMBNAIL;
-    } else if (g_ascii_strcasecmp (program, "gnome-web-print") == 0) {
-      mode = MODE_PRINT;
-    } else {
-      mode = MODE_PHOTO;
-    }
-  
-    LOG ("Mode detection: %s -> %d\n", program, mode);
   }
 
   /* Check size */
@@ -524,44 +527,50 @@ main (int argc, char **argv)
     synopsis ();
   }
 
-  /* Check url/input filename */
-  if ((url == NULL && infile == NULL) || (url != NULL && infile != NULL)) {
+  /* Check url/input filenames */
+  if (!arguments || (g_strv_length (arguments) % 2) != 0) {
+    g_print ("Missing arguments!\n");
     synopsis ();
   }
 
-  if (infile != NULL) {
-    url = g_filename_to_uri (infile, NULL, NULL);
-    if (url == NULL) {
-      g_print ("Could not convert filename '%s' to URL!\n", infile);
-      return 1;
+  /* Replace filenames with URIs */
+  if (is_file) {
+    for (i = 0; arguments[i]; i += 2) {
+      char *uri;
+
+      uri = g_filename_to_uri (arguments[i], NULL, &error);
+      if (!uri) {
+        g_print ("Error converting filename to URI: %s\n", error->message);
+        g_error_free (error);
+        return 1;
+      }
+
+      g_free (arguments[i]);
+      arguments[i] = uri;
     }
-  }
-
-  /* Check output filename */
-  if (outfile == NULL) {
-    g_print ("--output-filename must be specified!\n");
-    synopsis ();
   }
 
   /* Arg checking complete, now let's get started! */
 
   /* Initialised gecko */
-  if (NS_FAILED (init_gecko ())) {
-    g_print ("Failed to initialise gecko!\n");
+  nsresult rv = gecko_startup ();
+  if (NS_FAILED (rv)) {
+    g_print ("Failed to initialise gecko (rv = %x)!\n", rv);
     return 1;
   };
 
   /* Create window */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  g_signal_connect (window, "destroy", G_CALLBACK (gtk_main_quit), NULL);
 
   gtk_window_set_role (GTK_WINDOW (window), "gnome-web-photo-hidden-window");
   gtk_window_set_skip_taskbar_hint (GTK_WINDOW (window), TRUE);
   gtk_window_set_skip_pager_hint (GTK_WINDOW (window), TRUE);
 
-  embed = GTK_WIDGET (g_object_new (TYPE_EMBED, NULL));
-  gtk_widget_set_size_request (embed, width, HEIGHT);
-  gtk_container_add (GTK_CONTAINER (window), embed);
+  embed = EMBED (g_object_new (TYPE_EMBED, NULL));
+  g_signal_connect (embed, "ready", G_CALLBACK (embed_ready_cb), NULL);
+  g_signal_connect (embed, "print-done", G_CALLBACK (print_done_cb), NULL);
+  gtk_widget_set_size_request (GTK_WIDGET (embed), width, HEIGHT);
+  gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (embed));
 
 #ifndef DEBUG_SHOW_WINDOW
   /* Move the window off screen */
@@ -575,15 +584,15 @@ main (int argc, char **argv)
   gtk_widget_show_all (window);
 #endif
 
-  gtk_moz_embed_load_url (GTK_MOZ_EMBED (embed), url);
-
-  /* FIXME is there a way to guarantee a kill after TIMEOUT secs? */
-  if (timeout > 0) {
-    g_timeout_add (CLAMP (timeout, 1, 3600) * 1000,
-                   (GSourceFunc) timeout_cb, window);
-  }
+  state_change (STATE_NEXT);
 
   gtk_main ();
 
-  return retval;
+  g_assert (state == STATE_END || state == STATE_ERROR);
+
+  gtk_widget_destroy (window);
+
+  gecko_shutdown ();
+
+  return state == STATE_ERROR ? 1 : 0;
 }

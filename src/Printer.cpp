@@ -162,11 +162,8 @@ NS_IMPL_ISUPPORTS2 (Printer, nsIWebProgressListener, nsIPrintProgressParams)
 NS_IMETHODIMP
 Printer::OnStateChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest, PRUint32 aStateFlags, nsresult aStatus)
 {
-  LOG ("(flags %x, status %x) ", aStateFlags, aStatus);
   if (aStateFlags & STATE_STOP) {
-    LOG ("\n");
-    g_idle_add ((GSourceFunc) gtk_widget_destroy,
-                gtk_widget_get_toplevel (GTK_WIDGET (mEmbed)));
+    g_signal_emit_by_name (mEmbed, "print-done", NS_SUCCEEDED (aStatus));
   }
 
   return NS_OK;
@@ -176,7 +173,6 @@ Printer::OnStateChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest, PRUin
 NS_IMETHODIMP
 Printer::OnProgressChange(nsIWebProgress *aWebProgress, nsIRequest *aRequest, PRInt32 aCurSelfProgress, PRInt32 aMaxSelfProgress, PRInt32 aCurTotalProgress, PRInt32 aMaxTotalProgress)
 {
-  LOG ("[%d/%d, %d/%d] ", aCurSelfProgress, aMaxSelfProgress, aCurTotalProgress, aMaxTotalProgress);
   return NS_OK;
 }
 

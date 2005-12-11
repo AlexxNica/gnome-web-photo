@@ -1,8 +1,19 @@
+2005-12-11  Christian Persch  <chpe@cvs.gnome.org>
+
+	* data/thumbnailer.schemas.in:
+	* src/Embed.cpp:
+	* src/Embed.h:
+	* src/Makefile.am:
+	* src/Printer.cpp:
+	* src/main.cpp:
+
+	Add support for processing multiple files in a row.
+
 2005-12-08  Christian Persch  <chpe@cvs.gnome.org>
 
 	* data/prefs.js:
 
-	Turn off image animation and caret blinking. Patch by Robert
+	Turn off image animation and text blinking. Patch by Robert
 	O'Callahan.
 
 2005-12-07  Christian Persch  <chpe@cvs.gnome.org>

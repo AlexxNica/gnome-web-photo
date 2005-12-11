@@ -17,6 +17,8 @@ gecko_include_subdirs = \
 gnome_web_photo_SOURCES = \
 	Components.cpp	\
 	Components.h	\
+	Embed.cpp	\
+	Embed.h		\
 	Listener.cpp	\
 	Listener.h	\
 	Prefs.cpp	\
