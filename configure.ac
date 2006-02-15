@@ -53,6 +53,8 @@ AC_PROG_CXX
 AM_PROG_CC_STDC
 AC_HEADER_STDC
 
+AC_C_BIGENDIAN
+
 # AC_PATH_PROG([GLIB_GENMARSHAL],[glib-genmarshal])
 # AC_PATH_PROG([GLIB_MKENUMS],[glib-mkenums])
 
@@ -86,9 +88,6 @@ AC_SUBST([DEPENDENCY_LIBS])
 # GConf
 # *****
 
-# Specify the gconf configuration source, 
-# default to xml::$(sysconfdir)/gconf/gconf.xml.defaults
-
 AC_PATH_PROG([GCONFTOOL], [gconftool-2], [no])
 
 if test "x$GCONFTOOL" = xno; then
@@ -116,7 +115,7 @@ seamonkey) min_version=1.0 ;;
 xulrunner) min_version=1.8 ;;
 esac
 
-PKG_CHECK_MODULES([GECKO], [$GECKO-gtkmozembed $GECKO-xpcom >= $min_version])
+PKG_CHECK_MODULES([GECKO], [${gecko_cv_gecko}-xpcom >= $min_version ${gecko_cv_extra_pkg_dependencies}])
 AC_SUBST([GECKO_CFLAGS])
 AC_SUBST([GECKO_LIBS])
 
@@ -124,9 +123,10 @@ AC_SUBST([GECKO_LIBS])
 # explicitly link against it
 
 if test "$GECKO" != "xulrunner"; then
-	GFX_LIBS="-lgkgfx"
-	AC_SUBST([GFX_LIBS])
+	GECKO_EXTRA_LIBS="$GECKO_EXTRA_LIBS -lgkgfx"
 fi
+
+AC_SUBST([GECKO_EXTRA_LIBS])
 
 # Check for PSM headers
 

@@ -1,3 +1,25 @@
+2006-02-15  Christian Persch  <chpe@cvs.gnome.org>
+
+	* configure.ac:
+	* m4/gecko.m4:
+	* src/Makefile.am:
+
+	Build with xulrunner trunk too, and use AC_C_BIGENDIAN
+	to check the endianness.
+
+	* src/Prefs.cpp:
+
+	Use the document font gconf key.
+
+	* src/Writer.cpp:
+
+	Use stock endianness define.
+
+	* src/main.cpp:
+
+	Fix some compile warnings, and add support for xulrunner
+	trunk.
+
 2006-01-15 Christian Persch <chpe@cvs.gnome.org>
  
 	* m4/gecko.m4:

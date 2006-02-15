@@ -411,14 +411,12 @@ PNGWriter::WriteSurface(nsIDrawingSurface *aSurface,
       for (PRUint32 j = 0; j < aWidth; ++j)
         {
           /* v is the pixel value */
-#if defined(IS_BIG_ENDIAN)
+#ifdef WORDS_BIGENDIAN
           PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
           v >>= (32 - 8*aPixelSpan);
 //maybe like this:  PRUint32 v = *((PRUint32*) src) >> (32 - 8*bytesPerPix);
-#elif defined(IS_LITTLE_ENDIAN)
-          PRUint32 v = *((PRUint32*) src);
 #else
-#error Endianness not defined!
+          PRUint32 v = *((PRUint32*) src);
 #endif
 	  dest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
 	  dest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
@@ -525,14 +523,12 @@ PPMWriter::WriteSurface(nsIDrawingSurface *aSurface,
       for (PRUint32 j = 0; j < aWidth; ++j)
         {
           /* v is the pixel value */
-#if defined(IS_BIG_ENDIAN)
+#ifdef WORDS_BIGENDIAN
           PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
           v >>= (32 - 8*aPixelSpan);
 //maybe like this:  PRUint32 v = *((PRUint32*) src) >> (32 - 8*bytesPerPix);
-#elif defined(IS_LITTLE_ENDIAN)
-          PRUint32 v = *((PRUint32*) src);
 #else
-#error Endianness not defined!
+          PRUint32 v = *((PRUint32*) src);
 #endif
           dest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
           dest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
@@ -618,13 +614,11 @@ ThumbnailWriter::WriteSurface(nsIDrawingSurface *aSurface,
       for (PRUint32 j = 0; j < aWidth; ++j)
         {
           /* v is the pixel value */
-#if defined(IS_BIG_ENDIAN)
+#ifdef WORDS_BIGENDIAN
           PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
           v >>= (32 - 8*aPixelSpan);
-#elif defined(IS_LITTLE_ENDIAN)
-          PRUint32 v = *((PRUint32*) src);
 #else
-#error Endianness not defined!
+          PRUint32 v = *((PRUint32*) src);
 #endif
 	  mDest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
 	  mDest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);

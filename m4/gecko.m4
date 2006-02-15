@@ -88,9 +88,9 @@ seamonkey) gecko_cv_gecko_flavour=mozilla ;;
 xulrunner) gecko_cv_gecko_flavour=toolkit ;;
 esac
 
-_GECKO_INCLUDE_ROOT="`$PKG_CONFIG --variable=includedir ${gecko_cv_gecko}-gtkmozembed`"
-_GECKO_HOME="`$PKG_CONFIG --variable=libdir ${gecko_cv_gecko}-gtkmozembed`"
-_GECKO_PREFIX="`$PKG_CONFIG --variable=prefix ${gecko_cv_gecko}-gtkmozembed`"
+_GECKO_INCLUDE_ROOT="`$PKG_CONFIG --variable=includedir ${gecko_cv_gecko}-xpcom`"
+_GECKO_HOME="`$PKG_CONFIG --variable=libdir ${gecko_cv_gecko}-xpcom`"
+_GECKO_PREFIX="`$PKG_CONFIG --variable=prefix ${gecko_cv_gecko}-xpcom`"
 
 fi # if gecko_cv_have_gecko
 
@@ -210,9 +210,13 @@ AC_LANG_POP([C++])
 if test "$gecko_cv_have_debug" = "yes"; then
 	_GECKO_EXTRA_CXXFLAGS="$_GECKO_EXTRA_CXXFLAGS -DDEBUG -D_DEBUG"
 	AM_CXXFLAGS="-DDEBUG -D_DEBUG $AM_CXXFLAGS"
+
+	AC_DEFINE([HAVE_GECKO_DEBUG],[1],[Define if gecko is a debug build])
 fi
 
 fi # if gecko_cv_have_gecko
+
+AM_CONDITIONAL([HAVE_GECKO_DEBUG],[test "$gecko_cv_have_debug" = "yes"])
 
 # ***********************
 # Check for gecko version
@@ -277,13 +281,31 @@ $1[]_VERSION=$gecko_cv_gecko_version
 $1[]_VERSION_MAJOR=$gecko_cv_gecko_version_major
 $1[]_VERSION_MINOR=$gecko_cv_gecko_version_minor
 
+# **************************************************
+# Packages that we need to check for with pkg-config 
+# **************************************************
+
+gecko_cv_extra_libs=
+gecko_cv_extra_pkg_dependencies=
+
+if test "$gecko_cv_gecko_version_major" = "1" -a "$gecko_cv_gecko_version_minor" -ge "9"; then
+	if test "$gecko_cv_gecko" != "xulrunner"; then
+		gecko_cv_extra_libs="-lxul"
+	fi
+else
+	gecko_cv_extra_pkg_dependencies="${gecko_cv_gecko}-gtkmozembed"
+fi
+
+$1[]_EXTRA_PKG_DEPENDENCIES="$gecko_cv_extra_pkg_dependencies"
+$1[]_EXTRA_LIBS="$gecko_cv_extra_libs"
+
 ])
 
 # ***************************************************************************
 # ***************************************************************************
 # ***************************************************************************
 
-# GECKO_DISPATCH([MACRO], [HEADERS], ...)
+# GECKO_DISPATCH([MACRO], [INCLUDEDIRS], ...)
 
 m4_define([GECKO_DISPATCH],
 [
@@ -301,15 +323,15 @@ CPPFLAGS="$CPPFLAGS $_GECKO_EXTRA_CPPFLAGS -I$_GECKO_INCLUDE_ROOT $($PKG_CONFIG 
 CXXFLAGS="$CXXFLAGS $_GECKO_EXTRA_CXXFLAGS $($PKG_CONFIG --cflags-only-other ${gecko_cv_gecko}-xpcom)"
 LDFLAGS="$LDFLAGS $_GECKO_EXTRA_LDFLAGS $($PKG_CONFIG --libs ${gecko_cv_gecko}-xpcom) -Wl,--rpath=$_GECKO_HOME"
 
-_GECKO_DISPATCH_HEADERS="$2"
+_GECKO_DISPATCH_INCLUDEDIRS="$2"
 
 # Sigh Gentoo has a rubbish header layout
 # http://bugs.gentoo.org/show_bug.cgi?id=100804
 # Mind you, it's useful to be able to test against uninstalled mozilla builds...
-_GECKO_DISPATCH_HEADERS="$_GECKO_DISPATCH_HEADERS necko dom"
+_GECKO_DISPATCH_INCLUDEDIRS="$_GECKO_DISPATCH_INCLUDEDIRS dom necko pref"
 
 # Now add them to CPPFLAGS
-for i in $_GECKO_DISPATCH_HEADERS; do
+for i in $_GECKO_DISPATCH_INCLUDEDIRS; do
 	CPPFLAGS="$CPPFLAGS -I$_GECKO_INCLUDE_ROOT/$i"
 done
 
@@ -327,11 +349,15 @@ AC_LANG_POP([C++])
 # ***************************************************************************
 # ***************************************************************************
 
-# GECKO_COMPILE_IFELSE(HEADERS, PROGRAM, [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+# GECKO_CHECK_HEADERS(INCLUDEDIRS, HEADERS, [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND], [INCLUDES])
+
+AC_DEFUN([GECKO_CHECK_HEADERS],[GECKO_DISPATCH([AC_CHECK_HEADERS],$@)])
+
+# GECKO_COMPILE_IFELSE(INCLUDEDIRS, PROGRAM, [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
 
 AC_DEFUN([GECKO_COMPILE_IFELSE],[GECKO_DISPATCH([AC_COMPILE_IFELSE],$@)])
 
-# GECKO_RUN_IFELSE(HEADERS, PROGRAM, [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+# GECKO_RUN_IFELSE(INCLUDEDIRS, PROGRAM, [ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
 
 AC_DEFUN([GECKO_RUN_IFELSE],[GECKO_DISPATCH([AC_RUN_IFELSE],$@)])
 
@@ -363,7 +389,11 @@ GECKO_RUN_IFELSE([],
 #include <nsILocalFile.h>
 #include <nsIServiceManager.h>
 #include <nsIComponentRegistrar.h>
+#ifdef HAVE_GECKO_1_8
+#include <nsStringAPI.h>
+#else
 #include <nsString.h>
+#endif
 ]],[[
 // redirect unwanted mozilla debug output
 freopen ("/dev/null", "w", stdout);
@@ -412,5 +442,47 @@ Contract ID "$1" is not registered, but $PACKAGE_NAME depends on it.])],
 fi
 
 AS_VAR_POPDEF([gecko_cv_have_CID])
+
+])
+
+# ***************************************************************************
+# ***************************************************************************
+# ***************************************************************************
+
+# GECKO_XPIDL([ACTION-IF-FOUND],[ACTION-IF-NOT-FOUND])
+#
+# Checks for xpidl program and include directory
+#
+# Variables set:
+# XPIDL:        the xpidl program
+# XPIDL_IDLDIR: the xpidl include directory
+
+AC_DEFUN([GECKO_XPIDL],
+[AC_REQUIRE([GECKO_INIT])dnl
+
+_GECKO_LIBDIR="`$PKG_CONFIG --variable=libdir ${gecko_cv_gecko}-xpcom`"
+
+AC_PATH_PROG([XPIDL],[xpidl],[no],[$_GECKO_LIBDIR:$PATH])
+
+XPIDL_IDLDIR="`$PKG_CONFIG --variable=idldir ${gecko_cv_gecko}-xpcom`"
+
+# Older geckos don't have this variable, see
+# https://bugzilla.mozilla.org/show_bug.cgi?id=240473
+
+if test -z "$XPIDL_IDLDIR" -o ! -f "$XPIDL_IDLDIR/nsISupports.idl"; then
+	XPIDL_IDLDIR="`echo $_GECKO_LIBDIR | sed -e s!lib!share/idl!`"
+fi
+
+# Some distributions (Gentoo) have it in unusual places
+
+if test -z "$XPIDL_IDLDIR" -o ! -f "$XPIDL_IDLDIR/nsISupports.idl"; then
+	XPIDL_IDLDIR="$_GECKO_INCLUDE_ROOT/idl"
+fi
+
+if test "$XPIDL" != "no" -a -n "$XPIDL_IDLDIR" -a -f "$XPIDL_IDLDIR/nsISupports.idl"; then
+	ifelse([$1],,[:],[$1])
+else
+	ifelse([$2],,[AC_MSG_FAILURE([XPIDL program or include directory not found])],[$2])
+fi
 
 ])

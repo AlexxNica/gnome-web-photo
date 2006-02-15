@@ -5,13 +5,19 @@ gecko_include_subdirs = \
 	content		\
 	docshell	\
 	dom		\
+	embed_base	\
 	gfx		\
+	gtkembedmoz	\
 	layout		\
 	locale		\
 	necko		\
+	pipnss		\
+	pref		\
+	uriloader	\
 	view		\
 	webbrwsr	\
 	widget		\
+	windowwatcher	\
 	xpcom
 
 gnome_web_photo_SOURCES = \
@@ -49,7 +55,7 @@ gnome_web_photo_LDFLAGS = \
 gnome_web_photo_LDADD = \
 	$(DEPENDENCY_LIBS)	\
 	$(GECKO_LIBS)		\
-	$(GFX_LIBS)
+	$(GECKO_EXTRA_LIBS)
 
 
 install-exec-hook: gnome-web-photo

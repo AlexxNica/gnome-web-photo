@@ -93,7 +93,7 @@ static const char *font_languages[] = {
 static const char *font_types[] = { "variable", "monospace" };
 static const char *size_types[] = { "variable", "fixed" };
 
-#define GNOME_VARIABLE_FONT_KEY   "/desktop/gnome/interface/font_name"
+#define GNOME_VARIABLE_FONT_KEY   "/desktop/gnome/interface/document_font_name"
 #define GNOME_MONOSPACE_FONT_KEY  "/desktop/gnome/interface/monospace_font_name"
 #define EPHY_FONT_DIR             "/apps/epiphany/web"
 #define DEFAULT_MIN_SIZE          7

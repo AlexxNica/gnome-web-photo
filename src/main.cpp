@@ -112,14 +112,12 @@ typedef enum
   STATE_WORK,
 } StateType;
 
-#ifdef GNOME_ENABLE_DEBUG
 static const char *STATES[] =  { "CLEAN", "END", "ERROR", "NEXT", "PRINT", "WAIT", "WORK" };
-#endif
 
 static StateType state;
 static void state_change (StateType);
 
-static Embed *embed;
+static Embed *gEmbed;
 
 /* --- */
 
@@ -188,7 +186,7 @@ parse_format (const gchar *option_name,
   return TRUE;
 }
 
-static GOptionEntry entries [] =
+static const GOptionEntry entries [] =
 {
   { "mode", 'm', 0, G_OPTION_ARG_CALLBACK, (void*) parse_mode,
     N_("Operation mode [photo|thumbnail|print]"), NULL },
@@ -325,7 +323,7 @@ state_dispatch (void)
         LOG ("Now processing: URI '%s' => output file '%s'\n", uri, outfile);
 
         state = STATE_WAIT;
-        embed_load (embed, uri);
+        embed_load (gEmbed, uri);
 
         if (timeout > 0) {
           timeout_id = g_timeout_add (timeout * 1000, (GSourceFunc) timeout_cb, NULL);
@@ -335,10 +333,10 @@ state_dispatch (void)
       }
       break;
     case STATE_WORK:
-      take_picture (embed);
+      take_picture (gEmbed);
       break;
     case STATE_CLEAN:
-      embed_load (embed, "about:blank");
+      embed_load (gEmbed, "about:blank");
       break;
     case STATE_WAIT:
     case STATE_PRINT:
@@ -376,7 +374,11 @@ gecko_startup (void)
   gtk_moz_embed_set_profile_path (profile, "gnome-web-photo");
   g_free (profile);
 
+#ifdef HAVE_GECKO_1_9
+  gtk_moz_embed_set_path (GECKO_HOME);
+#else
   gtk_moz_embed_set_comp_path (GECKO_HOME);
+#endif
 
   /* Fire up the beast! */
   gtk_moz_embed_push_startup ();
@@ -462,7 +464,9 @@ main (int argc, char **argv)
   textdomain (GETTEXT_PACKAGE);
 #endif
 
-  if (!gtk_init_with_args (&argc, &argv, NULL, entries, GETTEXT_PACKAGE, &error)) {
+  if (!gtk_init_with_args (&argc, &argv, NULL,
+       			   (GOptionEntry*) entries,
+			   GETTEXT_PACKAGE, &error)) {
     g_print ("%s\n", error->message);
     g_error_free (error);
     synopsis ();
@@ -536,17 +540,17 @@ main (int argc, char **argv)
   /* Replace filenames with URIs */
   if (is_file) {
     for (i = 0; arguments[i]; i += 2) {
-      char *uri;
+      char *new_uri;
 
-      uri = g_filename_to_uri (arguments[i], NULL, &error);
-      if (!uri) {
+      new_uri = g_filename_to_uri (arguments[i], NULL, &error);
+      if (!new_uri) {
         g_print ("Error converting filename to URI: %s\n", error->message);
         g_error_free (error);
         return 1;
       }
 
       g_free (arguments[i]);
-      arguments[i] = uri;
+      arguments[i] = new_uri;
     }
   }
 
@@ -566,11 +570,11 @@ main (int argc, char **argv)
   gtk_window_set_skip_taskbar_hint (GTK_WINDOW (window), TRUE);
   gtk_window_set_skip_pager_hint (GTK_WINDOW (window), TRUE);
 
-  embed = EMBED (g_object_new (TYPE_EMBED, NULL));
-  g_signal_connect (embed, "ready", G_CALLBACK (embed_ready_cb), NULL);
-  g_signal_connect (embed, "print-done", G_CALLBACK (print_done_cb), NULL);
-  gtk_widget_set_size_request (GTK_WIDGET (embed), width, HEIGHT);
-  gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (embed));
+  gEmbed = EMBED (g_object_new (TYPE_EMBED, NULL));
+  g_signal_connect (gEmbed, "ready", G_CALLBACK (embed_ready_cb), NULL);
+  g_signal_connect (gEmbed, "print-done", G_CALLBACK (print_done_cb), NULL);
+  gtk_widget_set_size_request (GTK_WIDGET (gEmbed), width, HEIGHT);
+  gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (gEmbed));
 
 #ifndef DEBUG_SHOW_WINDOW
   /* Move the window off screen */
