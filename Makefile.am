@@ -8,6 +8,8 @@ EXTRA_DIST = 			\
 	intltool-update.in	\
 	intltool-extract.in	\
 	COPYING.README		\
+	COPYING.LGPL		\
+	COPYING.MPL		\
 	HACKING			\
 	MAINTAINERS
 
