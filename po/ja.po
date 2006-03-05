@@ -12,21 +12,21 @@ msgstr ""
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=EUC-JP\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/thumbnailer.schemas.in.h:1
 msgid "The command to thumbnail HTML files"
-msgstr "HTML ¥Õ¥¡¥¤¥ë¤Î¥µ¥à¥Í¥¤¥ë¤òÀ¸À®¤¹¤ë¥³¥Ş¥ó¥É"
+msgstr "HTML ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚µãƒ ãƒã‚¤ãƒ«ã‚’ç”Ÿæˆã™ã‚‹ã‚³ãƒãƒ³ãƒ‰"
 
 #: ../data/thumbnailer.schemas.in.h:2
 msgid "The command to thumbnail HTML files."
-msgstr "HTML ¥Õ¥¡¥¤¥ë¤Î¥µ¥à¥Í¥¤¥ë¤òÀ¸À®¤¹¤ëºİ¤Ë»ÈÍÑ¤¹¤ë¥³¥Ş¥ó¥É¤Ç¤¹¡£"
+msgstr "HTML ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚µãƒ ãƒã‚¤ãƒ«ã‚’ç”Ÿæˆã™ã‚‹éš›ã«ä½¿ç”¨ã™ã‚‹ã‚³ãƒãƒ³ãƒ‰ã§ã™ã€‚"
 
 #: ../data/thumbnailer.schemas.in.h:3
 msgid "Whether to enable thumbnailing of HTML files"
-msgstr "HTML ¥Õ¥¡¥¤¥ë¤ò¥µ¥à¥Í¥¤¥ë²½¤¹¤ë¤«¤É¤¦¤«"
+msgstr "HTML ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ã‚µãƒ ãƒã‚¤ãƒ«åŒ–ã™ã‚‹ã‹ã©ã†ã‹"
 
 #: ../data/thumbnailer.schemas.in.h:4
 msgid "Whether to enable thumbnailing of HTML files."
-msgstr "HTML ¥Õ¥¡¥¤¥ë¤Î¥µ¥à¥Í¥¤¥ëÀ¸À®¤òÍ­¸ú¤Ë¤¹¤ë¤«¤É¤¦¤«¤Ç¤¹¡£"
+msgstr "HTML ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚µãƒ ãƒã‚¤ãƒ«ç”Ÿæˆã‚’æœ‰åŠ¹ã«ã™ã‚‹ã‹ã©ã†ã‹ã§ã™ã€‚"
