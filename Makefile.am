@@ -9,7 +9,6 @@ EXTRA_DIST = 			\
 	intltool-extract.in	\
 	COPYING.README		\
 	COPYING.LGPL		\
-	COPYING.MPL		\
 	HACKING			\
 	MAINTAINERS
 

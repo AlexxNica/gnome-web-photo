@@ -1,3 +1,26 @@
+2006-07-14  Christian Persch  <chpe@cvs.gnome.org>
+
+	Commit uncommitted work before svn migration.
+
+	R COPYING.MPL:
+	* COPYING.README:
+	* Makefile.am:
+	* src/Components.cpp:
+	* src/Components.h:
+	* src/Embed.cpp:
+	* src/Embed.h:
+	* src/Listener.cpp:
+	* src/Listener.h:
+	* src/Prefs.cpp:
+	* src/Prefs.h:
+	* src/Printer.cpp:
+	* src/Printer.h:
+	* src/Writer.cpp:
+	* src/Writer.h:
+	* src/main.cpp:
+
+	Gecko is free now, so we can be LGPL only too!
+
 2006-02-15  Christian Persch  <chpe@cvs.gnome.org>
 
 	* configure.ac:
