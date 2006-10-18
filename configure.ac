@@ -32,7 +32,7 @@ AC_SUBST([ACLOCAL_AMFLAGS], ["\${ACLOCAL_FLAGS}"])
 
 AM_MAINTAINER_MODE
 
-IT_PROG_INTLTOOL([0.34])
+IT_PROG_INTLTOOL([0.35.0])
 
 GLIB_REQUIRED=2.6.0
 GTK_REQUIRED=2.6.3
@@ -193,8 +193,6 @@ AC_SUBST([AM_LDFLAGS])
 # ********************
 
 # Translators: new languages must be added to the po/LINGUAS file
-ALL_LINGUAS="`cat "$srcdir/po/LINGUAS" | grep -v '^#'`"
-AC_SUBST([CONFIG_STATUS_DEPENDENCIES],['$(top_srcdir)/po/LINGUAS'])
 
 GETTEXT_PACKAGE=gnome-web-photo
 AC_SUBST([GETTEXT_PACKAGE])
