@@ -472,6 +472,14 @@ main (int argc, char **argv)
     return 1;
   }
 
+  /* Renice when thumbnailing, since it is likely that Beagle or Nautilus will
+   * call us multiple times in sequence in order to thumbnail a bunch of HTML
+   * files.
+   */
+  if (mode == MODE_THUMBNAIL) {
+    nice (5);
+  }
+
   /* Check size */
   if (mode == MODE_THUMBNAIL) {
     if (size == -1) {
@@ -547,6 +555,7 @@ main (int argc, char **argv)
   gtk_window_set_role (GTK_WINDOW (window), "gnome-web-photo-hidden-window");
   gtk_window_set_skip_taskbar_hint (GTK_WINDOW (window), TRUE);
   gtk_window_set_skip_pager_hint (GTK_WINDOW (window), TRUE);
+  gtk_window_set_focus_on_map (GTK_WINDOW (window), FALSE);
 
   gEmbed = EMBED (g_object_new (TYPE_EMBED, NULL));
   g_signal_connect (gEmbed, "ready", G_CALLBACK (embed_ready_cb), NULL);

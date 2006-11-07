@@ -1,3 +1,13 @@
+2006-11-07  Christian Persch  <chpe@cvs.gnome.org>
+
+	* src/main.cpp:
+	
+	Renice when thumbnailing. Patch taken from suse rpm, by Federico Mena
+	Quintero. 
+	Don't focus the hidden window on map.
+	
+	Many thanks for never sending these patches to me, suse guys!
+
 2006-10-18  Christian Persch  <chpe@cvs.gnome.org>
 
 	* configure.ac:
