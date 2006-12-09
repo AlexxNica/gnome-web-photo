@@ -22,5 +22,27 @@
         <long>The command to thumbnail HTML files.</long>
       </locale>
    </schema>
+    <schema>
+      <key>/schemas/desktop/gnome/thumbnailers/application@xhtml@xml/enable</key>
+      <applyto>/desktop/gnome/thumbnailers/application@xhtml@xml/enable</applyto>
+      <owner>gnome-web-photo</owner>
+      <type>bool</type>
+      <default>true</default>
+      <locale name="C">
+        <short>Whether to enable thumbnailing of XHTML files</short>
+        <long>Whether to enable thumbnailing of XHTML files.</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/desktop/gnome/thumbnailers/application@xhtml@xml/command</key>
+      <applyto>/desktop/gnome/thumbnailers/application@xhtml@xml/command</applyto>
+      <owner>gnome-web-photo</owner>
+      <type>string</type>
+      <default>gnome-web-photo --mode=thumbnail --timeout=16 --size=%s %u %o</default>
+      <locale name="C">
+        <short>The command to thumbnail XHTML files</short>
+        <long>The command to thumbnail XHTML files.</long>
+      </locale>
+   </schema>
   </schemalist>
 </gconfschemafile>
