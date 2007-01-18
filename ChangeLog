@@ -1,3 +1,9 @@
+2007-01-18  Christian Persch  <chpe@svn.gnome.org>
+
+	* src/main.cpp:
+
+	Initialise GThread before calling any glib function.
+
 2006-12-09  Christian Persch  <chpe@cvs.gnome.org>
 
 	* data/thumbnailer.schemas.in:

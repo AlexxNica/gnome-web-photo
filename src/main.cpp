@@ -442,6 +442,9 @@ main (int argc, char **argv)
   textdomain (GETTEXT_PACKAGE);
 #endif
 
+  /* Have to initialise threads before calling any glib function */
+  g_thread_init (NULL);
+
   if (!gtk_init_with_args (&argc, &argv, NULL,
        			   (GOptionEntry*) entries,
 			   GETTEXT_PACKAGE, &error)) {
