@@ -74,6 +74,9 @@ enum
 enum
 {
   FORMAT_PNG,
+#ifdef ENABLE_JPEG
+  FORMAT_JPEG,
+#endif
   FORMAT_PPM,
   FORMAT_LAST,
   FORMAT_INVALID = FORMAT_LAST
@@ -90,7 +93,7 @@ typedef enum
   STATE_WORK,
 } StateType;
 
-static const char *STATES[] =  { "CLEAN", "END", "ERROR", "NEXT", "PRINT", "WAIT", "WORK" };
+static const char STATES[][6] =  { "CLEAN", "END", "ERROR", "NEXT", "PRINT", "WAIT", "WORK" };
 
 static StateType state;
 static void state_change (StateType);
@@ -99,8 +102,14 @@ static Embed *gEmbed;
 
 /* --- */
 
-static const char *modes[] = { "photo", "thumbnail", "print" };
-static const char *formats[] = { "png", "ppm" };
+static const char modes[][10] = { "photo", "thumbnail", "print" };
+static const char formats[][5] = {
+  "png",
+#ifdef ENABLE_JPEG
+  "jpeg",
+#endif
+  "ppm"
+};
 
 static int mode = MODE_INVALID;
 static int timeout = 60;
@@ -113,6 +122,7 @@ static char **arguments;
 static char *uri;
 static char *outfile;
 static gboolean is_file;
+static int quality = 100;
 
 static gboolean
 parse_mode (const gchar *option_name,
@@ -164,28 +174,6 @@ parse_format (const gchar *option_name,
   return TRUE;
 }
 
-static const GOptionEntry entries [] =
-{
-  { "mode", 'm', 0, G_OPTION_ARG_CALLBACK, (void*) parse_mode,
-    N_("Operation mode [photo|thumbnail|print]"), NULL },
-  { "timeout", 't', 0, G_OPTION_ARG_INT, &timeout,
-    N_("The timeout in seconds, or 0 to disable timeout (default: 60)"), "T" },
-  { "force", 'f', 0, G_OPTION_ARG_NONE, &force,
-    N_("Force output when timeout expires, even if the page isn't loaded fully"), NULL },
-  { "width", 'w', 0, G_OPTION_ARG_INT, &width,
-    N_("The desired width of the image (default: 1024)"), "W" },
-  { "size", 's', 0, G_OPTION_ARG_INT, &size,
-    N_("The thumbnail size (default: 256)"), "S" },
-  { "format", 0, 0, G_OPTION_ARG_CALLBACK, (void*) parse_format,
-    N_("File format for output. Supported are 'png' and 'ppm' (default:png)"), N_("FORMAT") },
-  { "print-background", 0, 0, G_OPTION_ARG_NONE, &print_background,
-    N_("Print background images and colours (default: false)"), NULL },
-  { "files", 0, 0, G_OPTION_ARG_NONE, &is_file,
-    "", },
-  { G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &arguments, "", NULL },
-  { NULL }
-};
-
 /* --- */
 
 static guint timeout_id;
@@ -219,6 +207,11 @@ take_picture (Embed *embed)
         case FORMAT_PNG:
           writer = new PNGWriter (mozembed, outfile);
           break;
+#ifdef ENABLE_JPEG
+        case FORMAT_JPEG:
+          writer = new JPEGWriter (mozembed, outfile, quality);
+          break;
+#endif
         case FORMAT_PPM:
           writer = new PPMWriter (mozembed, outfile);
           break;
@@ -432,8 +425,39 @@ main (int argc, char **argv)
 {
   GtkWidget *window;
   GdkScreen *screen;
+  GOptionContext *context;
   GError *error = NULL;
   int i, len;
+  const GOptionEntry main_options[] =
+  {
+    { "mode", 'm', 0, G_OPTION_ARG_CALLBACK, (void*) parse_mode,
+      N_("Operation mode [photo|thumbnail|print]"), NULL },
+    { "timeout", 't', 0, G_OPTION_ARG_INT, &timeout,
+      N_("The timeout in seconds, or 0 to disable timeout (default: 60)"), "T" },
+    { "force", 'f', 0, G_OPTION_ARG_NONE, &force,
+      N_("Force output when timeout expires, even if the page isn't loaded fully"), NULL },
+    { "width", 'w', 0, G_OPTION_ARG_INT, &width,
+      N_("The desired width of the image (default: 1024)"), "W" },
+    { "size", 's', 0, G_OPTION_ARG_INT, &size,
+      N_("The thumbnail size (default: 256)"), "S" },
+    { "format", 0, 0, G_OPTION_ARG_CALLBACK, (void*) parse_format,
+      N_("File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"), N_("FORMAT") },
+    { "print-background", 0, 0, G_OPTION_ARG_NONE, &print_background,
+      N_("Print background images and colours (default: false)"), NULL },
+    { "files", 0, 0, G_OPTION_ARG_NONE, &is_file,
+      "", },
+    { G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &arguments, "", NULL },
+    { NULL }
+  };
+
+#ifdef ENABLE_JPEG
+  GOptionGroup *jpeg_group;
+  const GOptionEntry jpeg_options[] = {
+    { "quality", 'q', 0, G_OPTION_ARG_INT, &quality, N_("The desired quality of the JPEG image (1 .. 100)"), N_("QUALITY") },
+    { NULL }
+  };
+#endif
+
 
 #ifdef ENABLE_NLS
   /* Initialize the i18n stuff */
@@ -445,13 +469,32 @@ main (int argc, char **argv)
   /* Have to initialise threads before calling any glib function */
   g_thread_init (NULL);
 
-  if (!gtk_init_with_args (&argc, &argv, NULL,
-       			   (GOptionEntry*) entries,
-			   GETTEXT_PACKAGE, &error)) {
+  /* Now parse the arguments */
+  context = g_option_context_new (NULL);
+#if GLIB_CHECK_VERSION (2, 12, 0)
+  g_option_context_set_translation_domain (context, GETTEXT_PACKAGE);
+#endif
+  g_option_context_add_main_entries (context, main_options, GETTEXT_PACKAGE);
+
+#ifdef ENABLE_JPEG
+  jpeg_group = g_option_group_new ("jpeg",
+				   N_("JPEG options:"),
+				   N_("JPEG options"),
+				   NULL, NULL);
+  g_option_group_set_translation_domain (jpeg_group, GETTEXT_PACKAGE);
+  g_option_group_add_entries (jpeg_group, jpeg_options);
+  g_option_context_add_group (context, jpeg_group);
+#endif
+
+  g_option_context_add_group (context, gtk_get_option_group (TRUE));
+
+  if (!g_option_context_parse (context, &argc, &argv, &error)) {
     g_print ("%s\n", error->message);
     g_error_free (error);
+    g_option_context_free (context);
     synopsis ();
   }
+  g_option_context_free (context);
 
   /* Mode not explicitly specified, derive from invocation filename */
   if (mode == MODE_INVALID) {
@@ -465,8 +508,6 @@ main (int argc, char **argv)
     } else {
       mode = MODE_PHOTO;
     }
-  
-    LOG ("Mode detection: %s -> %d\n", program, mode);
   }
 
   /* Check format */

@@ -81,6 +81,45 @@ PKG_CHECK_MODULES([DEPENDENCY], [\
 AC_SUBST([DEPENDENCY_CFLAGS])
 AC_SUBST([DEPENDENCY_LIBS])
 
+# ************
+# JPEG support
+# ************
+
+AC_MSG_CHECKING([whether JPEG support is requested])
+AC_ARG_ENABLE([jpeg],
+	[AS_HELP_STRING([--disable-jpeg],[Disable JPEG support])],
+	[enable_jpeg=$enableval],[enable_jpeg=yes])
+AC_MSG_RESULT([$enable_jpeg])
+
+# libjpeg sucks—it doesn't have a .pc file!
+have_jpeg=no
+if test "$enable_jpeg" != "no"; then
+	AC_CHECK_LIB([jpeg],[jpeg_destroy_decompress],[have_jpeg=yes],[have_jpeg=no])
+fi
+if test "$enable_jpeg" != "no" -a "$have_jpeg" = "yes"; then
+	AC_MSG_CHECKING([for jpeglib.h])
+	AC_PREPROC_IFELSE([AC_LANG_SOURCE(
+		[[#include <stdio.h>
+		  #undef PACKAGE
+		  #undef VERSION
+		  #undef HAVE_STDLIB_H
+		  #include <jpeglib.h>]])],
+		[have_jpeg=yes],
+		[have_jpeg=no])
+	AC_MSG_RESULT([$have_jpeg])
+fi
+if test "$enable_jpeg" = "yes" -a "$have_jpeg" = "yes"; then
+	JPEG_LIBS="-ljpeg"
+	AC_SUBST([JPEG_LIBS])
+	AC_DEFINE([ENABLE_JPEG],[1],[Define if JPEG support is enabled])
+elif test "$enable_jpeg" = "yes" -a "$have_jpeg" = "no"; then
+	AC_MSG_ERROR([JPEG support requested bug required jpeg library or headers not found])
+else
+	AC_MSG_WARN([JPEG support disabled])
+fi
+ 
+AM_CONDITIONAL([ENABLE_JPEG],[test "$enable_jpeg" = "yes" -a "$have_jpeg" = "yes"])
+
 # *****
 # GConf
 # *****

@@ -1,3 +1,13 @@
+2007-01-29  Christian Persch  <chpe@svn.gnome.org>
+
+	* configure.ac:
+	* src/Makefile.am:
+	* src/Writer.cpp:
+	* src/Writer.h:
+	* src/main.cpp:
+
+	Implement writing to JPEG.
+
 2007-01-18  Christian Persch  <chpe@svn.gnome.org>
 
 	* src/main.cpp:

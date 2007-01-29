@@ -643,3 +643,123 @@ ThumbnailWriter::Finish()
 
   return retval;
 }
+
+
+#ifdef ENABLE_JPEG
+/* JPEG Writer */
+
+JPEGWriter::JPEGWriter(GtkMozEmbed *aEmbed,
+		       const char *aFilename,
+		       PRUint16 aQuality)
+: Writer(aEmbed, aFilename)
+, mQuality(aQuality)
+, mFile(NULL)
+{
+  LOG ("JPEGWriter ctor\n");
+}
+
+JPEGWriter::~JPEGWriter()
+{
+  LOG ("JPEGWriter dtor\n");
+
+  if (mFile) {
+    fclose (mFile);
+  }
+
+  jpeg_destroy_compress (&mJPEG);
+};
+
+PRBool
+JPEGWriter::Prepare(nsIDrawingSurface *aSurface)
+{
+  if (mInitialised) return PR_TRUE;
+
+  mRow = (PRUint8*) malloc (3 * mWidth);
+  if (!mRow) return PR_FALSE;
+
+  mFile = fopen (mFilename.get(), "wb");
+  if (!mFile) return PR_FALSE;
+
+  mJPEG.err = jpeg_std_error (&mHandler);
+  jpeg_create_compress (&mJPEG);
+  if (mHadError) return PR_FALSE;
+
+  jpeg_stdio_dest (&mJPEG, mFile);
+  if (mHadError) return PR_FALSE;
+
+  mJPEG.image_width = mWidth;
+  mJPEG.image_height = mHeight;
+  mJPEG.input_components = 3;
+  mJPEG.in_color_space = JCS_RGB;
+
+  jpeg_set_defaults (&mJPEG);
+  if (mHadError) return PR_FALSE;
+
+  jpeg_set_quality (&mJPEG, mQuality, TRUE /* limit to baseline-JPEG values */);
+  if (mHadError) return PR_FALSE;
+
+  jpeg_start_compress (&mJPEG, TRUE);
+  if (mHadError) return PR_FALSE;
+
+#if 0
+  nsPixelFormat format;
+  aSurface->GetPixelFormat(&format);
+  /* FIXME: assert that subsequent surfaces have same format? */
+#endif
+
+  mInitialised = PR_TRUE;
+
+  return PR_TRUE;
+}
+
+void
+JPEGWriter::WriteSurface(nsIDrawingSurface *aSurface,
+			 PRUint32 aWidth,
+			 PRUint32 aHeight,
+			 PRUint8 *aData,
+			 PRInt32 aRowLen,
+		         PRInt32 aRowSpan,
+			 PRInt32 aPixelSpan)
+{
+  nsPixelFormat format;
+  aSurface->GetPixelFormat(&format);
+
+  PRUint8* buf = (PRUint8*) mRow;
+  for (PRUint32 i = 0; i < aHeight; ++i)
+    {
+      PRUint8* src = aData + i*aRowSpan;
+
+      PRUint8* dest = buf;
+      for (PRUint32 j = 0; j < aWidth; ++j)
+        {
+          /* v is the pixel value */
+#ifdef WORDS_BIGENDIAN
+          PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
+          v >>= (32 - 8*aPixelSpan);
+//maybe like this:  PRUint32 v = *((PRUint32*) src) >> (32 - 8*bytesPerPix);
+#else
+          PRUint32 v = *((PRUint32*) src);
+#endif
+	  dest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
+	  dest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
+	  dest[2] = ((v & format.mBlueMask) >> format.mBlueShift) << (8 - format.mBlueCount);
+          src += aPixelSpan;
+	  dest += 3;
+        }
+
+      JSAMPROW rows[1] = { (JSAMPLE*) mRow };
+      (void) jpeg_write_scanlines (&mJPEG, rows, 1);
+      if (mHadError) break;
+    }
+}
+
+PRBool
+JPEGWriter::Finish()
+{
+  if (mHadError) return PR_FALSE;
+
+  jpeg_finish_compress (&mJPEG);
+  return !mHadError;
+}
+
+#endif /* ENABLE_JPEG */

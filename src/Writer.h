@@ -26,6 +26,11 @@
 #include <gdk-pixbuf/gdk-pixdata.h>
 #include <png.h>
 
+#ifdef ENABLE_JPEG
+#include <jpeglib.h>
+#include <jerror.h>
+#endif
+
 class nsIDrawingSurface;
 
 class Writer
@@ -106,5 +111,26 @@ private:
   PRUint32 mSize;
   PRUint8 *mDest;
 };
+
+#ifdef ENABLE_JPEG
+class JPEGWriter : public Writer
+{
+public:
+  JPEGWriter (GtkMozEmbed*, const char *, PRUint16);
+  virtual ~JPEGWriter();
+
+  virtual PRBool Prepare(nsIDrawingSurface *);
+  virtual PRBool Finish();
+
+  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32, PRInt32);
+
+private:
+  PRUint16 mQuality;
+  FILE *mFile;
+  struct jpeg_compress_struct mJPEG;
+  struct jpeg_error_mgr mHandler;
+  PRUint8* mRow;
+};
+#endif /* ENABLE_JPEG */
 
 #endif

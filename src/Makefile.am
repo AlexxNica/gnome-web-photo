@@ -54,6 +54,7 @@ gnome_web_photo_LDFLAGS = \
 
 gnome_web_photo_LDADD = \
 	$(DEPENDENCY_LIBS)	\
+	$(JPEG_LIBS)		\
 	$(GECKO_LIBS)		\
 	$(GECKO_EXTRA_LIBS)
 
