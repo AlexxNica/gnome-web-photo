@@ -113,7 +113,7 @@ if test "$enable_jpeg" = "yes" -a "$have_jpeg" = "yes"; then
 	AC_SUBST([JPEG_LIBS])
 	AC_DEFINE([ENABLE_JPEG],[1],[Define if JPEG support is enabled])
 elif test "$enable_jpeg" = "yes" -a "$have_jpeg" = "no"; then
-	AC_MSG_ERROR([JPEG support requested bug required jpeg library or headers not found])
+	AC_MSG_ERROR([JPEG support requested but required jpeg library or headers not found])
 else
 	AC_MSG_WARN([JPEG support disabled])
 fi
