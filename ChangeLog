@@ -1,5 +1,12 @@
 2007-01-29  Christian Persch  <chpe@svn.gnome.org>
 
+	=== Release 0.3 ===
+
+	* NEWS:
+	* configure.ac:
+
+2007-01-29  Christian Persch  <chpe@svn.gnome.org>
+
 	* configure.ac:
 	* src/Makefile.am:
 	* src/Writer.cpp:

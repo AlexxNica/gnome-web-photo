@@ -1,3 +1,21 @@
+===================
+GNOME Web Photo 0.3
+===================
+
+Changes:
+
+	* Renice when thumbnailing
+	* Thumbnail application/xhtml+xml files
+	* Initialise GThread before calling any glib function
+
+
+===================
+GNOME Web Photo 0.2
+===================
+
+(no news available)
+
+===================
 GNOME Web Photo 0.1
 ===================
 
