@@ -1,3 +1,7 @@
+2007-01-30  Christian Persch  <chpe@svn.gnome.org>
+
+	* POTFILES.in: Add main.cpp.
+
 2007-01-30  Daniel Nylander <po@danielnylander.se>
 
 	* sv.po: Added Swedish translation.
