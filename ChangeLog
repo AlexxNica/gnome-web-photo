@@ -1,3 +1,9 @@
+2007-03-20  Christian Persch  <chpe@gnome.org>
+
+	* autogen.sh:
+
+	Require automake 1.9.
+
 2007-01-29  Christian Persch  <chpe@svn.gnome.org>
 
 	* configure.ac:
