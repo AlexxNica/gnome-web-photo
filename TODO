@@ -6,3 +6,5 @@
 * Fix the output on framed pages
 * Use <canvas> and drawWindow() instead of the low-level stuff (<canvas> can operate without a document,
   so we don't need to put it in an embed)
+* Add memory size and CPU time limit (look at totem-video-thumbnailer/indexer)
+* Implement printing to printer, using the gtk 2.10 print APIs
