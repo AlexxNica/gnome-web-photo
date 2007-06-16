@@ -1,5 +1,5 @@
 # Copyright © 2000-2004 Marco Pesenti Gritti
-# Copyright © 2003, 2004, 2005 Christian Persch
+# Copyright © 2003, 2004, 2005, 2006, 2007 Christian Persch
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the
@@ -26,8 +26,6 @@ AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip])
-
-AM_MAINTAINER_MODE
 
 IT_PROG_INTLTOOL([0.35.0])
 
