@@ -274,23 +274,43 @@ PNGWriter::Prepare(nsIDrawingSurface *aSurface)
   mFile = fopen (mFilename.get(), "wb");
   if (!mFile) return PR_FALSE;
 
+#ifdef PNG_iTXt_SUPPORTED
   PRUint32 n_keys = 3;
+#else
+  PRUint32 n_keys = 1;
+#endif
   mText = (png_textp) malloc (sizeof (png_text) * n_keys);
   if (!mText) return PR_FALSE;
 
+  memset (mText, 0, sizeof (png_text) * n_keys);
+
   mText[0].compression = PNG_TEXT_COMPRESSION_NONE;
-  mText[0].key  = "Title";
-  mText[0].text = mTitle.BeginWriting();
+  mText[0].key  = "Software";
+  mText[0].text = "GNOME Web Photo " VERSION;
   mText[0].text_length = strlen (mText[0].text);
-  mText[1].compression = PNG_TEXT_COMPRESSION_NONE;
-  mText[1].key  = "URL";
-  mText[1].text = mSpec.BeginWriting();
-  mText[1].text_length = strlen (mText[1].text);
-  mText[2].compression = PNG_TEXT_COMPRESSION_NONE;
-  mText[2].key  = "Creation Time";
-  mText[2].text = "FIXME";
-  mText[2].text_length = strlen (mText[2].text);
- 
+
+#ifdef PNG_iTXt_SUPPORTED
+  mText[0].lang = NULL;
+  mText[0].lang_key = NULL;
+
+  /* These chunks need UTF-8 text, so we can only write them with iTXt support */
+  mText[1].compression = PNG_ITXT_COMPRESSION_NONE;
+  mText[1].key  = "Title";
+  mText[1].text = mTitle.BeginWriting();
+  mText[1].text_length = 0; /* iTXt */
+  mText[1].itxt_length = strlen (mText[1].text);
+  mText[1].lang = NULL;
+  mText[1].lang_key = NULL;
+  
+  mText[2].compression = PNG_ITXT_COMPRESSION_NONE;
+  mText[2].key  = "URL";
+  mText[2].text = mSpec.BeginWriting();
+  mText[2].text_length = 0; /* iTXt */
+  mText[2].itxt_length = strlen (mText[2].text);
+  mText[2].lang = NULL;
+  mText[2].lang_key = NULL;
+#endif /* PNG_iTXt_SUPPORTED */
+
 	/*  The keywords that are given in the PNG Specification are:
 	
 	Title           Short (one line) mTitle or
