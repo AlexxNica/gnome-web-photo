@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gnome-web-photo HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-03-05 11:47+0900\n"
-"PO-Revision-Date: 2006-03-05 11:46+0900\n"
+"PO-Revision-Date: 2007-08-19 20:02+0200\n"
 "Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
@@ -19,16 +19,17 @@ msgstr ""
 
 #: ../data/thumbnailer.schemas.in.h:1
 msgid "The command to thumbnail HTML files"
-msgstr "HTML ファイルのサムネイルを生成するコマンド"
+msgstr ""
 
 #: ../data/thumbnailer.schemas.in.h:2
 msgid "The command to thumbnail HTML files."
-msgstr "HTML ファイルのサムネイルを生成する際に使用するコマンドです。"
+msgstr ""
 
 #: ../data/thumbnailer.schemas.in.h:3
 msgid "Whether to enable thumbnailing of HTML files"
-msgstr "HTML ファイルをサムネイル化するかどうか"
+msgstr ""
 
 #: ../data/thumbnailer.schemas.in.h:4
 msgid "Whether to enable thumbnailing of HTML files."
-msgstr "HTML ファイルのサムネイル生成を有効にするかどうかです。"
+msgstr ""
+
