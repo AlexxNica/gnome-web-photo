@@ -1,3 +1,7 @@
+Important:
+* Port to gecko 1.9/XULrunner. Maybe look at mozilla's reftest helper (mozilla/layout/tools/reftest/) ?
+
+Improvements:
 * Test on a big endian machine
 * Improve thumbnail creation time
 * Thumbnailing service? I.e. background process (which exits after some time without requests),
