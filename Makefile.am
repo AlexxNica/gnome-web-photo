@@ -27,7 +27,7 @@ DISTCHECK_CONFIGURE_FLAGS = --disable-schemas-install --with-gecko=$(GECKO)
 ChangeLog:
 	@if test -f $(top_srcdir)/.svn/entries; then \
 		svn log -v --xml -r HEAD:101 http://svn.gnome.org/svn/epiphany | \
-			xsltproc --stringparam strip-prefix "epiphany/trunk" \
+			xsltproc --stringparam strip-prefix "gnome-web-photo/trunk" \
 				 --stringparam include-rev "yes" $(top_srcdir)/svn2cl.xsl - > $@; \
 	fi
 
