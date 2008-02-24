@@ -74,6 +74,8 @@ static const char *size_types[] = { "variable", "fixed" };
 #define GNOME_VARIABLE_FONT_KEY   "/desktop/gnome/interface/document_font_name"
 #define GNOME_MONOSPACE_FONT_KEY  "/desktop/gnome/interface/monospace_font_name"
 #define EPHY_FONT_DIR             "/apps/epiphany/web"
+#define DEFAULT_VAR_FONT          "Sans 10"
+#define DEFAULT_MONO_FONT         "Monospace 10"
 #define DEFAULT_MIN_SIZE          7
 
 static PRBool
@@ -122,12 +124,15 @@ InitPrefs ()
 
   char *defaultFontVar = gconf_client_get_string (client, GNOME_VARIABLE_FONT_KEY, NULL);
   char *defaultFontMono = gconf_client_get_string (client, GNOME_MONOSPACE_FONT_KEY, NULL);
-  if (!defaultFontVar || !defaultFontMono) return PR_FALSE;
 
   char *defaultFont[2] = { nsnull, nsnull };
   int defaultSize[2] = { 0, 0 };
-  if (!ParsePangoFont (defaultFontVar, &defaultFont[0], &defaultSize[0]) ||
-      !ParsePangoFont (defaultFontMono, &defaultFont[1], &defaultSize[1])) return PR_FALSE;
+  if (!defaultFontVar ||
+      !ParsePangoFont (defaultFontVar, &defaultFont[0], &defaultSize[0]))
+    ParsePangoFont (DEFAULT_VAR_FONT, &defaultFont[0], &defaultSize[0]);
+  if (!defaultFontMono||
+      !ParsePangoFont (defaultFontMono, &defaultFont[1], &defaultSize[1]))
+    ParsePangoFont (DEFAULT_MONO_FONT, &defaultFont[1], &defaultSize[1]);
   g_free (defaultFontVar);
   g_free (defaultFontMono);
 
