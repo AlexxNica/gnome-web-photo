@@ -23,7 +23,7 @@
 
 #include <nsCOMPtr.h>
 #include <nsIDOMLoadListener.h>
-#include <nsString.h>
+#include <nsStringGlue.h>
 #include <gtkmozembed.h>
 
 class Listener : public nsIDOMLoadListener

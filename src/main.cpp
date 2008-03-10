@@ -25,6 +25,7 @@
 #include <glib/gi18n.h>
 #include <gtk/gtk.h>
 #include <gtkmozembed.h>
+#include <gtkmozembed_glue.cpp>
 #include <nsCOMPtr.h>
 #include <nsIServiceManager.h>
 #include <nsIStyleSheetService.h>
@@ -336,6 +337,48 @@ state_change (StateType new_state)
 static nsresult
 gecko_startup (void)
 {
+  nsresult rv;
+
+  static const GREVersionRange greVersion = {
+    "1.9a", PR_TRUE,
+    "1.9.*", PR_TRUE
+  };
+  char xpcomLocation[4096];
+  rv = GRE_GetGREPathWithProperties(&greVersion, 1, nsnull, 0, xpcomLocation, 4096);
+  if (NS_FAILED (rv))
+  {
+    g_warning ("Could not get gre path!\n");
+    return FALSE;
+  }
+
+  // Startup the XPCOM Glue that links us up with XPCOM.
+  rv = XPCOMGlueStartup(xpcomLocation);
+  if (NS_FAILED (rv))
+  {
+    g_warning ("Could not determine locale!\n");
+    return FALSE;
+  }
+
+  rv = GTKEmbedGlueStartup();
+  if (NS_FAILED (rv))
+  {
+    g_warning ("Could not startup glue!\n");
+    return FALSE;
+  }
+
+  rv = GTKEmbedGlueStartupInternal();
+  if (NS_FAILED (rv))
+  {
+    g_warning ("Could not startup internal glue!\n");
+    return FALSE;
+  }
+
+  char *lastSlash = strrchr(xpcomLocation, '/');
+  if (lastSlash)
+    *lastSlash = '\0';
+
+  gtk_moz_embed_set_path(xpcomLocation);
+
   /* BUG ALERT! If we don't have a profile, Gecko will crash on https sites and
    * when trying to open the password manager. The prefs will be set up so that
    * no cookies or passwords etc. will be persisted.
@@ -344,12 +387,6 @@ gecko_startup (void)
   profile = g_build_filename (g_get_home_dir (), GNOME_DOT_GNOME, NULL);
   gtk_moz_embed_set_profile_path (profile, "gnome-web-photo");
   g_free (profile);
-
-#ifdef HAVE_GECKO_1_9
-  gtk_moz_embed_set_path (GECKO_HOME);
-#else
-  gtk_moz_embed_set_comp_path (GECKO_HOME);
-#endif
 
   /* Fire up the beast! */
   gtk_moz_embed_push_startup ();
@@ -361,8 +398,6 @@ gecko_startup (void)
   if (!InitPrefs ()) {
     return NS_ERROR_FAILURE;
   }
-
-  nsresult rv = NS_OK;
 
   if (mode != MODE_PRINT) {
     /* This prevents us from printing all pages, so only do it for photo/thumbnail */
@@ -424,7 +459,6 @@ int
 main (int argc, char **argv)
 {
   GtkWidget *window;
-  GdkScreen *screen;
   GOptionContext *context;
   GError *error = NULL;
   int i, len;
@@ -596,11 +630,6 @@ main (int argc, char **argv)
   /* Create window */
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
-  gtk_window_set_role (GTK_WINDOW (window), "gnome-web-photo-hidden-window");
-  gtk_window_set_skip_taskbar_hint (GTK_WINDOW (window), TRUE);
-  gtk_window_set_skip_pager_hint (GTK_WINDOW (window), TRUE);
-  gtk_window_set_focus_on_map (GTK_WINDOW (window), FALSE);
-
   gEmbed = EMBED (g_object_new (TYPE_EMBED, NULL));
   g_signal_connect (gEmbed, "ready", G_CALLBACK (embed_ready_cb), NULL);
   g_signal_connect (gEmbed, "print-done", G_CALLBACK (print_done_cb), NULL);
@@ -608,13 +637,8 @@ main (int argc, char **argv)
   gtk_container_add (GTK_CONTAINER (window), GTK_WIDGET (gEmbed));
 
 #ifndef DEBUG_SHOW_WINDOW
-  /* Move the window off screen */
-  screen = gtk_widget_get_screen (GTK_WIDGET (window));
-  gtk_window_move (GTK_WINDOW (window),
-		   gdk_screen_get_width (screen) + 100,
-		   gdk_screen_get_height (screen) + 100);
-  gtk_widget_show_all (window);
-  gdk_window_hide (window->window);
+  gtk_widget_show(GTK_WIDGET(gEmbed));
+  gtk_widget_realize(GTK_WIDGET(gEmbed));
 #else
   gtk_widget_show_all (window);
 #endif

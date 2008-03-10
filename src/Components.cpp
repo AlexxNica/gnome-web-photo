@@ -137,80 +137,15 @@ NS_IMETHODIMP Prompter::Select(nsIDOMWindow *aParent, const PRUnichar *aDialogTi
   return NS_OK;
 }
 
-#ifdef HAVE_PSM
-
-#include <nsIBadCertListener.h>
-
-#define NSSDIALOGS_CLASSNAME "Dummy NSS Dialogs"
-#define NSSDIALOGS_CID { 0x128e643e, 0x8b28, 0x4eea, { 0x8d, 0xe7, 0x22, 0x4f, 0x5a, 0xa0, 0x56, 0x54 } }
-
-class NSSDialogs : public nsIBadCertListener
-{
-  public:
-    NS_DECL_ISUPPORTS
-    NS_DECL_NSIBADCERTLISTENER
-
-    NSSDialogs () { }
-    ~NSSDialogs () { }
-};
-
-NS_IMPL_THREADSAFE_ISUPPORTS1 (NSSDialogs, nsIBadCertListener)
-
-/* boolean confirmUnknownIssuer (in nsIInterfaceRequestor socketInfo, in nsIX509Cert cert, out short certAddType); */
-NS_IMETHODIMP
-NSSDialogs::ConfirmUnknownIssuer(nsIInterfaceRequestor *socketInfo,
-				 nsIX509Cert *cert,
-				 PRInt16 *certAddType,
-				 PRBool *_retval)
-{
-  LOG ("ConfirmUnknownIssuer\n");
-  *certAddType = nsIBadCertListener::ADD_TRUSTED_FOR_SESSION;
-  *_retval = PR_TRUE;
-  return NS_OK;
-}
-
-/* boolean confirmMismatchDomain (in nsIInterfaceRequestor socketInfo, in AUTF8String targetURL, in nsIX509Cert cert); */
-NS_IMETHODIMP
-NSSDialogs::ConfirmMismatchDomain(nsIInterfaceRequestor *socketInfo,
-				  const nsACString & targetURL,
-				  nsIX509Cert *cert,
-				  PRBool *_retval)
-{
-  LOG ("ConfirmMismatchDomain\n");
-  *_retval = PR_TRUE;
-  return NS_OK;
-}
-
-/* boolean confirmCertExpired (in nsIInterfaceRequestor socketInfo, in nsIX509Cert cert); */
-NS_IMETHODIMP
-NSSDialogs::ConfirmCertExpired(nsIInterfaceRequestor *socketInfo,
-			       nsIX509Cert *cert,
-			       PRBool *_retval)
-{
-  LOG ("ConfirmCertExpired\n");
-  *_retval = PR_TRUE;
-  return NS_OK;
-}
-
-/* void notifyCrlNextupdate (in nsIInterfaceRequestor socketInfo, in AUTF8String targetURL, in nsIX509Cert cert); */
-NS_IMETHODIMP
-NSSDialogs::NotifyCrlNextupdate(nsIInterfaceRequestor *socketInfo,
-				const nsACString & targetURL,
-				nsIX509Cert *cert)
-{
-  LOG ("NotifyCrlNextupdate\n");
-  return NS_OK;
-}
-
-#endif /* HAVE_PSM */
-
 /* -------------------------------------------------------------------------- */
 
 NS_GENERIC_FACTORY_CONSTRUCTOR(Prompter)
 
+#ifndef HAVE_GECKO_1_9
 #ifdef HAVE_PSM
 NS_GENERIC_FACTORY_CONSTRUCTOR(NSSDialogs)
 #endif
+#endif /* HAVE_GECKO_1_9 */
 
 static const nsModuleComponentInfo sAppComps[] =
 {
@@ -220,14 +155,6 @@ static const nsModuleComponentInfo sAppComps[] =
     NS_PROMPTSERVICE_CONTRACTID,
     PrompterConstructor
   },
-#ifdef HAVE_PSM
-  {
-    NSSDIALOGS_CLASSNAME,
-    NSSDIALOGS_CID,
-    NS_BADCERTLISTENER_CONTRACTID,
-    NSSDialogsConstructor
-  },
-#endif /* HAVE_PSM */
 };
 
 PRBool

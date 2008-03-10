@@ -37,13 +37,13 @@
 #include <nsIDocShell.h>
 #include <nsIDocumentViewer.h>
 #include <nsIMarkupDocumentViewer.h>
+#include <nsIInterfaceRequestorUtils.h>
 #include <nsIPresShell.h>
-#include <nsPresContext.h>
-#include <nsIView.h>
+#include <nsIDeviceContext.h>
 #include <nsIViewManager.h>
 #include <nsIScrollableView.h>
-#include <nsIRenderingContext.h>
-#include <nsIDrawingSurface.h>
+#include <gfxContext.h>
+#include <gfxPlatform.h>
 #include <nsRect.h>
 #include <gtkmozembed_internal.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
@@ -78,43 +78,24 @@ Writer::Write()
 {
   NS_ENSURE_STATE (mEmbed);
 
-  PRBool retval = PR_FALSE;
-
   nsresult rv;
   nsCOMPtr<nsIWebBrowser> browser;
   gtk_moz_embed_get_nsIWebBrowser (mEmbed, getter_AddRefs (browser));
-  NS_ENSURE_TRUE (browser, retval);
+  NS_ENSURE_TRUE (browser, PR_FALSE);
 
   nsCOMPtr<nsIDOMWindow> domWin;
   rv = browser->GetContentDOMWindow (getter_AddRefs (domWin));
-  NS_ENSURE_SUCCESS (rv, retval);
+  NS_ENSURE_SUCCESS (rv, PR_FALSE);
 
   nsCOMPtr<nsIDOMDocument> domDoc;
   rv = domWin->GetDocument (getter_AddRefs (domDoc));
-  NS_ENSURE_SUCCESS (rv, retval);
+  NS_ENSURE_SUCCESS (rv, PR_FALSE);
 
   nsCOMPtr<nsIDocument> doc (do_QueryInterface (domDoc, &rv));
-  NS_ENSURE_SUCCESS (rv, retval);
-
-  nsCOMPtr<nsISupports> docShellAsISupports (doc->GetContainer ());
-  nsCOMPtr<nsIDocShell> docShell (do_QueryInterface (docShellAsISupports, &rv));
-  NS_ENSURE_SUCCESS (rv, retval);
-
-  nsCOMPtr<nsIPresShell> presShell;
-  rv = docShell->GetPresShell (getter_AddRefs (presShell));
-  NS_ENSURE_SUCCESS (rv, retval);
-
-  nsCOMPtr<nsPresContext> presContext;
-  rv = docShell->GetPresContext (getter_AddRefs (presContext));
-  NS_ENSURE_SUCCESS (rv, retval);
-
-  rv = NS_ERROR_NULL_POINTER;
-  nsIViewManager *viewManager = presShell->GetViewManager ();
-  NS_ENSURE_TRUE (viewManager, retval);
+  NS_ENSURE_SUCCESS (rv, PR_FALSE);
 
   /* Get document information */
   CopyUTF16toUTF8 (doc->GetDocumentTitle(), mTitle);
-  mTitle.CompressWhitespace(PR_TRUE, PR_TRUE);
 
   nsIURI *uri = doc->GetDocumentURI();
   if (uri) {
@@ -122,6 +103,20 @@ Writer::Write()
   }
 
   doc->FlushPendingNotifications (Flush_Display);
+
+  nsCOMPtr<nsIDocShell> docShell (do_GetInterface (browser, &rv));
+  NS_ENSURE_SUCCESS (rv, rv);
+
+  nsCOMPtr<nsIPresShell> presShell;
+  rv = docShell->GetPresShell (getter_AddRefs (presShell));
+  NS_ENSURE_SUCCESS (rv, PR_FALSE);
+
+  nsIViewManager *viewManager = presShell->GetViewManager ();
+  NS_ENSURE_TRUE (viewManager, PR_FALSE);
+
+  nsIDeviceContext *dc; 
+  viewManager->GetDeviceContext (dc);
+  NS_ENSURE_TRUE (dc, PR_FALSE);
 
   nsIScrollableView* scrollableView = nsnull;
   viewManager->GetRootScrollableView (&scrollableView);
@@ -132,13 +127,11 @@ Writer::Write()
     viewManager->GetRootView(view);
   }
 
-  /* Get conversion factors */
-  float p2t = presContext->PixelsToTwips();
-  float t2p = presContext->TwipsToPixels();
+  PRInt32 p2a = dc->AppUnitsPerDevPixel();
 
   /* Limit the bitmap size */
-  nscoord twipLimitW = NSIntPixelsToTwips(mWidth, p2t);
-  nscoord twipLimitH = NSIntPixelsToTwips(mHeight, p2t);
+  nscoord twipLimitW = NSIntPixelsToAppUnits(mWidth, p2a);
+  nscoord twipLimitH = NSIntPixelsToAppUnits(mHeight, p2a);
 
   nsRect r = view->GetBounds() - view->GetPosition();
 
@@ -155,11 +148,11 @@ Writer::Write()
     return PR_FALSE;
   }
 
-  mWidth = NSTwipsToIntPixels(r.width, t2p);
-  mHeight = NSTwipsToIntPixels(r.height, t2p);
+  mWidth = NSAppUnitsToIntPixels(r.width, p2a);
+  mHeight = NSAppUnitsToIntPixels(r.height, p2a);
 
   PRUint32 stripe = (2 << 20) / mWidth;
-  nscoord twipStripe = NSIntPixelsToTwips(stripe, p2t);
+  nscoord twipStripe = NSIntPixelsToAppUnits(stripe, p2a);
 
   nsRect cutout(r);
   cutout.SizeTo(r.width, PR_MIN(r.height, twipStripe));
@@ -167,71 +160,62 @@ Writer::Write()
   PRUint32 roundCount = 0;
   const char* status = "";
 
+  PRUint32 width = NSAppUnitsToIntPixels(cutout.width, p2a);
+  PRUint32 height = NSAppUnitsToIntPixels(cutout.height, p2a);
+
+  nsRefPtr<gfxImageSurface> imgSurface =
+     new gfxImageSurface(gfxIntSize(width, height),
+                         gfxImageSurface::ImageFormatRGB24);
+  NS_ENSURE_TRUE(imgSurface, PR_FALSE);
+
+  nsRefPtr<gfxContext> imgContext = new gfxContext(imgSurface);
+
+  nsRefPtr<gfxASurface> surface = 
+    gfxPlatform::GetPlatform()->
+    CreateOffscreenSurface(gfxIntSize(width, height),
+      gfxASurface::ImageFormatRGB24);
+  NS_ENSURE_TRUE(surface, PR_FALSE);
+
+  nsRefPtr<gfxContext> context = new gfxContext(surface);
+  NS_ENSURE_TRUE(context, PR_FALSE);
+
   if (r.IsEmpty()) {
     status = "EMPTY";
+  } else if (!Prepare(imgSurface)) {
+    status = "PNGPREPAREFAILED";
   } else {
     PRBool failed = PR_FALSE;
+
     while (!cutout.IsEmpty() && !mHadError && !failed) {
       ++roundCount;
 
-      PRUint32 width = NSTwipsToIntPixels(cutout.width, t2p);
-      PRUint32 height = NSTwipsToIntPixels(cutout.height, t2p);
+      width = NSAppUnitsToIntPixels(cutout.width, p2a);
+      height = NSAppUnitsToIntPixels(cutout.height, p2a);
 
-      nsCOMPtr<nsIRenderingContext> context;
-      rv = viewManager->RenderOffscreen (view, cutout,
-                                         PR_FALSE, PR_TRUE, NS_RGB(255, 255, 255),
-                                         getter_AddRefs(context));
+      rv = presShell->RenderDocument(cutout, PR_FALSE, PR_TRUE,
+                                     NS_RGB(255, 255, 255), context);
+      if (NS_SUCCEEDED(rv)) {
+        imgContext->DrawSurface(surface, gfxSize(width, height));
+      }
+
       if (NS_FAILED(rv)) {
         failed = PR_TRUE;
         status = "FAILEDRENDER";
       } else {
-        nsIDrawingSurface* surface;
-        context->GetDrawingSurface(&surface);
-        if (!surface) {
-          failed = PR_TRUE;
-          status = "NOSURFACE";
-        } else {
-          PRUint32 w, h;
-          surface->GetDimensions(&w,&h);
-          /* these are computed from ScaleRoundOut(t2p) on cutout.Bounds(), and
-           * may be one pixel too wide and/or hight
-           */
-
-          if (width > w || height > h) {
-            failed = PR_TRUE;
-            status = "SIZEMISMATCH";
-          } else if (!Prepare(surface)) {
-            failed = PR_TRUE;
-            status = "PNGPREPAREFAILED";
-          } else {
-            PRUint8* data;
-            PRInt32 rowLen, rowSpan;
-            rv = surface->Lock(0, 0, w, h, (void**)&data, &rowSpan, &rowLen,
-                               NS_LOCK_SURFACE_READ_ONLY);
-            if (NS_FAILED(rv)) {
-	      failed = PR_TRUE;
-              status = "FAILEDLOCK";
-            } else {
-              LOG (".");
-              WriteSurface(surface, width, height, data, rowLen, rowSpan, rowLen/w);
-              surface->Unlock();
-            }
-          }
-        }
-        context->DestroyDrawingSurface(surface);
+        WriteSurface(imgSurface, width, height);
       }
       cutout.MoveBy(0, twipStripe);
-      cutout.IntersectRect(r, cutout);
+      cutout.height = PR_MIN(cutout.height, r.y + r.height - cutout.y);
     }
 
-    retval = Finish();
-    status = retval ? "OK" : status[0] != '\0' ? status : "FAILED";
+    rv = Finish();
+    status = rv ? "OK" : status[0] != '\0' ? status : "FAILED";
     LOG ("\n");
   }
 
   LOG ("%d round(s) of height %d, result: %s\n", roundCount, stripe, status);
 
-  return retval;
+  return rv;
 }
 
 /* PNG Writer */
@@ -267,7 +251,7 @@ PNGWriter::~PNGWriter()
 };
 
 PRBool
-PNGWriter::Prepare(nsIDrawingSurface *aSurface)
+PNGWriter::Prepare(gfxImageSurface *aSurface)
 {
   if (mInitialised) return PR_TRUE;
 
@@ -357,10 +341,6 @@ PNGWriter::Prepare(nsIDrawingSurface *aSurface)
 //                   PNG_RESOLUTION_METER);
 // 1000 * 72 / 25.4 = 2834
 
-  nsPixelFormat format;
-  aSurface->GetPixelFormat(&format);
-  /* FIXME: assert that subsequent surfaces have same format? */
-
   /* FIXME: do I need 8, or the format.m[R|G|B]Count here? */
   png_set_IHDR (mPNG, mInfo, mWidth, mHeight, 8 /* bits per sample */ /* FIXME? */,
                 PNG_COLOR_TYPE_RGB /* FIXME: alpha? */, PNG_INTERLACE_NONE,
@@ -368,10 +348,10 @@ PNGWriter::Prepare(nsIDrawingSurface *aSurface)
   if (mHadError) return PR_FALSE;
 
   png_color_8 sig_bit;
-  sig_bit.red = format.mRedCount;
-  sig_bit.green = format.mGreenCount;
-  sig_bit.blue = format.mBlueCount;
-  sig_bit.alpha = format.mAlphaCount;
+  sig_bit.red = 8;
+  sig_bit.green = 8;
+  sig_bit.blue = 8;
+  sig_bit.alpha = 0;
   png_set_sBIT (mPNG, mInfo, &sig_bit);
   if (mHadError) return PR_FALSE;
 
@@ -390,43 +370,27 @@ PNGWriter::Prepare(nsIDrawingSurface *aSurface)
 }
 
 void
-PNGWriter::WriteSurface(nsIDrawingSurface *aSurface,
+PNGWriter::WriteSurface(gfxImageSurface *aSurface,
 			PRUint32 aWidth,
-			PRUint32 aHeight,
-			PRUint8 *aData,
-			PRInt32 aRowLen,
-			PRInt32 aRowSpan,
-                        PRInt32 aPixelSpan)
+			PRUint32 aHeight)
 {
-  nsPixelFormat format;
-  aSurface->GetPixelFormat(&format);
+  long cairoStride = aSurface->Stride();
+  unsigned char* cairoData = aSurface->Data();
 
-  PRUint8* buf = (PRUint8*) mRow;
-  for (PRUint32 i = 0; i < aHeight; ++i)
-    {
-      PRUint8* src = aData + i*aRowSpan;
+  for (PRUint32 row = 0; row < aHeight; ++row) {
+    PRUint8* dest = mRow;
+    for (PRUint32 col = 0; col < aWidth; ++col) {
+      PRUint32* cairoPixel = reinterpret_cast<PRUint32*>
+                             ((cairoData + row * cairoStride + 4 * col));
 
-      PRUint8* dest = buf;
-      for (PRUint32 j = 0; j < aWidth; ++j)
-        {
-          /* v is the pixel value */
-#ifdef WORDS_BIGENDIAN
-          PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
-          v >>= (32 - 8*aPixelSpan);
-//maybe like this:  PRUint32 v = *((PRUint32*) src) >> (32 - 8*bytesPerPix);
-#else
-          PRUint32 v = *((PRUint32*) src);
-#endif
-	  dest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
-	  dest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
-	  dest[2] = ((v & format.mBlueMask) >> format.mBlueShift) << (8 - format.mBlueCount);
-          src += aPixelSpan;
-	  dest += 3;
-        }
-
-      png_write_row (mPNG, mRow);
-      if (mHadError) break;
+      dest[0] = (*cairoPixel >> 16) & 0xFF;
+      dest[1] = (*cairoPixel >>  8) & 0xFF;
+      dest[2] = (*cairoPixel >>  0) & 0xFF;
+      dest += 3;
     }
+    png_write_row (mPNG, mRow);
+    if (mHadError) break;
+  }
 }
 
 PRBool
@@ -484,7 +448,7 @@ PPMWriter::~PPMWriter()
 };
 
 PRBool
-PPMWriter::Prepare(nsIDrawingSurface *aSurface)
+PPMWriter::Prepare(gfxImageSurface *aSurface)
 {
   if (mInitialised) return PR_TRUE;
 
@@ -502,45 +466,30 @@ PPMWriter::Prepare(nsIDrawingSurface *aSurface)
 }
 
 void
-PPMWriter::WriteSurface(nsIDrawingSurface *aSurface,
+PPMWriter::WriteSurface(gfxImageSurface *aSurface,
                         PRUint32 aWidth,
-                        PRUint32 aHeight,
-                        PRUint8 *aData,
-                        PRInt32 aRowLen,
-                        PRInt32 aRowSpan,
-                        PRInt32 aPixelSpan)
+                        PRUint32 aHeight)
 {
-  nsPixelFormat format;
-  aSurface->GetPixelFormat(&format);
+  long cairoStride = aSurface->Stride();
+  unsigned char* cairoData = aSurface->Data();
 
-  PRUint8* buf = (PRUint8*) mRow;
-  for (PRUint32 i = 0; i < aHeight; ++i)
-    {
-      PRUint8* src = aData + i*aRowSpan;
+  for (PRUint32 row = 0; row < aHeight; ++row) {
+    PRUint8* dest = mRow;
+    for (PRUint32 col = 0; col < aWidth; ++col) {
+      PRUint32* cairoPixel = reinterpret_cast<PRUint32*>
+                             ((cairoData + row * cairoStride + 4 * col));
 
-      PRUint8* dest = mRow;
-      for (PRUint32 j = 0; j < aWidth; ++j)
-        {
-          /* v is the pixel value */
-#ifdef WORDS_BIGENDIAN
-          PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
-          v >>= (32 - 8*aPixelSpan);
-//maybe like this:  PRUint32 v = *((PRUint32*) src) >> (32 - 8*bytesPerPix);
-#else
-          PRUint32 v = *((PRUint32*) src);
-#endif
-          dest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
-          dest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
-          dest[2] = ((v & format.mBlueMask) >> format.mBlueShift) << (8 - format.mBlueCount);
-          src += aPixelSpan;
-          dest += 3;
-        }
-
-      if (fwrite(mRow, 3, mWidth, mFile) != mWidth) {
-        mHadError = PR_TRUE;
-        break;
-      }
+      dest[0] = (*cairoPixel >> 16) & 0xFF;
+      dest[1] = (*cairoPixel >>  8) & 0xFF;
+      dest[2] = (*cairoPixel >>  0) & 0xFF;
+      dest += 3;
     }
+
+    if (fwrite(mRow, 3, mWidth, mFile) != mWidth) {
+      mHadError = PR_TRUE;
+      break;
+    }
+  }
 }
 
 PRBool
@@ -573,7 +522,7 @@ ThumbnailWriter::~ThumbnailWriter()
 }
 
 PRBool
-ThumbnailWriter::Prepare(nsIDrawingSurface *aSurface)
+ThumbnailWriter::Prepare(gfxImageSurface *aSurface)
 {
   if (!mInitialised) {
     void *buf = malloc (sizeof (GdkPixdata) + 3 * THUMBNAIL_WIDTH * THUMBNAIL_HEIGHT);
@@ -596,38 +545,25 @@ ThumbnailWriter::Prepare(nsIDrawingSurface *aSurface)
 }  
 
 void
-ThumbnailWriter::WriteSurface(nsIDrawingSurface *aSurface,
+ThumbnailWriter::WriteSurface(gfxImageSurface *aSurface,
 			      PRUint32 aWidth,
-			      PRUint32 aHeight,
-			      PRUint8 *aData,
-			      PRInt32 aRowLen,
-			      PRInt32 aRowSpan,
-                              PRInt32 aPixelSpan)
+			      PRUint32 aHeight)
 {
-  nsPixelFormat format;
-  aSurface->GetPixelFormat(&format);
+  long cairoStride = aSurface->Stride();
+  unsigned char* cairoData = aSurface->Data();
 
-  for (PRUint32 i = 0; i < aHeight; ++i)
-    {
-      PRUint8* src = aData + i*aRowSpan;
-      for (PRUint32 j = 0; j < aWidth; ++j)
-        {
-          /* v is the pixel value */
-#ifdef WORDS_BIGENDIAN
-          PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
-          v >>= (32 - 8*aPixelSpan);
-#else
-          PRUint32 v = *((PRUint32*) src);
-#endif
-	  mDest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
-	  mDest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
-	  mDest[2] = ((v & format.mBlueMask) >> format.mBlueShift) << (8 - format.mBlueCount);
-          src += aPixelSpan;
-	  mDest += 3;
-        }
+  for (PRUint32 row = 0; row < aHeight; ++row) {
+    for (PRUint32 col = 0; col < aWidth; ++col) {
+      PRUint32* cairoPixel = reinterpret_cast<PRUint32*>
+                             ((cairoData + row * cairoStride + 4 * col));
 
-      if (mHadError) break;
+      mDest[0] = (*cairoPixel >> 16) & 0xFF;
+      mDest[1] = (*cairoPixel >>  8) & 0xFF;
+      mDest[2] = (*cairoPixel >>  0) & 0xFF;
+      mDest += 3;
     }
+    if (mHadError) break;
+  }
 }
 
 PRBool
@@ -690,7 +626,7 @@ JPEGWriter::~JPEGWriter()
 };
 
 PRBool
-JPEGWriter::Prepare(nsIDrawingSurface *aSurface)
+JPEGWriter::Prepare(gfxImageSurface *aSurface)
 {
   if (mInitialised) return PR_TRUE;
 
@@ -733,44 +669,29 @@ JPEGWriter::Prepare(nsIDrawingSurface *aSurface)
 }
 
 void
-JPEGWriter::WriteSurface(nsIDrawingSurface *aSurface,
+JPEGWriter::WriteSurface(gfxImageSurface *aSurface,
 			 PRUint32 aWidth,
-			 PRUint32 aHeight,
-			 PRUint8 *aData,
-			 PRInt32 aRowLen,
-		         PRInt32 aRowSpan,
-			 PRInt32 aPixelSpan)
+			 PRUint32 aHeight)
 {
-  nsPixelFormat format;
-  aSurface->GetPixelFormat(&format);
+  long cairoStride = aSurface->Stride();
+  unsigned char* cairoData = aSurface->Data();
 
-  PRUint8* buf = (PRUint8*) mRow;
-  for (PRUint32 i = 0; i < aHeight; ++i)
-    {
-      PRUint8* src = aData + i*aRowSpan;
+  for (PRUint32 row = 0; row < aHeight; ++row) {
+    PRUint8* dest = mRow;
+    for (PRUint32 col = 0; col < aWidth; ++col) {
+      PRUint32* cairoPixel = reinterpret_cast<PRUint32*>
+                             ((cairoData + row * cairoStride + 4 * col));
 
-      PRUint8* dest = buf;
-      for (PRUint32 j = 0; j < aWidth; ++j)
-        {
-          /* v is the pixel value */
-#ifdef WORDS_BIGENDIAN
-          PRUint32 v = (src[0] << 24) | (src[1] << 16) | (src[2] << 8) | src[3];
-          v >>= (32 - 8*aPixelSpan);
-//maybe like this:  PRUint32 v = *((PRUint32*) src) >> (32 - 8*bytesPerPix);
-#else
-          PRUint32 v = *((PRUint32*) src);
-#endif
-	  dest[0] = ((v & format.mRedMask) >> format.mRedShift) << (8 - format.mRedCount);
-	  dest[1] = ((v & format.mGreenMask) >> format.mGreenShift) << (8 - format.mGreenCount);
-	  dest[2] = ((v & format.mBlueMask) >> format.mBlueShift) << (8 - format.mBlueCount);
-          src += aPixelSpan;
-	  dest += 3;
-        }
-
-      JSAMPROW rows[1] = { (JSAMPLE*) mRow };
-      (void) jpeg_write_scanlines (&mJPEG, rows, 1);
-      if (mHadError) break;
+      dest[0] = (*cairoPixel >> 16) & 0xFF;
+      dest[1] = (*cairoPixel >>  8) & 0xFF;
+      dest[2] = (*cairoPixel >>  0) & 0xFF;
+      dest += 3;
     }
+
+    JSAMPROW rows[1] = { (JSAMPLE*) mRow };
+    (void) jpeg_write_scanlines (&mJPEG, rows, 1);
+    if (mHadError) break;
+  }
 }
 
 PRBool

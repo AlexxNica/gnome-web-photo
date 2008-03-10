@@ -21,7 +21,8 @@
 #ifndef WRITER_H
 #define WRITER_H
 
-#include <nsString.h>
+#include <nsStringGlue.h>
+#include <gfxImageSurface.h>
 #include <gtkmozembed.h>
 #include <gdk-pixbuf/gdk-pixdata.h>
 #include <png.h>
@@ -31,8 +32,6 @@
 #include <jerror.h>
 #endif
 
-class nsIDrawingSurface;
-
 class Writer
 {
 public:
@@ -41,9 +40,9 @@ public:
 
   PRBool Write ();
 
-  virtual PRBool Prepare(nsIDrawingSurface *) = 0;
+  virtual PRBool Prepare(gfxImageSurface *) = 0;
   virtual PRBool Finish() = 0;
-  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32, PRInt32) = 0;
+  virtual void WriteSurface(gfxImageSurface*, PRUint32, PRUint32) = 0;
 
 protected:
   GtkMozEmbed *mEmbed;
@@ -64,10 +63,10 @@ public:
   PNGWriter (GtkMozEmbed*, const char *);
   virtual ~PNGWriter();
 
-  virtual PRBool Prepare(nsIDrawingSurface *);
+  virtual PRBool Prepare(gfxImageSurface *);
   virtual PRBool Finish();
 
-  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32, PRInt32);
+  virtual void WriteSurface(gfxImageSurface*, PRUint32, PRUint32);
 
   static void WarnCallback(png_structp, png_const_charp);
   static void ErrorCallback(png_structp, png_const_charp);
@@ -86,10 +85,10 @@ public:
   PPMWriter (GtkMozEmbed*, const char *);
   virtual ~PPMWriter();
 
-  virtual PRBool Prepare(nsIDrawingSurface *);
+  virtual PRBool Prepare(gfxImageSurface *);
   virtual PRBool Finish();
 
-  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32, PRInt32);
+  virtual void WriteSurface(gfxImageSurface*, PRUint32, PRUint32);
 
 private:
   FILE *mFile;
@@ -102,9 +101,9 @@ public:
   ThumbnailWriter(GtkMozEmbed*, const char*, PRUint32);
   virtual ~ThumbnailWriter();
 
-  virtual PRBool Prepare(nsIDrawingSurface *);
+  virtual PRBool Prepare(gfxImageSurface *);
   virtual PRBool Finish();
-  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32, PRInt32);
+  virtual void WriteSurface(gfxImageSurface*, PRUint32, PRUint32);
 
 private:
   GdkPixdata *mData;
@@ -119,10 +118,10 @@ public:
   JPEGWriter (GtkMozEmbed*, const char *, PRUint16);
   virtual ~JPEGWriter();
 
-  virtual PRBool Prepare(nsIDrawingSurface *);
+  virtual PRBool Prepare(gfxImageSurface *);
   virtual PRBool Finish();
 
-  virtual void WriteSurface(nsIDrawingSurface*, PRUint32, PRUint32, PRUint8*, PRInt32, PRInt32, PRInt32);
+  virtual void WriteSurface(gfxImageSurface*, PRUint32, PRUint32);
 
 private:
   PRUint16 mQuality;

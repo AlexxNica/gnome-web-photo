@@ -27,7 +27,7 @@
 #include <nsIWebBrowserPrint.h>
 #include <nsIWebProgressListener.h>
 #include <nsIPrintProgressParams.h>
-#include <nsString.h>
+#include <nsStringGlue.h>
 #include <gtkmozembed.h>
 
 class nsIPrintSettings;

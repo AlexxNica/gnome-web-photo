@@ -26,9 +26,9 @@
 #include <nsCOMPtr.h>
 #include <nsIPrefService.h>
 #include <nsIServiceManager.h>
-#include <nsIServiceManager.h>
+#include <nsServiceManagerUtils.h>
 #include <nsILocalFile.h>
-#include <nsString.h>
+#include <nsStringGlue.h>
 
 #include <pango/pango.h>
 #include <gconf/gconf-client.h>

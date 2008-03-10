@@ -27,6 +27,7 @@
 #include <nsIPrintSettings.h>
 #include <nsIPrintSettingsService.h>
 #include <nsIServiceManager.h>
+#include <nsServiceManagerUtils.h>
 #include <nsIInterfaceRequestorUtils.h>
 #include <nsNativeCharsetUtils.h>
 #include <gtkmozembed_internal.h>
@@ -44,10 +45,10 @@ Printer::Printer (GtkMozEmbed *aEmbed,
 , mPrintBG(aPrintBG)
 {
   if (aFilename[0] == '/') {
-    NS_CopyNativeToUnicode (nsDependentCString(aFilename), mFilename);
+    NS_CStringToUTF16 (nsCString (aFilename), NS_CSTRING_ENCODING_UTF8, mFilename);
   } else {
     char *path = g_build_filename (g_get_current_dir(), aFilename, NULL);
-    NS_CopyNativeToUnicode (nsDependentCString(path), mFilename);
+    NS_CStringToUTF16 (nsCString (path), NS_CSTRING_ENCODING_UTF8, mFilename);
     g_free(path);
   }
 }
@@ -100,7 +101,6 @@ Printer::SetSettings(nsIPrintSettings *aSettings)
 {
 	aSettings->SetPrinterName (NS_LITERAL_STRING("PostScript/default").get());
 	aSettings->SetPrintRange (nsIPrintSettings::kRangeAllPages);
-	aSettings->SetPaperSize (nsIPrintSettings::kPaperSizeDefined);
 	aSettings->SetPaperSizeUnit (nsIPrintSettings::kPaperSizeMillimeters);
 	aSettings->SetPaperWidth (210.0);
 	aSettings->SetPaperHeight (297.0);

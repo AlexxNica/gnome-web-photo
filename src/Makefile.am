@@ -36,28 +36,31 @@ gnome_web_photo_SOURCES = \
 	main.cpp
 
 gnome_web_photo_CPPFLAGS = \
+	$(DEPENDENCY_CFLAGS)			\
 	$(addprefix -I$(GECKO_INCLUDE_ROOT)/,$(gecko_include_subdirs))	\
 	-DSHARE_DIR=\"$(pkgdatadir)\"   	\
 	-DLOCALEDIR=\"$(datadir)/locale\"	\
 	-DGECKO_HOME=\"$(GECKO_HOME)\"	\
 	-DGECKO_PREFIX=\"$(GECKO_PREFIX)\"	\
+        -DXPCOM_GLUE_USE_NSPR			\
+        -DXPCOM_GLUE				\
 	$(AM_CPPFLAGS)
 
 gnome_web_photo_CXXFLAGS = \
 	$(DEPENDENCY_CFLAGS) 	\
-	$(GECKO_CFLAGS)	\
+	$(LIBXUL_INCLUDES)	\
+	$(LIBXUL_CXXFLAGS)	\
 	$(AM_CXXFLAGS)
 
 gnome_web_photo_LDFLAGS = \
-	-R$(GECKO_HOME)	\
+	-R$(LIBXUL_LIBDIR)	\
 	$(AM_LDFLAGS)
 
 gnome_web_photo_LDADD = \
 	$(DEPENDENCY_LIBS)	\
 	$(JPEG_LIBS)		\
-	$(GECKO_LIBS)		\
-	$(GECKO_EXTRA_LIBS)
-
+	$(LIBXUL_LIBS)		\
+	-lxpcomglue
 
 install-exec-hook: gnome-web-photo
 	cd $(DESTDIR)$(bindir) && \

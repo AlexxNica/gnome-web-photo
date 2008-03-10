@@ -1,5 +1,5 @@
 # Copyright © 2000-2004 Marco Pesenti Gritti
-# Copyright © 2003, 2004, 2005, 2006, 2007 Christian Persch
+# Copyright © 2003, 2004, 2005 Christian Persch
 #
 # This program is free software; you can redistribute it and/or modify it
 # under the terms of the GNU General Public License as published by the
@@ -130,58 +130,12 @@ fi
 
 AM_GCONF_SOURCE_2
 
+# *********
+# Xulrunner
+# *********
 
-# *******
-# Mozilla
-# *******
-
-GECKO_INIT([GECKO])
-GECKO_DEFINES
-
-AC_SUBST([GECKO])
-AC_SUBST([GECKO_FLAVOUR])
-AC_SUBST([GECKO_INCLUDE_ROOT])
-AC_SUBST([GECKO_HOME])
-AC_SUBST([GECKO_PREFIX])
-
-case "$GECKO" in
-seamonkey) min_version=1.0 ;;
-*firefox) min_version=1.4 ;;
-xulrunner) min_version=1.8 ;;
-esac
-
-PKG_CHECK_MODULES([GECKO], [${gecko_cv_gecko}-xpcom >= $min_version ${gecko_cv_extra_pkg_dependencies}])
-AC_SUBST([GECKO_CFLAGS])
-AC_SUBST([GECKO_LIBS])
-
-# In xulrunner, gkgfx is in libxul; for all others we need to 
-# explicitly link against it
-
-if test "$GECKO" != "xulrunner"; then
-	GECKO_EXTRA_LIBS="$GECKO_EXTRA_LIBS -lgkgfx"
-fi
-
-AC_SUBST([GECKO_EXTRA_LIBS])
-
-# Check for PSM headers
-
-AC_MSG_CHECKING([for mozilla security compoment])
-GECKO_COMPILE_IFELSE([pipnss],
-        [AC_LANG_PROGRAM(
-                [[#include <nsIX509Cert.h>]],
-                [[nsIX509Cert *c;
-                  c->GetIssuer (nsnull);]]
-        )],
-        [AC_DEFINE([HAVE_PSM], [1],[Define if you have the mozilla NSS headers installed]) have_psm=yes],
-        [have_psm=no])
-AC_MSG_RESULT([$have_psm])
-
-AM_CONDITIONAL([HAVE_PSM],[test "x$have_psm" = "xyes"])
-
-# Needed since 1.8b2
-# Define this down here so it doesn't affect the API checks above
-
-AC_DEFINE([MOZILLA_INTERNAL_API],[1],[Define for access to internal mozilla API])
+LIBXUL_INIT
+LIBXUL_DEFINES
 
 # ******************
 # Portability checks
