@@ -8,7 +8,6 @@ EXTRA_DIST = 			\
 	intltool-update.in	\
 	intltool-extract.in	\
 	ChangeLog		\
-	ChangeLog-20090919	\
 	COPYING.README		\
 	COPYING.LGPL		\
 	HACKING			\
@@ -26,7 +25,8 @@ DISTCHECK_CONFIGURE_FLAGS = --disable-schemas-install --with-gecko=$(GECKO)
 
 ChangeLog:
 	@if test -f $(top_srcdir)/.svn/entries; then \
-		svn log -v --xml -r HEAD:101 http://svn.gnome.org/svn/epiphany | \
+		echo Generating ChangeLog...; \
+		svn log -v --xml -r HEAD:101 http://svn.gnome.org/svn/gnome-web-photo | \
 			xsltproc --stringparam strip-prefix "gnome-web-photo/trunk" \
 				 --stringparam include-rev "yes" $(top_srcdir)/svn2cl.xsl - > $@; \
 	fi
