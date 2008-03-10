@@ -1,4 +1,12 @@
 ===================
+GNOME Web Photo 0.4
+===================
+
+Changes:
+	* Port to xulrunner 1.9, and remove support for gecko 1.8.
+
+
+===================
 GNOME Web Photo 0.3
 ===================
 
