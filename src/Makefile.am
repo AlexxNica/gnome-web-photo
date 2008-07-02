@@ -50,6 +50,7 @@ gnome_web_photo_CXXFLAGS = \
 	$(DEPENDENCY_CFLAGS) 	\
 	$(LIBXUL_INCLUDES)	\
 	$(LIBXUL_CXXFLAGS)	\
+	-UGTK_DISABLE_DEPRECATED\
 	$(AM_CXXFLAGS)
 
 gnome_web_photo_LDFLAGS = \
