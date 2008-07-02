@@ -4,19 +4,13 @@ ACLOCAL_AMFLAGS = -I m4
 
 EXTRA_DIST = 			\
 	autogen.sh		\
-	intltool-merge.in	\
-	intltool-update.in	\
-	intltool-extract.in	\
 	ChangeLog		\
 	COPYING.README		\
 	COPYING.LGPL		\
 	HACKING			\
 	MAINTAINERS
 
-DISTCLEANFILES = 		\
-	intltool-extract 	\
-	intltool-merge 		\
-	intltool-update
+DISTCLEANFILES =
 
 DISTCHECK_CONFIGURE_FLAGS = --disable-schemas-install --with-gecko=$(GECKO)
 
