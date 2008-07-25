@@ -505,6 +505,7 @@ ThumbnailWriter::ThumbnailWriter(GtkMozEmbed *aEmbed,
 				 PRUint32 aSize)
 : Writer(aEmbed, aFilename)
 , mSize(aSize)
+, mData(NULL)
 {
   LOG ("ThumbnailWriter ctor\n");
 
