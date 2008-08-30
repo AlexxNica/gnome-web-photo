@@ -73,3 +73,4 @@ pref("browser.blink_allowed", false);
 // we don't want an image of an error page
 pref("browser.xul.error_pages.enabled", false);
 
+pref("general.useragent.firefox","Firefox/3.0");
