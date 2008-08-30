@@ -18,7 +18,9 @@ DISTCHECK_CONFIGURE_FLAGS = --disable-schemas-install --with-gecko=$(GECKO)
 # Only build this when in an svn checkout.
 
 ChangeLog:
-	@if test -f $(top_srcdir)/.svn/entries; then \
+	@if test -f $(top_srcdir)/.git/HEAD; then \
+		git log --stat > $@; \
+	elif test -f $(top_srcdir)/.svn/entries; then \
 		echo Generating ChangeLog...; \
 		svn log -v --xml -r HEAD:101 http://svn.gnome.org/svn/gnome-web-photo | \
 			xsltproc --stringparam strip-prefix "gnome-web-photo/trunk" \
