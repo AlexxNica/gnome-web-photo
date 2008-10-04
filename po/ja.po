@@ -1,14 +1,14 @@
 # gnome-web-photo ja.po.
-# Copyright (C) 2006 Free Software Foundation, Inc.
-# This file is distributed under the same license as the 'gnome-web-photo' package.
-# Takeshi AIHANA <takeshi.aihana@gmail.com>, 2006.
+# Copyright (C) 2006,2008 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gnome-web-photo package.
+# Takeshi AIHANA <takeshi.aihana@gmail.com>, 2006, 2008.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gnome-web-photo HEAD\n"
+"Project-Id-Version: gnome-web-photo trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-03-05 11:47+0900\n"
-"PO-Revision-Date: 2006-03-05 11:46+0900\n"
+"POT-Creation-Date: 2008-10-04 15:23+0900\n"
+"PO-Revision-Date: 2008-10-04 15:14+0900\n"
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -24,9 +24,119 @@ msgid "The command to thumbnail HTML files."
 msgstr "HTML ファイルのサムネイルを生成する際に使用するコマンドです。"
 
 #: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail XHTML files"
+msgstr "XHTML ファイルのサムネイルを生成するコマンド"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail XHTML files."
+msgstr "XHTML ファイルのサムネイルを生成する際に使用するコマンドです。"
+
+#: ../data/thumbnailer.schemas.in.h:5
 msgid "Whether to enable thumbnailing of HTML files"
 msgstr "HTML ファイルをサムネイル化するかどうか"
 
-#: ../data/thumbnailer.schemas.in.h:4
+#: ../data/thumbnailer.schemas.in.h:6
 msgid "Whether to enable thumbnailing of HTML files."
 msgstr "HTML ファイルのサムネイル生成を有効にするかどうかです。"
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "XHTML ファイルをサムネイル化するかどうか"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "XHTML ファイルのサムネイル生成を有効にするかどうかです。"
+
+#: ../src/main.cpp:146
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "不明なモードです: %s"
+
+#: ../src/main.cpp:171
+#, c-format
+msgid "Unknown format '%s'"
+msgstr "不明な形式です: %s"
+
+#: ../src/main.cpp:439
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "用法: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/main.cpp:443
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
+"FILE OUTFILE [...]\n"
+msgstr ""
+"用法: %s [-t 時間] [--force] [--format 形式] [-w 幅] [--files] URI|ファイル "
+"出力先 [...]\n"
+
+#: ../src/main.cpp:446
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+"OUTFILE [...]\n"
+msgstr ""
+"用法: %s [-t 時間] [--force] [-w 幅] -s サイズ [--files] URI|ファイル 出力先 "
+"[...]\n"
+
+#: ../src/main.cpp:449
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
+"URI|FILE OUTFILE [...]\n"
+msgstr ""
+"用法: %s [-t 時間] [--force] [-w 幅] [--print-background] [--files] URI|ファ"
+"イル 出力先 [...]\n"
+
+#: ../src/main.cpp:468
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "操作モードを指定する [photo|thumbnail|print]"
+
+#: ../src/main.cpp:470
+msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr ""
+"タイムアウトの時間 (単位は秒)、またはタイムアウトを無効にする場合は 0 (デフォ"
+"ルト: 60)"
+
+#: ../src/main.cpp:472
+msgid "Force output when timeout expires, even if the page isn't loaded fully"
+msgstr ""
+"ページが完全に読み込まれていない場合でもタイムアウト後に強制的に出力する"
+
+#: ../src/main.cpp:474
+msgid "The desired width of the image (default: 1024)"
+msgstr "出力する画像の幅を指定する (デフォルト: 1024)"
+
+#: ../src/main.cpp:476
+msgid "The thumbnail size (default: 256)"
+msgstr "出力するサムネイルのサイズを指定する (デフォルト: 256)"
+
+#: ../src/main.cpp:478
+msgid ""
+"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+msgstr "出力する画像の形式を指定する [png|jpeg|ppm] (デフォルト: png)"
+
+#: ../src/main.cpp:478
+msgid "FORMAT"
+msgstr "形式"
+
+#: ../src/main.cpp:480
+msgid "Print background images and colours (default: false)"
+msgstr "背景の画像と色を出力する (デフォルト: 無効)"
+
+#: ../src/main.cpp:490
+msgid "The desired quality of the JPEG image (1 .. 100)"
+msgstr "JPEG 画像の品質を指定する (1 .. 100)"
+
+#: ../src/main.cpp:490
+msgid "QUALITY"
+msgstr "品質"
+
+#: ../src/main.cpp:515
+msgid "JPEG options:"
+msgstr "JPEG 関連のオプション:"
+
+#: ../src/main.cpp:516
+msgid "JPEG options"
+msgstr "JPEG 関連のオプション"
