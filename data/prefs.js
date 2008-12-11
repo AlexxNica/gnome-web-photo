@@ -45,9 +45,6 @@ pref("xpinstall.enabled", false);
 // disable typeahead find
 pref("accessibility.typeaheadfind", false);
 
-// use system proxy prefs
-pref("config.use_system_prefs", true);
-
 // disble null plugin
 pref("plugin.default_plugin_disabled", true);
 
