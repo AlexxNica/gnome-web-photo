@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Swedish translation for gnome-web-photo.
+# Copyright (C) 2007-2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gnome-web-photo package.
+# Daniel Nylander <po@danielnylander.se>, 2007, 2009.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-web-photo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-30 23:02+0100\n"
-"PO-Revision-Date: 2007-01-30 23:02+0100\n"
+"POT-Creation-Date: 2009-02-20 13:56+0100\n"
+"PO-Revision-Date: 2009-02-20 13:59+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -46,3 +46,82 @@ msgstr "Huruvida skapandet av miniatyrbilder för XHTML-filer ska aktiveras"
 #: ../data/thumbnailer.schemas.in.h:8
 msgid "Whether to enable thumbnailing of XHTML files."
 msgstr "Huruvida skapandet av miniatyrbilder för XHTML-filer ska aktiveras."
+
+#: ../src/main.cpp:146
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Okänt läge \"%s\""
+
+#: ../src/main.cpp:171
+#, c-format
+msgid "Unknown format '%s'"
+msgstr "Okänt format \"%s\""
+
+#: ../src/main.cpp:439
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "Användning: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/main.cpp:443
+#, c-format
+msgid "Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|FILE OUTFILE [...]\n"
+msgstr "Användning: %s [-t TIDSGRÄNS] [--force] [--format FORMAT] [-w BREDD] [--files] URI|FIL UTFIL [...]\n"
+
+#: ../src/main.cpp:446
+#, c-format
+msgid "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE OUTFILE [...]\n"
+msgstr "Användning: %s [-t TIDSGRÄNS] [--force] [-w BREDD] -s STORLEK [--files] URI|FIL UTFIL [...]\n"
+
+#: ../src/main.cpp:449
+#, c-format
+msgid "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] URI|FILE OUTFILE [...]\n"
+msgstr "Användning: %s [-t TIDSGRÄNS] [--force] [-w BREDD] [--print-background] [--files] URI|FIL UTFIL [...]\n"
+
+#: ../src/main.cpp:468
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "Åtgärdsläge [photo|thumbnail|print]"
+
+#: ../src/main.cpp:470
+msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr "Tidsgränsen i sekunder, eller 0 för att inaktivera tidsgräns (standard: 60)"
+
+#: ../src/main.cpp:472
+msgid "Force output when timeout expires, even if the page isn't loaded fully"
+msgstr "Tvinga utdata när tidsgränsen nås, även om sidan inte helt har lästs in"
+
+#: ../src/main.cpp:474
+msgid "The desired width of the image (default: 1024)"
+msgstr "Önskad bredd för bilden (standard: 1024)"
+
+#: ../src/main.cpp:476
+msgid "The thumbnail size (default: 256)"
+msgstr "Storlek för miniatyrbild (standard: 256)"
+
+#: ../src/main.cpp:478
+msgid "File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+msgstr "Filformat för utdata. Format som stöds är \"png\", \"jpeg\" och \"ppm\" (standard:png)"
+
+#: ../src/main.cpp:478
+msgid "FORMAT"
+msgstr "FORMAT"
+
+#: ../src/main.cpp:480
+msgid "Print background images and colours (default: false)"
+msgstr "Skriv ut bakgrundsbilder och färger (standard: false)"
+
+#: ../src/main.cpp:490
+msgid "The desired quality of the JPEG image (1 .. 100)"
+msgstr "Önskad kvalitet för JPEG-bilden (1 .. 100)"
+
+#: ../src/main.cpp:490
+msgid "QUALITY"
+msgstr "KVALITET"
+
+#: ../src/main.cpp:515
+msgid "JPEG options:"
+msgstr "JPEG-alternativ:"
+
+#: ../src/main.cpp:516
+msgid "JPEG options"
+msgstr "JPEG-alternativ"
+
