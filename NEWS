@@ -1,4 +1,18 @@
 ===================
+GNOME Web Photo 0.6
+===================
+
+* Don't set config.use_system_prefs to true (Vincent Untz)
+* Translation updates
+
+===================
+GNOME Web Photo 0.5
+===================
+    	
+* Fix a crash (https://bugzilla.novell.com/show_bug.cgi?id=395920)
+* Translation updates
+
+===================
 GNOME Web Photo 0.4
 ===================
 
