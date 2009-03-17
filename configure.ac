@@ -15,7 +15,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 
-AC_INIT([GNOME Web Photo],[0.5-svn],[mailto:epiphany-list@gnome.org],[gnome-web-photo])
+AC_INIT([GNOME Web Photo],[0.6],[mailto:epiphany-list@gnome.org],[gnome-web-photo])
 
 GNOME_COMMON_INIT
 
@@ -32,7 +32,6 @@ IT_PROG_INTLTOOL([0.35.0])
 GLIB_REQUIRED=2.6.0
 GTK_REQUIRED=2.6.3
 LIBXML_REQUIRED=2.6.12
-LIBGNOMEVFS_REQUIRED=2.9.2
 
 AC_ENABLE_SHARED([yes])
 AC_ENABLE_STATIC([no])
@@ -72,8 +71,6 @@ PKG_CHECK_MODULES([DEPENDENCY], [\
 		  glib-2.0 >= $GLIB_REQUIRED \
 		  gtk+-2.0 >= $GTK_REQUIRED \
 		  libxml-2.0 >= $LIBXML_REQUIRED \
-		  gnome-vfs-2.0 >= $LIBGNOMEVFS_REQUIRED \
-		  gnome-vfs-module-2.0 \
 		  gconf-2.0 \
 		  libpng])
 AC_SUBST([DEPENDENCY_CFLAGS])
