@@ -42,6 +42,7 @@
 #include <nsIDeviceContext.h>
 #include <nsIViewManager.h>
 #include <nsIScrollableView.h>
+#include <nsIDOMNSDocument.h>
 #include <gfxContext.h>
 #include <gfxPlatform.h>
 #include <nsRect.h>
@@ -95,7 +96,11 @@ Writer::Write()
   NS_ENSURE_SUCCESS (rv, PR_FALSE);
 
   /* Get document information */
-  CopyUTF16toUTF8 (doc->GetDocumentTitle(), mTitle);
+  nsString title;
+  nsCOMPtr<nsIDOMNSDocument> domNSDoc = do_QueryInterface(doc);
+  if (domNSDoc)
+    domNSDoc->GetTitle(title);
+  CopyUTF16toUTF8 (title, mTitle);
 
   nsIURI *uri = doc->GetDocumentURI();
   if (uri) {
