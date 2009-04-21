@@ -1,0 +1,20 @@
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns:gnome="http://api.gnome.org/doap-extensions#"
+         xmlns="http://usefulinc.com/ns/doap#">
+
+  <name xml:lang="en">GNOME Web Photo</name>
+  <shortdesc xml:lang="en">Create snapshot images and print web pages from the command line</shortdesc>
+
+  <download-page rdf:resource="http://download.gnome.org/sources/gnome-web-photo/" />
+  <bug-database rdf:resource="mailto:epiphany-list%40gnome.org" />
+
+  <maintainer>
+    <foaf:Person>
+      <foaf:name>Christian Persch</foaf:name>
+      <foaf:mbox rdf:resource="chpe@gnome.org" />
+      <gnome:userid>chpe</gnome:userid>
+    </foaf:Person>
+  </maintainer>
+</Project>
