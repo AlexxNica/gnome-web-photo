@@ -8,7 +8,7 @@ EXTRA_DIST = 			\
 	COPYING.README		\
 	COPYING.LGPL		\
 	HACKING			\
-	MAINTAINERS
+	gnome-web-photo.doap
 
 DISTCLEANFILES =
 

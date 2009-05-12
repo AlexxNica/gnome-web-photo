@@ -5,7 +5,7 @@
          xmlns="http://usefulinc.com/ns/doap#">
 
   <name xml:lang="en">GNOME Web Photo</name>
-  <shortdesc xml:lang="en">Create snapshot images and print web pages from the command line</shortdesc>
+  <shortdesc xml:lang="en">Create snapshot images of and print web pages from the command line</shortdesc>
 
   <download-page rdf:resource="http://download.gnome.org/sources/gnome-web-photo/" />
   <bug-database rdf:resource="mailto:epiphany-list%40gnome.org" />
@@ -13,7 +13,7 @@
   <maintainer>
     <foaf:Person>
       <foaf:name>Christian Persch</foaf:name>
-      <foaf:mbox rdf:resource="chpe@gnome.org" />
+      <foaf:mbox rdf:resource="mailto:chpe%40gnome.org" />
       <gnome:userid>chpe</gnome:userid>
     </foaf:Person>
   </maintainer>
