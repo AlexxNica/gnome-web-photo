@@ -348,7 +348,7 @@ gecko_startup (void)
   if (NS_FAILED (rv))
   {
     g_warning ("Could not get gre path!\n");
-    return FALSE;
+    return rv;
   }
 
   // Startup the XPCOM Glue that links us up with XPCOM.
@@ -356,21 +356,21 @@ gecko_startup (void)
   if (NS_FAILED (rv))
   {
     g_warning ("Could not determine locale!\n");
-    return FALSE;
+    return rv;
   }
 
   rv = GTKEmbedGlueStartup();
   if (NS_FAILED (rv))
   {
     g_warning ("Could not startup glue!\n");
-    return FALSE;
+    return rv;
   }
 
   rv = GTKEmbedGlueStartupInternal();
   if (NS_FAILED (rv))
   {
     g_warning ("Could not startup internal glue!\n");
-    return FALSE;
+    return rv;
   }
 
   char *lastSlash = strrchr(xpcomLocation, '/');
