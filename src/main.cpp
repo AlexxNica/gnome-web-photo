@@ -234,7 +234,7 @@ take_picture (Embed *embed)
   }
 
   if (!success) {
-    g_print ("Failed to take picture of uri '%s'\n", uri);
+    g_printerr ("Failed to take picture of uri '%s'\n", uri);
   }
 }
 
@@ -258,7 +258,7 @@ print_done_cb (Embed *embed,
                gboolean success)
 {
   if (!success) {
-    g_warning ("Failed to print '%s'\n", uri);
+    g_printerr ("Failed to print '%s'\n", uri);
   }
 
   state_change (STATE_CLEAN);
@@ -270,10 +270,10 @@ timeout_cb (void)
   timeout_id = 0;
 
   if (force) {
-    g_print ("Load timed out; consider increasing the timeout (use 0 for no timeout)\n");
+    g_printerr ("Load timed out; consider increasing the timeout (use 0 for no timeout)\n");
     state_change (STATE_WORK);
   } else {
-    g_print ("Load timed out; consider using --force or increasing the timeout (use 0 for no timeout)\n");
+    g_printerr ("Load timed out; consider using --force or increasing the timeout (use 0 for no timeout)\n");
     state_change (STATE_CLEAN);
   }
 
@@ -347,7 +347,7 @@ gecko_startup (void)
   rv = GRE_GetGREPathWithProperties(&greVersion, 1, nsnull, 0, xpcomLocation, 4096);
   if (NS_FAILED (rv))
   {
-    g_warning ("Could not get gre path!\n");
+    g_printerr ("Could not get gre path!\n");
     return rv;
   }
 
@@ -355,21 +355,21 @@ gecko_startup (void)
   rv = XPCOMGlueStartup(xpcomLocation);
   if (NS_FAILED (rv))
   {
-    g_warning ("Could not determine locale!\n");
+    g_printerr ("Could not determine locale!\n");
     return rv;
   }
 
   rv = GTKEmbedGlueStartup();
   if (NS_FAILED (rv))
   {
-    g_warning ("Could not startup glue!\n");
+    g_printerr ("Could not startup glue!\n");
     return rv;
   }
 
   rv = GTKEmbedGlueStartupInternal();
   if (NS_FAILED (rv))
   {
-    g_warning ("Could not startup internal glue!\n");
+    g_printerr ("Could not startup internal glue!\n");
     return rv;
   }
 
@@ -523,7 +523,7 @@ main (int argc, char **argv)
   g_option_context_add_group (context, gtk_get_option_group (TRUE));
 
   if (!g_option_context_parse (context, &argc, &argv, &error)) {
-    g_print ("%s\n", error->message);
+    g_printerr ("%s\n", error->message);
     g_error_free (error);
     g_option_context_free (context);
     synopsis ();
@@ -546,7 +546,7 @@ main (int argc, char **argv)
 
   /* Check format */
   if (mode != MODE_PHOTO && format != FORMAT_PNG) {
-    g_print ("--format can only be used with --mode=photo\n");
+    g_printerr ("--format can only be used with --mode=photo\n");
     return 1;
   }
 
@@ -564,11 +564,11 @@ main (int argc, char **argv)
       size = DEFAULT_THUMBNAIL_SIZE;
     }
     if (size != 32 && size != 64 && size != 96 && size != 128 && size != 256) {
-      g_print ("--size can only be 32, 64, 96, 128 or 256!\n");
+      g_printerr ("--size can only be 32, 64, 96, 128 or 256!\n");
       return 1;
     }
   } else if (size != -1) {
-    g_print ("--size is only available in thumbnail mode!\n");
+    g_printerr ("--size is only available in thumbnail mode!\n");
     synopsis ();
   }
 
@@ -581,23 +581,23 @@ main (int argc, char **argv)
     }
   }
   if (width < MIN_WIDTH || width > MAX_WIDTH) {
-    g_print ("--width out of bounds; must be between %d and %d!\n", MIN_WIDTH, MAX_WIDTH);
+    g_printerr ("--width out of bounds; must be between %d and %d!\n", MIN_WIDTH, MAX_WIDTH);
     return 1;
   }
   if (mode == MODE_THUMBNAIL && (width % 32) != 0) {
-    g_print ("--width must be a multiple of 32 in thumbnail mode!\n");
+    g_printerr ("--width must be a multiple of 32 in thumbnail mode!\n");
     return 1;
   }
 
   /* Check --print-background */
   if (mode != MODE_PRINT && print_background) {
-    g_print ("--print-background is only available in print mode!\n");
+    g_printerr ("--print-background is only available in print mode!\n");
     synopsis ();
   }
 
   /* Check url/input filenames */
   if (!arguments || (g_strv_length (arguments) % 2) != 0) {
-    g_print ("Missing arguments!\n");
+    g_printerr ("Missing arguments!\n");
     synopsis ();
   }
 
@@ -608,7 +608,7 @@ main (int argc, char **argv)
 
       new_uri = g_filename_to_uri (arguments[i], NULL, &error);
       if (!new_uri) {
-        g_print ("Error converting filename to URI: %s\n", error->message);
+        g_printerr ("Error converting filename to URI: %s\n", error->message);
         g_error_free (error);
         return 1;
       }
@@ -623,7 +623,7 @@ main (int argc, char **argv)
   /* Initialised gecko */
   nsresult rv = gecko_startup ();
   if (NS_FAILED (rv)) {
-    g_print ("Failed to initialise gecko (rv = %x)!\n", rv);
+    g_printerr ("Failed to initialise gecko (rv = %x)!\n", rv);
     return 1;
   };
 
