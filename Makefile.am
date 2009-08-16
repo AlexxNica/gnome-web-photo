@@ -15,7 +15,7 @@ DISTCLEANFILES =
 DISTCHECK_CONFIGURE_FLAGS = --disable-schemas-install --with-gecko=$(GECKO)
 
 ChangeLog:
-	@if test -f $(top_srcdir)/.git/HEAD; then \
+	$(AM_V_GEN) if test -f $(top_srcdir)/.git/HEAD; then \
 		git log --stat > $@; \
 	fi
 

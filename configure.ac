@@ -27,6 +27,8 @@ AC_CONFIG_MACRO_DIR([m4])
 
 AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip])
 
+m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([no])])
+
 IT_PROG_INTLTOOL([0.35.0])
 
 GLIB_REQUIRED=2.6.0
