@@ -27,3 +27,5 @@ EXTRA_DIST = \
 CLEANFILES = $(schema_DATA)
 DISTCLEANFILES = $(schema_DATA)
 MAINTAINERCLEANFILES = $(schema_DATA)
+
+-include $(top_srcdir)/git.mk

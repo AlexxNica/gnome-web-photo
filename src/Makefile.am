@@ -72,3 +72,5 @@ install-exec-hook: gnome-web-photo
 uninstall-hook:
 	cd $(DESTDIR)$(bindir) && \
 	rm -f gnome-web-thumbnail gnome-web-print
+
+-include $(top_srcdir)/git.mk
