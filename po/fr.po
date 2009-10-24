@@ -1,0 +1,146 @@
+# French translation for gnome-web-photo.
+# Copyright (C) 2009 gnome-web-photo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-web-photo package.
+#
+# Nicolas Repentin <nicolas.repentin@gmail.com>, 2009.
+# Claude Paroz <claude@2xlibre.net>, 2009
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-web-photo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-10-21 22:41+0000\n"
+"PO-Revision-Date: 2009-10-24 14:04+0200\n"
+"Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
+"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "The command to thumbnail HTML files"
+msgstr "La commande de création de vignette pour les fichiers HTML"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "The command to thumbnail HTML files."
+msgstr "La commande de création de vignette pour les fichiers HTML."
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail XHTML files"
+msgstr "La commande de création de vignette pour les fichiers XHTML"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail XHTML files."
+msgstr "La commande de création de vignette pour les fichiers XHTML."
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "Indique s'il faut activer la création de vignettes pour les fichiers HTML"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "Indique s'il faut activer la création de vignettes pour les fichiers HTML."
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "Indique s'il faut activer la création de vignettes pour les fichiers XHTML"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "Indique s'il faut activer la création de vignettes pour les fichiers XHTML."
+
+#: ../src/main.cpp:146
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Mode « %s » inconnu"
+
+#: ../src/main.cpp:171
+#, c-format
+msgid "Unknown format '%s'"
+msgstr "Format « %s » inconnu"
+
+#: ../src/main.cpp:439
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "Usage : %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/main.cpp:443
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
+"FILE OUTFILE [...]\n"
+msgstr ""
+"Usage : %s [-t DÉLAI] [--force] [--format FORMAT] [-w LARGEUR] [--files] URI|"
+"FICHIER FICHIER_SORTIE [...]\n"
+
+#: ../src/main.cpp:446
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+"OUTFILE [...]\n"
+msgstr ""
+"Usage : %s [-t DÉLAI] [--force] [-w LARGEUR] -s TAILLE [--files] URI|FICHIER "
+"FICHIER_SORTIE [...]\n"
+
+#: ../src/main.cpp:449
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
+"URI|FILE OUTFILE [...]\n"
+msgstr ""
+"Usage : %s [-t DÉLAI] [--force] [-w LARGEUR] [--print-background] [--files] "
+"URI|FICHIER FICHIER_SORTIE [...]\n"
+
+#: ../src/main.cpp:468
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "Mode de fonctionnement [photo|thumbnail|print] (photo, vignette, impression)"
+
+#: ../src/main.cpp:470
+msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr "Délai en secondes, ou 0 pour le désactiver (par défaut : 60)"
+
+#: ../src/main.cpp:472
+msgid "Force output when timeout expires, even if the page isn't loaded fully"
+msgstr ""
+"Forcer la sortie lorsque le délai expire, même si la page n'est pas "
+"complètement chargée"
+
+#: ../src/main.cpp:474
+msgid "The desired width of the image (default: 1024)"
+msgstr "La largeur désirée de l'image (par défaut : 1024)"
+
+#: ../src/main.cpp:476
+msgid "The thumbnail size (default: 256)"
+msgstr "Taille de la miniature (par défaut : 256)"
+
+#: ../src/main.cpp:478
+msgid ""
+"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+msgstr ""
+"Format de fichier de sortie. Les formats pris en charge sont « png », « jpeg » et "
+"« ppm » (par défaut : png)"
+
+#: ../src/main.cpp:478
+msgid "FORMAT"
+msgstr "FORMAT"
+
+#: ../src/main.cpp:480
+msgid "Print background images and colours (default: false)"
+msgstr "Imprimer les images d'arrière-plan et les couleurs (par défaut : non)"
+
+#: ../src/main.cpp:490
+msgid "The desired quality of the JPEG image (1 .. 100)"
+msgstr "La qualité désirée de l'image JPEG (1 .. 100)"
+
+#: ../src/main.cpp:490
+msgid "QUALITY"
+msgstr "QUALITÉ"
+
+#: ../src/main.cpp:515
+msgid "JPEG options:"
+msgstr "Options JPEG :"
+
+#: ../src/main.cpp:516
+msgid "JPEG options"
+msgstr "Options JPEG"
