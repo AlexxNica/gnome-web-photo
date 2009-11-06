@@ -1,0 +1,131 @@
+# Slovenian translation for gnome-web-photo.
+# Copyright (C) 2009 gnome-web-photo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-web-photo package.
+# Vanja Cvelbar <cvelbar@gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-web-photo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-11-02 11:06+0000\n"
+"PO-Revision-Date: 2009-11-06 07:06+0100\n"
+"Last-Translator: Vanja Cvelbar <cvelbar@gmail.com>\n"
+"Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n%100==4 ? 3 : 0);\n"
+"X-Poedit-Language: Slovenian\n"
+"X-Poedit-Country: SLOVENIA\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "The command to thumbnail HTML files"
+msgstr "Ukaz za izdelavo sličic datotek HTML"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "The command to thumbnail HTML files."
+msgstr "Ukaz za izdelavo sličic datotek HTML."
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail XHTML files"
+msgstr "Ukaz za izdelavo sličic datotek XHTML"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail XHTML files."
+msgstr "Ukaz za izdelavo sličic datotek XHTML."
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "Ali naj bo omogočeno izdelovanje sličic za datoteke HTML"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "Ali naj bo omogočeno izdelovanje sličic za datoteke HTML."
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "Ali naj bo omogočeno izdelovanje sličic za datoteke XHTML"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "Ali naj bo omogočeno izdelovanje sličic za datoteke XHTML."
+
+#: ../src/main.cpp:146
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Neznan način '%s'"
+
+#: ../src/main.cpp:171
+#, c-format
+msgid "Unknown format '%s'"
+msgstr "Neznan zapis: '%s'"
+
+#: ../src/main.cpp:439
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "Uporaba: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/main.cpp:443
+#, c-format
+msgid "Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|FILE OUTFILE [...]\n"
+msgstr "Uporaba: %s [-t ZAKASNITEV] [--force] [--format ZAPIS] [-w ŠIRINA] [--files] URI|DATOTEKA DATOTEKAIZPISA [...]\n"
+
+#: ../src/main.cpp:446
+#, c-format
+msgid "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE OUTFILE [...]\n"
+msgstr "Uporaba: %s [-t ZAKASNITEV] [--force] [-w ŠIRINA] -s VELIKOST [--files] URI|DATOTEKA DATOTEKAIZPISA [...]\n"
+
+#: ../src/main.cpp:449
+#, c-format
+msgid "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] URI|FILE OUTFILE [...]\n"
+msgstr "Uporaba: %s [-t ZAKASNITEV] [--force] [-w ŠIRINA] [--print-background] [--files] URI|DATOTEKA DATOTEKAIZPISA [...]\n"
+
+#: ../src/main.cpp:468
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "Način delovanja [photo (fotografija)|thumbnail (sličica)|print (tisk)]"
+
+#: ../src/main.cpp:470
+msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr "Zakasnitev izražena v sekundah. Vrednost 0 onemogoči zakasnitev (privzeto: 60)"
+
+#: ../src/main.cpp:472
+msgid "Force output when timeout expires, even if the page isn't loaded fully"
+msgstr "Vsili izpis, ko je zakasnitev pretekla, čeprav se stran še ni popolnoma naložila"
+
+#: ../src/main.cpp:474
+msgid "The desired width of the image (default: 1024)"
+msgstr "Želena širina slike (privzeto: 1024)"
+
+#: ../src/main.cpp:476
+msgid "The thumbnail size (default: 256)"
+msgstr "Velikost sličice (privzeto: 256)"
+
+#: ../src/main.cpp:478
+msgid "File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+msgstr "Vrsta zapisa datoteke. Podprti zapisi so  'png', 'jpeg' in 'ppm' (privzeto: png)"
+
+#: ../src/main.cpp:478
+msgid "FORMAT"
+msgstr "Zapis"
+
+#: ../src/main.cpp:480
+msgid "Print background images and colours (default: false)"
+msgstr "Natisni slike ozadja in barve (privzeto: onemogočeno)"
+
+#: ../src/main.cpp:490
+msgid "The desired quality of the JPEG image (1 .. 100)"
+msgstr "Želena kakovost slike (1 .. 100)"
+
+#: ../src/main.cpp:490
+msgid "QUALITY"
+msgstr "Kakovost"
+
+#: ../src/main.cpp:515
+msgid "JPEG options:"
+msgstr "Možnosti JPEG:"
+
+#: ../src/main.cpp:516
+msgid "JPEG options"
+msgstr "Možnosti JPEG"
+
