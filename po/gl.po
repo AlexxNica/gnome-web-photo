@@ -1,0 +1,149 @@
+# translation of gnome-web-photo.po.master.po to Galician
+# Galician translation for gnome-web-photo.
+# Copyright (C) 2010 gnome-web-photo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-web-photo package.
+#
+# Antón Méixome <meixome@certima.net>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-web-photo.po.master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-12-31 21:00+0000\n"
+"PO-Revision-Date: 2010-02-28 13:02+0100\n"
+"Last-Translator: Antón Méixome <meixome@certima.net>\n"
+"Language-Team: Galician <proxecto@trasno.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "The command to thumbnail HTML files"
+msgstr "A orde para miniaturizar ficheiros HTML"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "The command to thumbnail HTML files."
+msgstr "A orde para miniaturizar ficheiros HTML."
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail XHTML files"
+msgstr "A orde para miniaturizar ficheiros XHTML"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail XHTML files."
+msgstr "A orde para miniaturizar ficheiros XHTML."
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "Momento para activar a miniaturización de ficheiros HTML"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "Momento para activar a miniaturización de ficheiros HTML."
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "Momento para activar a miniaturización de ficheiros XHTML"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "Momento para activar a miniaturización de ficheiros XHTML."
+
+#: ../src/main.cpp:146
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Modo descoñecido '%s'"
+
+#: ../src/main.cpp:171
+#, c-format
+msgid "Unknown format '%s'"
+msgstr "Formato descoñecido '%s'"
+
+#: ../src/main.cpp:439
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "Uso: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/main.cpp:443
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
+"FILE OUTFILE [...]\n"
+msgstr ""
+"Uso: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
+"FILE OUTFILE [...]\n"
+
+#: ../src/main.cpp:446
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+"OUTFILE [...]\n"
+msgstr ""
+"Uso: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE OUTFILE "
+"[...]\n"
+
+#: ../src/main.cpp:449
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
+"URI|FILE OUTFILE [...]\n"
+msgstr ""
+"Uso: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] URI|"
+"FILE OUTFILE [...]\n"
+
+#: ../src/main.cpp:468
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "Modo de operación [photo|thumbnail|print]"
+
+#: ../src/main.cpp:470
+msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr ""
+"O tempo de expiración en segundos, ou 0 para desactivar o tempo de "
+"expiración (predefinido: 60)"
+
+#: ../src/main.cpp:472
+msgid "Force output when timeout expires, even if the page isn't loaded fully"
+msgstr ""
+"Forzar a saída cando o tempo de expiración caduca, mesmo se a páxina non foi "
+"cargada totalmente"
+
+#: ../src/main.cpp:474
+msgid "The desired width of the image (default: 1024)"
+msgstr "A largura desexada da imaxe (predefinido: 1024)"
+
+#: ../src/main.cpp:476
+msgid "The thumbnail size (default: 256)"
+msgstr "O tamaño da miniatura (predefinido: 256)"
+
+#: ../src/main.cpp:478
+msgid ""
+"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+msgstr ""
+"O formato do ficheiro para a saída. Os compatíbeis son 'png', 'jpeg' e "
+"'ppm' (default:png)"
+
+#: ../src/main.cpp:478
+msgid "FORMAT"
+msgstr "FORMATO"
+
+#: ../src/main.cpp:480
+msgid "Print background images and colours (default: false)"
+msgstr "Imprimir as imaxes de fondo e cores (predefinido: falso)"
+
+#: ../src/main.cpp:490
+msgid "The desired quality of the JPEG image (1 .. 100)"
+msgstr "A calidade desexada da imaxe JPEG (1 .. 100)"
+
+#: ../src/main.cpp:490
+msgid "QUALITY"
+msgstr "CALIDADE"
+
+#: ../src/main.cpp:515
+msgid "JPEG options:"
+msgstr "Opcións de JPEG:"
+
+#: ../src/main.cpp:516
+msgid "JPEG options"
+msgstr "Opcións de JPEG"
+
