@@ -1,0 +1,148 @@
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Aviary.pl
+# Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
+# pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas:
+# gnomepl@aviary.pl
+# -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-web-photo\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-09 11:22+0100\n"
+"PO-Revision-Date: 2010-03-07 12:45+0100\n"
+"Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
+"Language-Team: Polish <gnomepl@aviary.pl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Poedit-Language: Polish\n"
+"X-Poedit-Country: Poland\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "The command to thumbnail HTML files"
+msgstr "Polecenie do tworzenia miniatur plików HTML"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "The command to thumbnail HTML files."
+msgstr "Polecenie do tworzenia miniatur plików HTML."
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail XHTML files"
+msgstr "Polecenie do tworzenia miniatur plików XHTML"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail XHTML files."
+msgstr "Polecenie do tworzenia miniatur plików XHTML."
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "Określa, czy włączyć tworzenie miniatur plików HTML"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "Określa, czy włączyć tworzenie miniatur plików HTML."
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "Określa, czy włączyć tworzenie miniatur plików XHTML"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "Określa, czy włączyć tworzenie miniatur plików XHTML."
+
+#: ../src/main.cpp:146
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Nieznany tryb \"%s\""
+
+#: ../src/main.cpp:171
+#, c-format
+msgid "Unknown format '%s'"
+msgstr "Nieznany format \"%s\""
+
+#: ../src/main.cpp:439
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "Użycie: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/main.cpp:443
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
+"FILE OUTFILE [...]\n"
+msgstr ""
+"Użycie: %s [-t CZAS_OCZEKIWANIA] [--force] [--format FORMAT] [-w SZEROKOŚĆ] "
+"[--files] ADRES_URI|PLIK PLIK_WYJŚCIOWY [...]\n"
+
+#: ../src/main.cpp:446
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+"OUTFILE [...]\n"
+msgstr ""
+"Użycie: %s [-t CZAS_OCZEKIWANIA] [--force] [-w SZEROKOŚĆ] -s ROZMIAR [--"
+"files] ADRES_URI|PLIK PLIK_WYJŚCIOWY [...]\n"
+
+#: ../src/main.cpp:449
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
+"URI|FILE OUTFILE [...]\n"
+msgstr ""
+"Użycie: %s [-t CZAS_OCZEKIWANIA] [--force] [-w SZEROKOŚĆ] [--print-"
+"background] [--files] ADRES_URI|PLIK PLIK_WYJŚCIOWY [...]\n"
+
+#: ../src/main.cpp:468
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "Tryb działania [photo|thumbnail|print]"
+
+#: ../src/main.cpp:470
+msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr "Czas oczekiwania w sekundach, lub 0, aby go wyłączyć (domyślnie: 60)"
+
+#: ../src/main.cpp:472
+msgid "Force output when timeout expires, even if the page isn't loaded fully"
+msgstr ""
+"Wymuszenie wyjścia, kiedy zostanie przekroczony czas oczekiwania, nawet "
+"jeśli strona nie jest całkiem wczytana"
+
+#: ../src/main.cpp:474
+msgid "The desired width of the image (default: 1024)"
+msgstr "Docelowa szerokość obrazu (domyślnie: 1024)"
+
+#: ../src/main.cpp:476
+msgid "The thumbnail size (default: 256)"
+msgstr "Rozmiar miniatury (domyślnie: 256)"
+
+#: ../src/main.cpp:478
+msgid ""
+"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+msgstr ""
+"Format pliku wyjściowego. Obsługiwane są formaty \"png\", \"jpeg\" i \"ppm"
+"\" (domyślnie:png) "
+
+#: ../src/main.cpp:478
+msgid "FORMAT"
+msgstr "FORMAT"
+
+#: ../src/main.cpp:480
+msgid "Print background images and colours (default: false)"
+msgstr "Wyświetlanie obrazów i kolorów tła (domyślnie: fałsz)"
+
+#: ../src/main.cpp:490
+msgid "The desired quality of the JPEG image (1 .. 100)"
+msgstr "Docelowa jakość obrazu JPEG (1-100)"
+
+#: ../src/main.cpp:490
+msgid "QUALITY"
+msgstr "JAKOŚĆ"
+
+#: ../src/main.cpp:515
+msgid "JPEG options:"
+msgstr "Opcje JPEG:"
+
+#: ../src/main.cpp:516
+msgid "JPEG options"
+msgstr "Opcje JPEG"
