@@ -1,0 +1,137 @@
+# Norwegian bokmål translation of Epiphany
+# Copyright (C) 2000-2003, 2005 Free Software Foundation, Inc.
+# Ola Sverre Bauge <osb@plover.net>, 2000.
+# Kjartan Maraas  <kmaraas@gnome.org>, 2000-2010.
+# Roy-Magne Mo <rmo@sunnmore.net>, 2001.
+# Terance Edward Sola <terance@lyse.net>, 2005.
+# Øivind Hoel <ohoel@cvs.gnome.org>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: epiphany 2.29.x\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-03-15 14:21+0100\n"
+"PO-Revision-Date: 2010-03-15 14:22+0100\n"
+"Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
+"Language-Team: Norwegian Bokmal <i18n-nb@lister.ping.uio.no>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "The command to thumbnail HTML files"
+msgstr ""
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "The command to thumbnail HTML files."
+msgstr ""
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail XHTML files"
+msgstr ""
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail XHTML files."
+msgstr ""
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr ""
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr ""
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr ""
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr ""
+
+#: ../src/main.cpp:146
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Ukjent modus «%s»"
+
+#: ../src/main.cpp:171
+#, c-format
+msgid "Unknown format '%s'"
+msgstr "Ukjent format «%s»"
+
+#: ../src/main.cpp:439
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr ""
+
+#: ../src/main.cpp:443
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
+"FILE OUTFILE [...]\n"
+msgstr ""
+
+#: ../src/main.cpp:446
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+"OUTFILE [...]\n"
+msgstr ""
+
+#: ../src/main.cpp:449
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
+"URI|FILE OUTFILE [...]\n"
+msgstr ""
+
+#: ../src/main.cpp:468
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr ""
+
+#: ../src/main.cpp:470
+msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr ""
+
+#: ../src/main.cpp:472
+msgid "Force output when timeout expires, even if the page isn't loaded fully"
+msgstr ""
+
+#: ../src/main.cpp:474
+msgid "The desired width of the image (default: 1024)"
+msgstr ""
+
+#: ../src/main.cpp:476
+msgid "The thumbnail size (default: 256)"
+msgstr ""
+
+#: ../src/main.cpp:478
+msgid ""
+"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+msgstr ""
+
+#: ../src/main.cpp:478
+msgid "FORMAT"
+msgstr "FORMAT"
+
+#: ../src/main.cpp:480
+msgid "Print background images and colours (default: false)"
+msgstr "Skriv ut bakgrunnsbilder og farger (forvalg: false)"
+
+#: ../src/main.cpp:490
+msgid "The desired quality of the JPEG image (1 .. 100)"
+msgstr ""
+
+#: ../src/main.cpp:490
+msgid "QUALITY"
+msgstr "KVALITET"
+
+#: ../src/main.cpp:515
+msgid "JPEG options:"
+msgstr "JPEG-alternativer:"
+
+#: ../src/main.cpp:516
+msgid "JPEG options"
+msgstr "JPEG-alternativer"
+
