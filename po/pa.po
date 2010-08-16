@@ -1,0 +1,142 @@
+# Punjabi translation for gnome-web-photo.
+# Copyright (C) 2010 gnome-web-photo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-web-photo package.
+#
+# A S Alam <aalam@users.sf.net>, 2010.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-web-photo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-04-25 08:35+0000\n"
+"PO-Revision-Date: 2010-08-16 19:56+0530\n"
+"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"Language-Team: testLokalize <punjabi-users@lists.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "The command to thumbnail HTML files"
+msgstr "ਥੰਮਨੇਲ HTML ਫਾਇਲਾਂ ਬਣਾਉਣ ਲਈ ਕਮਾਂਡ"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "The command to thumbnail HTML files."
+msgstr "ਥੰਮਨੇਲ HTML ਫਾਇਲਾਂ ਬਣਾਉਣ ਲਈ ਕਮਾਂਡ।"
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail XHTML files"
+msgstr "ਥੰਮਨੇਲ XHTML ਫਾਇਲਾਂ ਬਣਾਉਣ ਲਈ ਕਮਾਂਡ।"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail XHTML files."
+msgstr "ਥੰਮਨੇਲ XHTML ਫਾਇਲਾਂ ਬਣਾਉਣ ਲਈ ਕਮਾਂਡ।"
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "HTML ਫਾਇਲਾਂ ਲਈ ਥੰਮਨੇਲ ਬਣਾਉਣਾ ਚਾਲੂ ਕਰਨਾ ਹੈ"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "HTML ਫਾਇਲਾਂ ਲਈ ਥੰਮਨੇਲ ਬਣਾਉਣਾ ਚਾਲੂ ਕਰਨਾ ਹੈ।"
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "XHTML ਫਾਇਲਾਂ ਲਈ ਥੰਮਨੇਲ ਬਣਾਉਣਾ ਚਾਲੂ ਕਰਨਾ ਹੈ।"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "XHTML ਫਾਇਲਾਂ ਲਈ ਥੰਮਨੇਲ ਬਣਾਉਣਾ ਚਾਲੂ ਕਰਨਾ ਹੈ।"
+
+#: ../src/main.cpp:146
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "ਅਣਜਾਣ ਮੋਡ '%s'"
+
+#: ../src/main.cpp:171
+#, c-format
+msgid "Unknown format '%s'"
+msgstr "ਅਣਜਾਣ ਫਾਰਮੈਟ '%s'"
+
+#: ../src/main.cpp:439
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "ਵਰਤੋਂ: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/main.cpp:443
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
+"FILE OUTFILE [...]\n"
+msgstr ""
+"ਵਰਤੋਂ: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
+"FILE OUTFILE [...]\n"
+
+#: ../src/main.cpp:446
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+"OUTFILE [...]\n"
+msgstr ""
+"ਵਰਤੋਂ: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+"OUTFILE [...]\n"
+
+#: ../src/main.cpp:449
+#, c-format
+msgid ""
+"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
+"URI|FILE OUTFILE [...]\n"
+msgstr ""
+"ਵਰਤੋਂ: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
+"URI|FILE OUTFILE [...]\n"
+
+#: ../src/main.cpp:468
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr ""
+
+#: ../src/main.cpp:470
+msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr ""
+
+#: ../src/main.cpp:472
+msgid "Force output when timeout expires, even if the page isn't loaded fully"
+msgstr ""
+
+#: ../src/main.cpp:474
+msgid "The desired width of the image (default: 1024)"
+msgstr ""
+
+#: ../src/main.cpp:476
+msgid "The thumbnail size (default: 256)"
+msgstr ""
+
+#: ../src/main.cpp:478
+msgid ""
+"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+msgstr ""
+
+#: ../src/main.cpp:478
+msgid "FORMAT"
+msgstr "FORMAT"
+
+#: ../src/main.cpp:480
+msgid "Print background images and colours (default: false)"
+msgstr ""
+
+#: ../src/main.cpp:490
+msgid "The desired quality of the JPEG image (1 .. 100)"
+msgstr ""
+
+#: ../src/main.cpp:490
+msgid "QUALITY"
+msgstr "ਕੁਆਲਟੀ"
+
+#: ../src/main.cpp:515
+msgid "JPEG options:"
+msgstr "JPEG ਚੋਣਾਂ:"
+
+#: ../src/main.cpp:516
+msgid "JPEG options"
+msgstr "JPEG ਚੋਣਾਂ"
+
