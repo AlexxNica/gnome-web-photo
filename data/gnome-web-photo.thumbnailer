@@ -1,0 +1,4 @@
+[Thumbnailer Entry]
+TryExec=gnome-web-photo
+Exec=gnome-web-photo --mode=thumbnail --timeout=16 --thumbnail-size=%s %u %o
+MimeType=text/html;application/xhtml+xml;

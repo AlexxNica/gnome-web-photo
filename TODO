@@ -1,14 +1,7 @@
-Important:
-* Port to gecko 1.9/XULrunner. Maybe look at mozilla's reftest helper (mozilla/layout/tools/reftest/) ?
-
 Improvements:
-* Test on a big endian machine
 * Improve thumbnail creation time
 * Thumbnailing service? I.e. background process (which exits after some time without requests),
   which the frontend tells which files/pages to thumbnail.
-* Find out why it crashes on https:// sites, and on http://slashdot.org/, if I disable the profile
 * Fix the output on framed pages
-* Use <canvas> and drawWindow() instead of the low-level stuff (<canvas> can operate without a document,
-  so we don't need to put it in an embed)
 * Add memory size and CPU time limit (look at totem-video-thumbnailer/indexer)
 * Implement printing to printer, using the gtk 2.10 print APIs

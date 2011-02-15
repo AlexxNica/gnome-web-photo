@@ -3,6 +3,5 @@ files and thumbnails from HTML files and web pages.
 
 Requirements:
 * gtk+
-* libpng
-* mozilla or firefox trunk build from 2005-07-19 or later
+* webkitgtk
 

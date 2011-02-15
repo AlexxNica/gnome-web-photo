@@ -1,3 +1,4 @@
+if !HAVE_GNOME3
 @INTLTOOL_SCHEMAS_RULE@
 
 schemadir = $(GCONF_SCHEMA_FILE_DIR)
@@ -12,17 +13,16 @@ if GCONF_SCHEMAS_INSTALL
 	done \
 	fi
 endif
+endif
 
-cssdir = $(pkgdatadir)
-css_DATA = style.css
-
-prefsdir = $(pkgdatadir)
-prefs_DATA = prefs.js
+if HAVE_GNOME3
+thumbnailerdir = $(datadir)/thumbnailers
+thumbnailer_DATA = gnome-web-photo.thumbnailer
+endif
 
 EXTRA_DIST = \
-	$(schema_in_files)	\
-	$(css_DATA)		\
-	$(prefs_DATA)
+	$(schema_in_files) \
+	$(thumbnailer_DATA)
 
 CLEANFILES = $(schema_DATA)
 DISTCLEANFILES = $(schema_DATA)

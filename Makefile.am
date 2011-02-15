@@ -36,8 +36,7 @@ MAINTAINERCLEANFILES = \
 
 DISTCHECK_CONFIGURE_FLAGS = \
 	--disable-silent-rules \
-	--disable-schemas-install \
-	--with-gecko=$(GECKO)
+	--disable-schemas-install
 
 ChangeLog:
 	$(AM_V_GEN) if test -f $(top_srcdir)/.git/HEAD; then \

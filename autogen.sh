@@ -6,7 +6,7 @@ test -z "$srcdir" && srcdir=.
 
 PKG_NAME="gnome-web-photo"
 
-(test -f $srcdir/src/main.cpp) || {
+(test -f $srcdir/src/gnome-web-photo.c) || {
     echo -n "**Error**: Directory "\`$srcdir\'" does not look like the"
     echo " top-level $PKG_NAME directory"
     exit 1
