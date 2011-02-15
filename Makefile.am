@@ -31,6 +31,7 @@ MAINTAINERCLEANFILES = \
 	$(srcdir)/omf.make \
 	$(srcdir)/xmldocs.make \
 	$(srcdir)/gtk-doc.make \
+	$(srcdir)/m4/* \
 	$(srcdir)/po/Makefile.in.in \
 	`find "$(srcdir)" -type f -name Makefile.in -print`
 
