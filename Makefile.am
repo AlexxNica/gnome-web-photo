@@ -6,7 +6,7 @@ EXTRA_DIST = 			\
 	autogen.sh		\
 	ChangeLog		\
 	COPYING.README		\
-	COPYING.LGPL		\
+	COPYING			\
 	HACKING			\
 	gnome-web-photo.doap
 
