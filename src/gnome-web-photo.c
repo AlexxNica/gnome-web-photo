@@ -74,6 +74,7 @@ typedef enum
   MODE_PHOTO,
   MODE_THUMBNAIL,
   MODE_PRINT,
+  MODE_DEBUG,
   MODE_LAST,
   MODE_INVALID = MODE_LAST
 } PhotoMode;
@@ -84,7 +85,8 @@ static struct {
 } modes[] = {
   { "photo",     MODE_PHOTO     },
   { "thumbnail", MODE_THUMBNAIL },
-  { "print",     MODE_PRINT     }
+  { "print",     MODE_PRINT     },
+  { "debug",     MODE_DEBUG     }
 };
 
 static PhotoMode parsed_mode = MODE_INVALID;
@@ -508,6 +510,33 @@ _print_photo (PhotoData *data)
   g_object_unref (operation);
 }
 
+static gboolean
+_on_window_deleted (GtkWidget *widget,
+                    PhotoData *data)
+{
+  /* Don't destroy the window, it will be done while we go through the exit
+   * path. This avoids having to check if it has already been destroyed during
+   * that exit path. */
+
+  gtk_main_quit ();
+
+  return TRUE;
+}
+
+static void
+_display_page (PhotoData *data)
+{
+  /* Make sure we display what we currently have, and don't do anything
+   * additional */
+  webkit_web_view_stop_loading (data->webview);
+
+  g_signal_connect (data->window, "delete-event",
+                    G_CALLBACK (_on_window_deleted), data);
+  gtk_window_present (GTK_WINDOW (data->window));
+
+  gtk_main ();
+}
+
 static void
 _do_action (PhotoData *data)
 {
@@ -520,6 +549,9 @@ _do_action (PhotoData *data)
       break;
     case MODE_PRINT:
       _print_photo (data);
+      break;
+    case MODE_DEBUG:
+      _display_page (data);
       break;
     default:
       g_assert_not_reached ();
@@ -632,7 +664,10 @@ _create_web_window (PhotoData *data)
   WebKitWebSettings *settings;
   int                max_height;
 
-  window = photo_offscreen_window_new ();
+  if (data->mode != MODE_DEBUG)
+    window = photo_offscreen_window_new ();
+  else
+    window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   data->window = window;
 
   /* We don't specify a height: if we did so, we'd be forcing the height of the
@@ -649,13 +684,15 @@ _create_web_window (PhotoData *data)
    * better than not getting anything anyway. */
   gtk_widget_set_size_request (window, data->width, -1);
 
-  /* For thumbnails, there is no point in having a height larger than the
-   * width, so minimize directly what we need */
-  max_height = MAX_SIZE;
-  if (data->mode == MODE_THUMBNAIL)
-    max_height = MIN (data->width, max_height);
-  photo_offscreen_window_set_max_height (PHOTO_OFFSCREEN_WINDOW (window),
-                                         max_height);
+  if (data->mode != MODE_DEBUG) {
+    /* For thumbnails, there is no point in having a height larger than the
+     * width, so minimize directly what we need */
+    max_height = MAX_SIZE;
+    if (data->mode == MODE_THUMBNAIL)
+      max_height = MIN (data->width, max_height);
+    photo_offscreen_window_set_max_height (PHOTO_OFFSCREEN_WINDOW (window),
+                                           max_height);
+  }
 
   webview = webkit_web_view_new ();
   data->webview = WEBKIT_WEB_VIEW (webview);
@@ -669,6 +706,11 @@ _create_web_window (PhotoData *data)
 
   gtk_container_add (GTK_CONTAINER(window), webview);
   gtk_widget_show_all (window);
+
+  /* In MODE_DEBUG, we only want to show the window when it's ready. We still
+   * use gtk_widget_show_all() before as it seems to make webkit happier. */
+  if (data->mode == MODE_DEBUG)
+    gtk_widget_hide (window);
 
   g_signal_connect (webview, "load-error",
                     G_CALLBACK (_on_web_view_load_error), data);
@@ -915,12 +957,16 @@ main (int    argc,
   }
 
   /* Check uri/output */
-  if (!arguments || g_strv_length (arguments) < 2) {
+  if (!arguments ||
+      (data.mode != MODE_DEBUG && (g_strv_length (arguments) < 2)) ||
+      /* For MODE_DEBUG, we only need a URI. */
+      (data.mode == MODE_DEBUG && (g_strv_length (arguments) < 1))) {
     g_printerr (_("Missing arguments!\n"));
     _print_synopsis ();
     return 1;
   }
 
+  /* For MODE_DEBUG, accept an output file, even though it won't be used. */
   if (g_strv_length (arguments) > 2) {
     g_printerr (_("Too many arguments!\n"));
     _print_synopsis ();
