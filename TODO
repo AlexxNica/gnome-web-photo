@@ -3,6 +3,10 @@ Issues after webkit port:
   gtk_widget_set_size_request()). We can possibly use a GtkScrolledWindow to
   make this work.
 
+Webkit issues:
+* Using the custom CSS for iframes doesn't actually work perfectly: it seems to
+  append lots of empty space at the end.
+
 Improvements:
 * Improve thumbnail creation time
 * Thumbnailing service? I.e. background process (which exits after some time without requests),
