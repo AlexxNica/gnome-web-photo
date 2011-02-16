@@ -634,6 +634,7 @@ _create_web_window (PhotoData *data)
   GtkWidget         *window;
   GtkWidget         *webview;
   WebKitWebSettings *settings;
+  int                max_height;
 
   window = photo_offscreen_window_new ();
   data->window = window;
@@ -651,8 +652,14 @@ _create_web_window (PhotoData *data)
    * related to what is displayed). So it only affects MODE_PHOTO. But it's
    * better than not getting anything anyway. */
   gtk_widget_set_size_request (window, data->width, -1);
+
+  /* For thumbnails, there is no point in having a height larger than the
+   * width, so minimize directly what we need */
+  max_height = MAX_SIZE;
+  if (data->mode == MODE_THUMBNAIL)
+    max_height = MIN (data->width, max_height);
   photo_offscreen_window_set_max_height (PHOTO_OFFSCREEN_WINDOW (window),
-                                         MAX_SIZE);
+                                         max_height);
 
   webview = webkit_web_view_new ();
   data->webview = WEBKIT_WEB_VIEW (webview);
