@@ -243,8 +243,13 @@ _prepare_web_settings (WebKitWebSettings *settings,
   char *value;
   char *font_name = NULL;
   int   font_size = 0;
+  char *css_uri;
 
   /* Various settings */
+
+  value = g_build_filename (PKGDATADIR, "style.css", NULL);
+  css_uri = g_filename_to_uri (value, NULL, NULL);
+  g_free (value);
 
   g_object_set (G_OBJECT (settings),
                 /* printing settings */
@@ -260,7 +265,11 @@ _prepare_web_settings (WebKitWebSettings *settings,
                 /* ensure secure settings */
                 "javascript-can-access-clipboard", FALSE,
                 "enable-universal-access-from-file-uris", FALSE,
+                /* custom css */
+                "user-stylesheet-uri", css_uri,
                 NULL);
+
+  g_free (css_uri);
 
   /* Fetch fonts from user config */
 

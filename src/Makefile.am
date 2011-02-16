@@ -7,6 +7,7 @@ gnome_web_photo_SOURCES =		\
 
 gnome_web_photo_CPPFLAGS = \
 	$(DEPENDENCY_CFLAGS)			\
+	-DPKGDATADIR=\"$(pkgdatadir)\"		\
 	-DLOCALEDIR=\"$(datadir)/locale\"	\
 	$(AM_CPPFLAGS)
 

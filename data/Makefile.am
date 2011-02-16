@@ -20,9 +20,13 @@ thumbnailerdir = $(datadir)/thumbnailers
 thumbnailer_DATA = gnome-web-photo.thumbnailer
 endif
 
+cssdir = $(pkgdatadir)
+css_DATA = style.css
+
 EXTRA_DIST = \
-	$(schema_in_files) \
-	$(thumbnailer_DATA)
+	$(schema_in_files)	\
+	$(thumbnailer_DATA)	\
+	$(css_DATA)
 
 CLEANFILES = $(schema_DATA)
 DISTCLEANFILES = $(schema_DATA)
