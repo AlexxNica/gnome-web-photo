@@ -1,7 +1,9 @@
 bin_PROGRAMS = gnome-web-photo
 
-gnome_web_photo_SOURCES = \
-	gnome-web-photo.c
+gnome_web_photo_SOURCES =		\
+	gnome-web-photo.c		\
+	photo-offscreen-window.c	\
+	photo-offscreen-window.h
 
 gnome_web_photo_CPPFLAGS = \
 	$(DEPENDENCY_CFLAGS)			\

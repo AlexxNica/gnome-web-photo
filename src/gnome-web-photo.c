@@ -29,12 +29,6 @@
  *   gtk_widget_set_size_request()).
  */
 
-/* Build with either:
- *    gcc -g -Wall -DHAVE_GNOME3 `pkg-config --cflags --libs gtk+-3.0 webkitgtk-3.0` gnome-web-photo.c -o gnome-web-photo
- * or:
- *    gcc -g -Wall `pkg-config --cflags --libs gconf-2.0 gtk+-2.0 webkit-1.0` gnome-web-photo.c -o gnome-web-photo
- */
-
 #include "config.h"
 
 #include <glib.h>
@@ -48,6 +42,8 @@
 #else
 #include <gconf/gconf-client.h>
 #endif
+
+#include "photo-offscreen-window.h"
 
 #ifdef HAVE_GNOME3
 #define GSETTINGS_DESKTOP_INTERFACE  "org.gnome.desktop.interface"
@@ -66,10 +62,6 @@
 #define MIN_WIDTH       64
 #define MAX_WIDTH       2048
 #define DEFAULT_WIDTH   1024
-
-/* Value to keep in sync with the one from cairo:
- * MAX_IMAGE_SIZE in cairo-image-surface.c */
-#define MAX_HEIGHT      32767
 
 #define DEFAULT_THUMBNAIL_SIZE  256
 
@@ -342,76 +334,6 @@ _prepare_webkit (WebKitWebView     *webview,
   _prepare_web_settings (settings, print_background);
 }
 
-
-/******************************************\
- * GtkOffscreenWindow with limited height *
-\******************************************/
-
-/* This is a GtkOffscreenWindow with a maximum height.
- * See comment above gtk_widget_set_size_request() call to understand why we
- * need this. */
-
-typedef struct _PhotoOffscreenWindow      PhotoOffscreenWindow;
-typedef struct _PhotoOffscreenWindowClass PhotoOffscreenWindowClass;
-
-struct _PhotoOffscreenWindow
-{
-  GtkOffscreenWindow parent_object;
-};
-
-struct _PhotoOffscreenWindowClass
-{
-  GtkOffscreenWindowClass parent_class;
-};
-
-GType photo_offscreen_window_get_type (void) G_GNUC_CONST;	
-
-G_DEFINE_TYPE (PhotoOffscreenWindow, photo_offscreen_window, GTK_TYPE_OFFSCREEN_WINDOW)
-
-#ifdef HAVE_GNOME3
-static void
-photo_offscreen_window_get_preferred_height (GtkWidget *widget,
-                                             gint      *minimum,
-                                             gint      *natural)
-{
-  GTK_WIDGET_CLASS (photo_offscreen_window_parent_class)->get_preferred_height (widget, minimum, natural);
-
-  *minimum = MIN (*minimum, MAX_HEIGHT);
-  *natural = MIN (*natural, MAX_HEIGHT);
-}
-#else
-static void
-photo_offscreen_window_size_request (GtkWidget      *widget,
-                                     GtkRequisition *requisition)
-{
-  GTK_WIDGET_CLASS (photo_offscreen_window_parent_class)->size_request (widget, requisition);
-
-  requisition->height = MIN (requisition->height, MAX_HEIGHT);
-}
-#endif
-
-static void
-photo_offscreen_window_class_init (PhotoOffscreenWindowClass *class)
-{
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (class);
-
-#ifdef HAVE_GNOME3
-  widget_class->get_preferred_height = photo_offscreen_window_get_preferred_height;
-#else
-  widget_class->size_request = photo_offscreen_window_size_request;
-#endif
-}
-
-static void
-photo_offscreen_window_init (PhotoOffscreenWindow *window)
-{
-}
-
-static GtkWidget *
-photo_offscreen_window_new (void)
-{
-  return g_object_new (photo_offscreen_window_get_type (), NULL);
-}
 
 /************\
  *   Core   *
