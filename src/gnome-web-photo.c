@@ -24,11 +24,6 @@
  *   Copyright (C) 2005 Christian Persch
  */
 
-/* TODO:
- * - PHOTO_MODE doesn't work for very tall pages (like pgo, see comment before
- *   gtk_widget_set_size_request()).
- */
-
 #include "config.h"
 
 #include <glib.h>

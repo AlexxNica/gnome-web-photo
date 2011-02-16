@@ -1,3 +1,8 @@
+Issues after webkit port:
+* PHOTO_MODE doesn't work for very tall pages (like pgo, see comment before
+  gtk_widget_set_size_request()). We can possibly use a GtkScrolledWindow to
+  make this work.
+
 Improvements:
 * Improve thumbnail creation time
 * Thumbnailing service? I.e. background process (which exits after some time without requests),
