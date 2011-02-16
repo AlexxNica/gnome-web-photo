@@ -7,6 +7,7 @@ gnome_web_photo_SOURCES =		\
 
 gnome_web_photo_CPPFLAGS = \
 	$(DEPENDENCY_CFLAGS)			\
+	$(GTKUNIXPRINT_CFLAGS)			\
 	-DPKGDATADIR=\"$(pkgdatadir)\"		\
 	-DLOCALEDIR=\"$(datadir)/locale\"	\
 	$(AM_CPPFLAGS)
@@ -18,7 +19,8 @@ gnome_web_photo_LDFLAGS = \
 	$(AM_LDFLAGS)
 
 gnome_web_photo_LDADD = \
-	$(DEPENDENCY_LIBS)
+	$(DEPENDENCY_LIBS) \
+	$(GTKUNIXPRINT_LIBS)
 
 install-exec-hook: gnome-web-photo
 	cd $(DESTDIR)$(bindir) && \

@@ -77,9 +77,11 @@ AC_MSG_RESULT([$with_gtk])
 case "$with_gtk" in
   2.0)
     DEPENDENCY_PC="glib-2.0 >= $GLIB_REQUIRED gtk+-2.0 >= $GTK2_REQUIRED webkit-1.0 >= $WEBKIT_REQUIRED gconf-2.0"
+    GTKUNIXPRINT_PC="gtk+-unix-print-2.0"
     ;;
   3.0)
     DEPENDENCY_PC="glib-2.0 >= $GLIB_REQUIRED gtk+-3.0 >= $GTK3_REQUIRED webkitgtk-3.0 >= $WEBKIT_REQUIRED"
+    GTKUNIXPRINT_PC="gtk+-unix-print-3.0"
     AC_DEFINE([HAVE_GNOME3], 1,
               [Use GNOME 3 technologies])
     ;;
@@ -89,6 +91,15 @@ AM_CONDITIONAL(HAVE_GNOME3, test "$with_gtk" == 3.0)
 PKG_CHECK_MODULES([DEPENDENCY], [$DEPENDENCY_PC])
 AC_SUBST([DEPENDENCY_CFLAGS])
 AC_SUBST([DEPENDENCY_LIBS])
+
+PKG_CHECK_MODULES([GTKUNIXPRINT], [$GTKUNIXPRINT_PC],
+                  [with_gtk_unix_print="yes"], [with_gtk_unix_print="no"])
+AC_SUBST([GTKUNIXPRINT_CFLAGS])
+AC_SUBST([GTKUNIXPRINT_LIBS])
+if test "$with_gtk_unix_print" == "yes"; then
+  AC_DEFINE([HAVE_GTK_UNIX_PRINT], 1,
+            [Build with gtk-unix-print features])
+fi
 
 # *****
 # GConf

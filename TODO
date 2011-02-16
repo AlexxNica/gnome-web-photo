@@ -13,4 +13,3 @@ Improvements:
   which the frontend tells which files/pages to thumbnail.
 * Fix the output on framed pages
 * Add memory size and CPU time limit (look at totem-video-thumbnailer/indexer)
-* Implement printing to printer, using the gtk 2.10 print APIs

@@ -31,6 +31,10 @@
 #include <gtk/gtk.h>
 #include <webkit/webkit.h>
 
+#ifdef HAVE_GTK_UNIX_PRINT
+#include <gtk/gtkunixprint.h>
+#endif
+
 #ifdef HAVE_GNOME3
 #include <gio/gio.h>
 #include <cairo/cairo-xlib.h>
@@ -96,6 +100,7 @@ typedef struct {
   int            width;
   int            thumbnail_size;
   gboolean       print_background;
+  char          *printer;
 
   int            timeout;
   gboolean       force;
@@ -486,23 +491,51 @@ _print_photo (PhotoData *data)
   WebKitWebFrame    *main_frame;
   GError            *error = NULL;
 
-  operation = gtk_print_operation_new ();
-  gtk_print_operation_set_export_filename (operation, data->outfile);
-
   main_frame = webkit_web_view_get_main_frame (data->webview);
 
-  webkit_web_frame_print_full (main_frame, operation,
-                               GTK_PRINT_OPERATION_ACTION_EXPORT, &error);
+#ifdef HAVE_GTK_UNIX_PRINT
+  if (data->printer) {
+    GtkPrintSettings  *settings;
 
-  if (error) {
-    data->error = TRUE;
-    /* Translators: first %s is a URI */
-    g_printerr (_("Error while printing '%s': %s\n"),
-                data->uri, error->message);
-    g_error_free (error);
+    operation = gtk_print_operation_new ();
+    settings = gtk_print_settings_new ();
+    gtk_print_settings_set_printer (settings, data->printer);
+    gtk_print_operation_set_print_settings (operation, settings);
+
+    error = NULL;
+    webkit_web_frame_print_full (main_frame, operation,
+                                 GTK_PRINT_OPERATION_ACTION_PRINT, &error);
+
+    g_object_unref (operation);
+
+    if (error) {
+      data->error = TRUE;
+      /* Translators: first %s is a URI, second %s is a printer name */
+      g_printerr (_("Error while printing '%s' on '%s': %s\n"),
+                  data->uri, data->printer, error->message);
+      g_error_free (error);
+    }
   }
+#endif
 
-  g_object_unref (operation);
+  if (data->outfile) {
+    operation = gtk_print_operation_new ();
+    gtk_print_operation_set_export_filename (operation, data->outfile);
+
+    error = NULL;
+    webkit_web_frame_print_full (main_frame, operation,
+                                 GTK_PRINT_OPERATION_ACTION_EXPORT, &error);
+
+    g_object_unref (operation);
+
+    if (error) {
+      data->error = TRUE;
+      /* Translators: first %s is a URI */
+      g_printerr (_("Error while printing '%s': %s\n"),
+                  data->uri, error->message);
+      g_error_free (error);
+    }
+  }
 }
 
 static gboolean
@@ -767,12 +800,59 @@ _print_synopsis (void)
       g_print (_("Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"), name);
       break;
     case MODE_PRINT:
+#ifdef HAVE_GTK_UNIX_PRINT
+      g_print (_("Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"), name);
+#else
       g_print (_("Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE\n"), name);
+#endif
       break;
     default:
       break;
   }
 }
+
+#ifdef HAVE_GTK_UNIX_PRINT
+static gboolean
+_validate_printer (GtkPrinter *printer,
+                   PhotoData  *data)
+{
+  const char *name;
+
+  name = gtk_printer_get_name (printer);
+  if (g_strcmp0 (data->printer, name) == 0) {
+    data->error = FALSE;
+    return TRUE;
+  }
+
+  return FALSE;
+}
+
+static gboolean
+_print_printer_name (GtkPrinter *printer,
+                     PhotoData  *data)
+{
+  GtkPrintBackend *backend;
+  const char      *backend_name;
+
+  /* Don't list the "Print to File" printer */
+  backend = gtk_printer_get_backend (printer);
+  backend_name = G_OBJECT_CLASS_NAME (G_OBJECT_GET_CLASS (backend));
+  if (g_strcmp0 (backend_name, "GtkPrintBackendFile") == 0)
+    return FALSE;
+
+  if (gtk_printer_is_active (printer))
+    /* Translators: the leading spaces are a way to add tabulation in some text
+     * printed on the terminal; %s is the name of a printer. */
+    g_printerr (_("  %s\n"), gtk_printer_get_name (printer));
+  else
+    /* Translators: the leading spaces are a way to add tabulation in some text
+     * printed on the terminal; %s is the name of a printer; "active" applies
+     * to the printer. */
+    g_printerr (_("  %s (not active)\n"), gtk_printer_get_name (printer));
+
+  return FALSE;
+}
+#endif
 
 int
 main (int    argc,
@@ -784,12 +864,13 @@ main (int    argc,
   gboolean         is_file = FALSE;
   GtkWidget       *window;
   char            *user_css_path = NULL;
+  int              required_argc;
 
   PhotoData data = { NULL, NULL,
                      MODE_INVALID,
                      /* thumbnail_size set to -1 to be able to check if option
                       * was passed or not */
-                     NULL, DEFAULT_WIDTH, -1, FALSE,
+                     NULL, DEFAULT_WIDTH, -1, FALSE, NULL,
                      60, FALSE,
                      FALSE,
                      NULL, NULL, 0, 0 };
@@ -816,6 +897,12 @@ main (int    argc,
       N_("Thumbnail size (default: 256)"),
       /* Translators: S will appear in the help, as in: --thumbnail-size=S */
       N_("S") },
+#ifdef HAVE_GTK_UNIX_PRINT
+    { "printer", 'p', 0, G_OPTION_ARG_STRING, &data.printer,
+      N_("Print page on PRINTER (default: none, save as PDF)"),
+      /* Translators: PRINTER will appear in the help, as in: --printer=PRINTER */
+      N_("PRINTER") },
+#endif
     { "print-background", 0, 0, G_OPTION_ARG_NONE, &data.print_background,
       N_("Print background images and colours (default: false)"), NULL },
     { "file", 0, 0, G_OPTION_ARG_NONE, &is_file,
@@ -951,18 +1038,60 @@ main (int    argc,
     return 1;
   }
 
+#ifdef HAVE_GTK_UNIX_PRINT
+  /* Check --printer */
+  if (data.mode != MODE_PRINT && data.printer) {
+    g_printerr (_("--printer is only available in print mode!\n"));
+    _print_synopsis ();
+    return 1;
+  } else if (data.mode == MODE_PRINT && data.printer) {
+    data.error = TRUE;
+    gtk_enumerate_printers ((GtkPrinterFunc) _validate_printer,
+                            &data, NULL, TRUE);
+    if (data.error) {
+      /* Translators: %s is the name of a printer */
+      g_printerr (_("'%s' is not a valid printer!\n"), data.printer);
+      g_printerr ("\n");
+      g_printerr (_("List of printers:\n"));
+      gtk_enumerate_printers ((GtkPrinterFunc) _print_printer_name,
+                              &data, NULL, TRUE);
+      return 1;
+    }
+  }
+#endif
+
+  switch (data.mode) {
+    case MODE_PHOTO:
+    case MODE_THUMBNAIL:
+      /* we only need a URI and a output file */
+      required_argc = 2;
+      break;
+    case MODE_PRINT:
+      /* we need a URI, and if --printer is not passed, a output file */
+#ifdef HAVE_GTK_UNIX_PRINT
+      if (data.printer)
+        required_argc = 1;
+      else
+#endif
+        required_argc = 2;
+      break;
+    case MODE_DEBUG:
+      /* we only need a URI */
+      required_argc = 1;
+      break;
+    default:
+      g_assert_not_reached ();
+      break;
+  }
+
   /* Check uri/output */
-  if (!arguments ||
-      (data.mode != MODE_DEBUG && (g_strv_length (arguments) < 2)) ||
-      /* For MODE_DEBUG, we only need a URI. */
-      (data.mode == MODE_DEBUG && (g_strv_length (arguments) < 1))) {
+  if (!arguments || g_strv_length (arguments) < required_argc) {
     g_printerr (_("Missing arguments!\n"));
     _print_synopsis ();
     return 1;
   }
 
-  /* For MODE_DEBUG, accept an output file, even though it won't be used. */
-  if (g_strv_length (arguments) > 2) {
+  if (g_strv_length (arguments) > required_argc) {
     g_printerr (_("Too many arguments!\n"));
     _print_synopsis ();
     return 1;
@@ -982,7 +1111,8 @@ main (int    argc,
 
   /* Now let's do the work! */
   data.uri = arguments[0];
-  data.outfile = arguments[1];
+  if (required_argc == 2)
+    data.outfile = arguments[1];
 
   window = _create_web_window (&data);
 
