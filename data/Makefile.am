@@ -1,8 +1,13 @@
+schema_in_files = thumbnailer.schemas.in
+thumbnailer_DATA_files = gnome-web-photo.thumbnailer
+
+cssdir = $(pkgdatadir)
+css_DATA = style.css
+
 if !HAVE_GNOME3
 @INTLTOOL_SCHEMAS_RULE@
 
 schemadir = $(GCONF_SCHEMA_FILE_DIR)
-schema_in_files = thumbnailer.schemas.in
 schema_DATA = $(schema_in_files:%.in=%)
 
 install-data-local: $(schema_DATA)
@@ -17,15 +22,12 @@ endif
 
 if HAVE_GNOME3
 thumbnailerdir = $(datadir)/thumbnailers
-thumbnailer_DATA = gnome-web-photo.thumbnailer
+thumbnailer_DATA = $(thumbnailer_DATA_files)
 endif
 
-cssdir = $(pkgdatadir)
-css_DATA = style.css
-
 EXTRA_DIST = \
-	$(schema_in_files)	\
-	$(thumbnailer_DATA)	\
+	$(schema_in_files)		\
+	$(thumbnailer_DATA_files)	\
 	$(css_DATA)
 
 CLEANFILES = $(schema_DATA)

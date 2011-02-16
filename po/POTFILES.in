@@ -1,3 +1,4 @@
 # Please keep this file sorted alphabetically
 data/thumbnailer.schemas.in
-src/main.cpp
+src/gnome-web-photo.c
+src/photo-offscreen-window.c
