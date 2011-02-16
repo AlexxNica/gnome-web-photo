@@ -95,6 +95,7 @@ typedef struct {
 
   PhotoMode      mode;
 
+  char          *user_css;
   int            width;
   int            thumbnail_size;
   gboolean       print_background;
@@ -233,6 +234,7 @@ _parse_font (const char  *font_descr,
 
 static void
 _prepare_web_settings (WebKitWebSettings *settings,
+                       const char        *user_css,
                        gboolean           print_background)
 {
 #ifdef HAVE_GNOME3
@@ -243,13 +245,8 @@ _prepare_web_settings (WebKitWebSettings *settings,
   char *value;
   char *font_name = NULL;
   int   font_size = 0;
-  char *css_uri;
 
   /* Various settings */
-
-  value = g_build_filename (PKGDATADIR, "style.css", NULL);
-  css_uri = g_filename_to_uri (value, NULL, NULL);
-  g_free (value);
 
   g_object_set (G_OBJECT (settings),
                 /* printing settings */
@@ -266,10 +263,8 @@ _prepare_web_settings (WebKitWebSettings *settings,
                 "javascript-can-access-clipboard", FALSE,
                 "enable-universal-access-from-file-uris", FALSE,
                 /* custom css */
-                "user-stylesheet-uri", css_uri,
+                "user-stylesheet-uri", user_css,
                 NULL);
-
-  g_free (css_uri);
 
   /* Fetch fonts from user config */
 
@@ -336,6 +331,7 @@ _prepare_web_settings (WebKitWebSettings *settings,
 static void
 _prepare_webkit (WebKitWebView     *webview,
                  WebKitWebSettings *settings,
+                 const char        *user_css,
                  gboolean           print_background)
 {
   SoupSession* session = webkit_get_default_session();
@@ -344,7 +340,7 @@ _prepare_webkit (WebKitWebView     *webview,
   soup_session_remove_feature_by_type (session, WEBKIT_TYPE_SOUP_AUTH_DIALOG);
 
   _prepare_web_view (webview);
-  _prepare_web_settings (settings, print_background);
+  _prepare_web_settings (settings, user_css, print_background);
 }
 
 
@@ -666,7 +662,8 @@ _create_web_window (PhotoData *data)
 
   settings = webkit_web_settings_new ();
 
-  _prepare_webkit (data->webview, settings, data->print_background);
+  _prepare_webkit (data->webview, settings,
+                   data->user_css, data->print_background);
 
   webkit_web_view_set_settings (data->webview, settings);
 
@@ -727,13 +724,13 @@ _print_synopsis (void)
 
   switch (parsed_mode) {
     case MODE_PHOTO:
-      g_print (_("Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE OUTFILE\n"), name);
+      g_print (_("Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE OUTFILE\n"), name);
       break;
     case MODE_THUMBNAIL:
-      g_print (_("Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"), name);
+      g_print (_("Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"), name);
       break;
     case MODE_PRINT:
-      g_print (_("Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE\n"), name);
+      g_print (_("Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE\n"), name);
       break;
     default:
       break;
@@ -749,12 +746,13 @@ main (int    argc,
   char           **arguments = NULL;
   gboolean         is_file = FALSE;
   GtkWidget       *window;
+  char            *user_css_path = NULL;
 
   PhotoData data = { NULL, NULL,
                      MODE_INVALID,
                      /* thumbnail_size set to -1 to be able to check if option
                       * was passed or not */
-                     DEFAULT_WIDTH, -1, FALSE,
+                     NULL, DEFAULT_WIDTH, -1, FALSE,
                      60, FALSE,
                      FALSE,
                      NULL, NULL, 0, 0 };
@@ -763,6 +761,10 @@ main (int    argc,
   {
     { "mode", 'm', 0, G_OPTION_ARG_CALLBACK, (void*) _parse_mode,
       N_("Operation mode [photo|thumbnail|print]"), NULL },
+    { "user-css", 'c', 0, G_OPTION_ARG_FILENAME, &user_css_path,
+      N_("User style sheet to use for the page (default: " PKGDATADIR "/style.css)"),
+      /* Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE */
+      N_("CSSFILE") },
     { "timeout", 't', 0, G_OPTION_ARG_INT, &data.timeout,
       N_("Timeout in seconds, or 0 to disable timeout (default: 60)"),
       /* Translators: T will appear in the help, as in: --timeout=T */
@@ -829,6 +831,39 @@ main (int    argc,
    * times in sequence in order to thumbnail a bunch of HTML files. */
   if (data.mode == MODE_THUMBNAIL) {
     nice (5);
+  }
+
+  /* Check user css */
+  if (user_css_path) {
+    GFile *file;
+    char  *path;
+
+    file = g_file_new_for_commandline_arg (user_css_path);
+    data.user_css = g_file_get_uri (file);
+    path = g_file_get_path (file);
+
+    if (g_file_is_native (file) &&
+        !g_file_test (path, G_FILE_TEST_IS_REGULAR)) {
+      g_object_unref (file);
+      g_free (path);
+      /* Translators: %s is a filename or a URI */
+      g_printerr (_("Specified user stylesheet ('%s') does not exist!\n"),
+                  user_css_path);
+      _print_synopsis ();
+      return 1;
+    }
+
+    g_object_unref (file);
+    g_free (path);
+  } else {
+    GFile *file;
+    char  *path;
+
+    path = g_build_filename (PKGDATADIR, "style.css", NULL);
+    file = g_file_new_for_path (path);
+    data.user_css = g_file_get_uri (file);
+    g_free (path);
+    g_object_unref (file);
   }
 
   /* Check timeout */
