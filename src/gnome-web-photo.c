@@ -841,6 +841,8 @@ main (int    argc,
     return 1;
   }
 
+  g_assert (data.thumbnail_size < MAX_SIZE);
+
   /* Check width */
   if (data.width < MIN_WIDTH || data.width > MAX_WIDTH) {
     g_printerr (_("--width out of bounds; must be between %d and %d!\n"), MIN_WIDTH, MAX_WIDTH);
@@ -851,6 +853,8 @@ main (int    argc,
     g_printerr (_("--width must be a multiple of 32 in thumbnail mode!\n"));
     return 1;
   }
+
+  g_assert (data.width < MAX_SIZE);
 
   /* Check --print-background */
   if (data.mode != MODE_PRINT && data.print_background) {
