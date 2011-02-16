@@ -27,16 +27,16 @@
 
 #include "photo-offscreen-window.h"
 
-/* This is a GtkOffscreenWindow with a maximum height.
- * See comment above gtk_widget_set_size_request() call to understand why we
- * need this. */
+/* This is a GtkOffscreenWindow with a maximum width/height. */
 
 enum {
-  PROP_MAX_HEIGHT = 1
+  PROP_MAX_WIDTH = 1,
+  PROP_MAX_HEIGHT
 };
 
 struct _PhotoOffscreenWindowPrivate
 {
+  guint max_width;
   guint max_height;
 };
 
@@ -52,6 +52,9 @@ photo_offscreen_window_set_property (GObject      *obj,
 
   switch (property_id)
     {
+    case PROP_MAX_WIDTH:
+      photo_offscreen_window_set_max_width (window, g_value_get_uint (value));
+      break;
     case PROP_MAX_HEIGHT:
       photo_offscreen_window_set_max_height (window, g_value_get_uint (value));
       break;
@@ -71,6 +74,9 @@ photo_offscreen_window_get_property (GObject    *obj,
 
   switch (property_id)
     {
+    case PROP_MAX_WIDTH:
+      g_value_set_uint (value, window->priv->max_width);
+      break;
     case PROP_MAX_HEIGHT:
       g_value_set_uint (value, window->priv->max_height);
       break;
@@ -81,6 +87,21 @@ photo_offscreen_window_get_property (GObject    *obj,
 }
 
 #ifdef HAVE_GNOME3
+static void
+photo_offscreen_window_get_preferred_width (GtkWidget *widget,
+                                            gint      *minimum,
+                                            gint      *natural)
+{
+  PhotoOffscreenWindow *window = PHOTO_OFFSCREEN_WINDOW (widget);
+
+  GTK_WIDGET_CLASS (photo_offscreen_window_parent_class)->get_preferred_width (widget, minimum, natural);
+
+  if (window->priv->max_width > 0) {
+    *minimum = MIN (*minimum, window->priv->max_width);
+    *natural = MIN (*natural, window->priv->max_width);
+  }
+}
+
 static void
 photo_offscreen_window_get_preferred_height (GtkWidget *widget,
                                              gint      *minimum,
@@ -104,6 +125,8 @@ photo_offscreen_window_size_request (GtkWidget      *widget,
 
   GTK_WIDGET_CLASS (photo_offscreen_window_parent_class)->size_request (widget, requisition);
 
+  if (window->priv->max_width > 0)
+    requisition->width = MIN (requisition->width, window->priv->max_width);
   if (window->priv->max_height > 0)
     requisition->height = MIN (requisition->height, window->priv->max_height);
 }
@@ -120,10 +143,29 @@ photo_offscreen_window_class_init (PhotoOffscreenWindowClass *class)
   object_class->get_property = photo_offscreen_window_get_property;
 
 #ifdef HAVE_GNOME3
+  widget_class->get_preferred_width = photo_offscreen_window_get_preferred_width;
   widget_class->get_preferred_height = photo_offscreen_window_get_preferred_height;
 #else
   widget_class->size_request = photo_offscreen_window_size_request;
 #endif
+
+  /**
+   * PhotoOffscreenWindow:max-width:
+   *
+   * The #PhotoOffscreenWindow:max-width property determines the maximum
+   * width of the offscreen window. This can be useful if widgets inside the
+   * offscreen window get too large.
+   *
+   * Usual offscreen windows have no maximum width; a maximum width of 0 will
+   * keep this behavior.
+   */
+  pspec =
+    g_param_spec_uint ("max-width",
+                       _("Maximum width"),
+                       _("Maximum width of the offscreen window"),
+                       0, G_MAXUINT, 0,
+                       G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
+  g_object_class_install_property (object_class, PROP_MAX_WIDTH, pspec);
 
   /**
    * PhotoOffscreenWindow:max-height:
@@ -143,7 +185,6 @@ photo_offscreen_window_class_init (PhotoOffscreenWindowClass *class)
                        G_PARAM_READWRITE | G_PARAM_CONSTRUCT | G_PARAM_STATIC_STRINGS);
   g_object_class_install_property (object_class, PROP_MAX_HEIGHT, pspec);
 
-
   g_type_class_add_private (class, sizeof (PhotoOffscreenWindowPrivate));
 }
 
@@ -158,6 +199,29 @@ GtkWidget *
 photo_offscreen_window_new (void)
 {
   return g_object_new (photo_offscreen_window_get_type (), NULL);
+}
+
+void
+photo_offscreen_window_set_max_width (PhotoOffscreenWindow *window,
+                                      guint                 max_width)
+{
+  g_return_if_fail (PHOTO_IS_OFFSCREEN_WINDOW (window));
+
+  if (window->priv->max_width == max_width)
+    return;
+
+  window->priv->max_width = max_width;
+  g_object_notify (G_OBJECT (window), "max-width");
+
+  gtk_widget_queue_resize (GTK_WIDGET (window));
+}
+
+guint
+photo_offscreen_window_get_max_width (PhotoOffscreenWindow *window)
+{
+  g_return_val_if_fail (PHOTO_IS_OFFSCREEN_WINDOW (window), 0);
+
+  return window->priv->max_width;
 }
 
 void

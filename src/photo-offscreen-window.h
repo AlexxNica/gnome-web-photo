@@ -54,6 +54,10 @@ GType photo_offscreen_window_get_type (void) G_GNUC_CONST;
 
 GtkWidget *photo_offscreen_window_new (void);
 
+void       photo_offscreen_window_set_max_width  (PhotoOffscreenWindow *window,
+                                                  guint                 max_width);
+guint      photo_offscreen_window_get_max_width  (PhotoOffscreenWindow *window);
+
 void       photo_offscreen_window_set_max_height (PhotoOffscreenWindow *window,
                                                   guint                 max_height);
 guint      photo_offscreen_window_get_max_height (PhotoOffscreenWindow *window);
