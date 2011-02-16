@@ -1,13 +1,31 @@
-In order to keep the code nice and clean we have a few requirements you'll
-need to stick to in order to get your patch accepted:
+Hacking on gnome-web-photo
+==========================
 
-- all files have to be encoded in UTF-8
+ + The development occurs in git:
 
-  Comment blocks are written like this:
-  
-/*
- * bla_bla_cb: This is an example comment block
- */
+     http://git.gnome.org/browse/gnome-web-photo
 
-Do NOT commit to this module without permission from me 
-(chpe@gnome.org)
+   For information on how to access GNOME git please read:
+
+     http://live.gnome.org/Git
+
+ + Please send patches as bug reports in GNOME Bugzilla:
+
+     https://bugzilla.gnome.org/ (product gnome-web-photo)
+
+   Your patch should be in unified diff form (the -u option to GNU
+   diff). See also:
+
+     http://live.gnome.org/GnomeLove/SubmittingPatches
+
+ + Please try and send a patch against a recent version of this package.
+   Patches against git master are most preferable.
+
+ + Don't commit any but the most trivial patches without approval.
+
+ + Exceptions to this are:
+
+   - Translators may commit basic i18n related patches to the build
+     setup.
+   - Build sheriff are welcome - in accordance with the relevant build
+     sheriff constraints.
