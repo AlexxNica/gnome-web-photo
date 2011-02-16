@@ -33,12 +33,16 @@ G_BEGIN_DECLS
 #define PHOTO_IS_OFFSCREEN_WINDOW_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), PHOTO_TYPE_OFFSCREEN_WINDOW))
 #define PHOTO_OFFSCREEN_WINDOW_GET_CLASS(obj)   (G_TYPE_INSTANCE_GET_CLASS((obj), PHOTO_TYPE_OFFSCREEN_WINDOW, PhotoOffscreenWindowClass))
 
-typedef struct _PhotoOffscreenWindow      PhotoOffscreenWindow;
-typedef struct _PhotoOffscreenWindowClass PhotoOffscreenWindowClass;
+typedef struct _PhotoOffscreenWindow        PhotoOffscreenWindow;
+typedef struct _PhotoOffscreenWindowClass   PhotoOffscreenWindowClass;
+typedef struct _PhotoOffscreenWindowPrivate PhotoOffscreenWindowPrivate;
 
 struct _PhotoOffscreenWindow
 {
   GtkOffscreenWindow parent_object;
+
+  /*< private >*/
+  PhotoOffscreenWindowPrivate *priv;
 };
 
 struct _PhotoOffscreenWindowClass
@@ -49,6 +53,10 @@ struct _PhotoOffscreenWindowClass
 GType photo_offscreen_window_get_type (void) G_GNUC_CONST;
 
 GtkWidget *photo_offscreen_window_new (void);
+
+void       photo_offscreen_window_set_max_height (PhotoOffscreenWindow *window,
+                                                  guint                 max_height);
+guint      photo_offscreen_window_get_max_height (PhotoOffscreenWindow *window);
 
 G_END_DECLS
 
