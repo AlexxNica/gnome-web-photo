@@ -59,6 +59,10 @@
 #define DEFAULT_MONOSPACE_FONT    "Monospace 10"
 #define DEFAULT_MINIMUM_SIZE      7
 
+/* Value to keep in sync with the one from cairo:
+ * MAX_IMAGE_SIZE in cairo-image-surface.c */
+#define MAX_SIZE        32767
+
 #define MIN_WIDTH       64
 #define MAX_WIDTH       2048
 #define DEFAULT_WIDTH   1024
@@ -638,6 +642,8 @@ _create_web_window (PhotoData *data)
    * related to what is displayed). So it only affects MODE_PHOTO. But it's
    * better than not getting anything anyway. */
   gtk_widget_set_size_request (window, data->width, -1);
+  photo_offscreen_window_set_max_height (PHOTO_OFFSCREEN_WINDOW (window),
+                                         MAX_SIZE);
 
   webview = webkit_web_view_new ();
   data->webview = WEBKIT_WEB_VIEW (webview);
