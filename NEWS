@@ -1,3 +1,39 @@
+====================
+GNOME Web Photo 0.10
+====================
+
+For the 0.10 release, GNOME Web Photo has been rewritten to use WebKitGTK+.
+The code is simpler and smaller! There is one regression: photos of very
+tall pages are now clipped. This is usually not visible, but a typical example
+of such a tall page is Planet GNOME.
+
+  Features
+
+	* Rewrite using WebKit
+	* Add --user-css option, to let user specify a custom CSS
+	* Add --printer option, to print the page on a printer
+
+  Misc
+
+	* Update to non-code files
+	* Build fixes
+
+  Translators
+
+	* Marek Černocký (cs)
+	* Joe Hansen (da)
+	* Mario Blättermann (de)
+	* Jorge González (es)
+	* Claude Paroz (fr)
+	* Antón Méixome (gl)
+	* Yaron Shahrabani (he)
+	* Kjartan Maraas (nb)
+	* A S Alam (pa)
+	* Piotr Drąg (pl)
+	* Flamarion Jorge (pt_BR)
+	* Matej Urbančič (sl)
+	* 苏运强 (zh_CN)
+
 ===================
 GNOME Web Photo 0.9
 ===================
