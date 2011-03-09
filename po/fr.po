@@ -1,16 +1,16 @@
 # French translation for gnome-web-photo.
-# Copyright (C) 2009 gnome-web-photo's COPYRIGHT HOLDER
+# Copyright (C) 2009-2011 Listed translators
 # This file is distributed under the same license as the gnome-web-photo package.
 #
-# Nicolas Repentin <nicolas.repentin@gmail.com>, 2009.
-# Claude Paroz <claude@2xlibre.net>, 2009
+# Nicolas Repentin <nicolas.repentin@gmail.com>, 2009
+# Claude Paroz <claude@2xlibre.net>, 2009-2011
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-web-photo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-21 22:41+0000\n"
-"PO-Revision-Date: 2009-10-24 14:04+0200\n"
+"POT-Creation-Date: 2011-02-16 19:30+0000\n"
+"PO-Revision-Date: 2011-03-09 17:17+0100\n"
 "Last-Translator: Claude Paroz <claude@2xlibre.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -36,111 +36,274 @@ msgstr "La commande de création de vignette pour les fichiers XHTML."
 
 #: ../data/thumbnailer.schemas.in.h:5
 msgid "Whether to enable thumbnailing of HTML files"
-msgstr "Indique s'il faut activer la création de vignettes pour les fichiers HTML"
+msgstr ""
+"Indique s'il faut activer la création de vignettes pour les fichiers HTML"
 
 #: ../data/thumbnailer.schemas.in.h:6
 msgid "Whether to enable thumbnailing of HTML files."
-msgstr "Indique s'il faut activer la création de vignettes pour les fichiers HTML."
+msgstr ""
+"Indique s'il faut activer la création de vignettes pour les fichiers HTML."
 
 #: ../data/thumbnailer.schemas.in.h:7
 msgid "Whether to enable thumbnailing of XHTML files"
-msgstr "Indique s'il faut activer la création de vignettes pour les fichiers XHTML"
+msgstr ""
+"Indique s'il faut activer la création de vignettes pour les fichiers XHTML"
 
 #: ../data/thumbnailer.schemas.in.h:8
 msgid "Whether to enable thumbnailing of XHTML files."
-msgstr "Indique s'il faut activer la création de vignettes pour les fichiers XHTML."
+msgstr ""
+"Indique s'il faut activer la création de vignettes pour les fichiers XHTML."
 
-#: ../src/main.cpp:146
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:369 ../src/gnome-web-photo.c:384
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Erreur lors de l'enregistrement de « %s » : %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:437 ../src/gnome-web-photo.c:480
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Erreur lors de la création des vignettes pour « %s » : %s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:514
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Erreur lors de l'impression de « %s » sur « %s » : %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:534
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Erreur lors de l'impression de « %s » : %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:604
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Erreur lors du chargement de « %s » : %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:663
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr ""
+"Expiration du délai lors du chargement de « %s ». Production de la vue "
+"actuelle...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:670
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr "Expiration du délai lors du chargement de « %s ». Rien à produire...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:676
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "Expiration du délai lors du chargement de « %s ».\n"
+
+#: ../src/gnome-web-photo.c:780
 #, c-format
 msgid "Unknown mode '%s'"
 msgstr "Mode « %s » inconnu"
 
-#: ../src/main.cpp:171
-#, c-format
-msgid "Unknown format '%s'"
-msgstr "Format « %s » inconnu"
-
-#: ../src/main.cpp:439
+#: ../src/gnome-web-photo.c:793
 #, c-format
 msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
 msgstr "Usage : %s [--mode=photo|thumbnail|print] [...]\n"
 
-#: ../src/main.cpp:443
+#: ../src/gnome-web-photo.c:797
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
-"FILE OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE "
+"OUTFILE\n"
 msgstr ""
-"Usage : %s [-t DÉLAI] [--force] [--format FORMAT] [-w LARGEUR] [--files] URI|"
-"FICHIER FICHIER_SORTIE [...]\n"
+"Usage : %s [-c FICHIER_CSS] [-t DÉLAI] [--force] [-w LARGEUR] [--file] URI|FICHIER "
+"FICHIER_SORTIE\n"
 
-#: ../src/main.cpp:446
+#: ../src/gnome-web-photo.c:800
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
-"OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] "
+"[--file] URI|FILE OUTFILE\n"
 msgstr ""
-"Usage : %s [-t DÉLAI] [--force] [-w LARGEUR] -s TAILLE [--files] URI|FICHIER "
-"FICHIER_SORTIE [...]\n"
+"Usage : %s [-c FICHIER_CSS] [-t DÉLAI] [--force] [-w LARGEUR] [-s TAILLE_VIGNETTE] "
+"[--file] URI|FICHIER FICHIER_SORTIE\n"
 
-#: ../src/main.cpp:449
+#: ../src/gnome-web-photo.c:804
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
-"URI|FILE OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
 msgstr ""
-"Usage : %s [-t DÉLAI] [--force] [-w LARGEUR] [--print-background] [--files] "
-"URI|FICHIER FICHIER_SORTIE [...]\n"
+"Usage : %s [-c FICHIER_CSS] [-t DÉLAI] [--force] [-w LARGEUR] [--print-"
+"background] [--file] URI|FICHIER FICHIER_SORTIE|--printer=IMPRIMANTE\n"
 
-#: ../src/main.cpp:468
+#: ../src/gnome-web-photo.c:806
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"Usage : %s [-c FICHIER_CSS] [-t DÉLAI] [--force] [-w LARGEUR] [--print-"
+"background] [--file] URI|FICHIER FICHIER_SORTIE\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:846
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:851
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (non actif)\n"
+
+#: ../src/gnome-web-photo.c:881
 msgid "Operation mode [photo|thumbnail|print]"
-msgstr "Mode de fonctionnement [photo|thumbnail|print] (photo, vignette, impression)"
+msgstr ""
+"Mode de fonctionnement [photo|thumbnail|print] (photo, vignette, impression)"
 
-#: ../src/main.cpp:470
-msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+#: ../src/gnome-web-photo.c:883
+msgid "User style sheet to use for the page (default: "
+msgstr "Feuille de style utilisateur à appliquer à la page (par défaut : "
+
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:885
+msgid "CSSFILE"
+msgstr "FICHIER_CSS"
+
+#: ../src/gnome-web-photo.c:887
+msgid "Timeout in seconds, or 0 to disable timeout (default: 60)"
 msgstr "Délai en secondes, ou 0 pour le désactiver (par défaut : 60)"
 
-#: ../src/main.cpp:472
-msgid "Force output when timeout expires, even if the page isn't loaded fully"
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:889
+msgid "T"
+msgstr "T"
+
+#: ../src/gnome-web-photo.c:891
+msgid "Force output when timeout expires, even if the page is not fully loaded"
 msgstr ""
 "Forcer la sortie lorsque le délai expire, même si la page n'est pas "
 "complètement chargée"
 
-#: ../src/main.cpp:474
-msgid "The desired width of the image (default: 1024)"
-msgstr "La largeur désirée de l'image (par défaut : 1024)"
+#: ../src/gnome-web-photo.c:893
+msgid "Desired width of the web page (default: 1024)"
+msgstr "La largeur désirée de la page Web (par défaut : 1024)"
 
-#: ../src/main.cpp:476
-msgid "The thumbnail size (default: 256)"
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:895
+msgid "W"
+msgstr "W"
+
+#: ../src/gnome-web-photo.c:897
+msgid "Thumbnail size (default: 256)"
 msgstr "Taille de la miniature (par défaut : 256)"
 
-#: ../src/main.cpp:478
-msgid ""
-"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:899
+msgid "S"
+msgstr "S"
+
+#: ../src/gnome-web-photo.c:902
+msgid "Print page on PRINTER (default: none, save as PDF)"
 msgstr ""
-"Format de fichier de sortie. Les formats pris en charge sont « png », « jpeg » et "
-"« ppm » (par défaut : png)"
+"Imprimer la page sur l'IMPRIMANTE (par défaut : aucune, enregistrer en PDF)"
 
-#: ../src/main.cpp:478
-msgid "FORMAT"
-msgstr "FORMAT"
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:904
+msgid "PRINTER"
+msgstr "IMPRIMANTE"
 
-#: ../src/main.cpp:480
+#: ../src/gnome-web-photo.c:907
 msgid "Print background images and colours (default: false)"
 msgstr "Imprimer les images d'arrière-plan et les couleurs (par défaut : non)"
 
-#: ../src/main.cpp:490
-msgid "The desired quality of the JPEG image (1 .. 100)"
-msgstr "La qualité désirée de l'image JPEG (1 .. 100)"
+#: ../src/gnome-web-photo.c:909
+msgid "Argument is a file and not a URI"
+msgstr "Le paramètre est un fichier, non un URI"
 
-#: ../src/main.cpp:490
-msgid "QUALITY"
-msgstr "QUALITÉ"
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:974
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "La feuille de style utilisateur indiquée (« %s ») n'existe pas !\n"
 
-#: ../src/main.cpp:515
-msgid "JPEG options:"
-msgstr "Options JPEG :"
+#: ../src/gnome-web-photo.c:995
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--timeout ne peut pas être négatif\n"
 
-#: ../src/main.cpp:516
-msgid "JPEG options"
-msgstr "Options JPEG"
+#: ../src/gnome-web-photo.c:1010
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--size doit être 32, 64, 96, 128 ou 256\n"
+
+#: ../src/gnome-web-photo.c:1014
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "--size n'est disponible qu'en mode vignette\n"
+
+#: ../src/gnome-web-photo.c:1023
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--width hors limites ; doit être entre %d et %d\n"
+
+#: ../src/gnome-web-photo.c:1028
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "--width doit être un mutliple de 32 en mode vignette\n"
+
+#: ../src/gnome-web-photo.c:1036
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--print-background n'est disponible qu'en mode impression\n"
+
+#: ../src/gnome-web-photo.c:1044
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--printer n'est disponible qu'en mode impression\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1053
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "« %s » n'est pas une imprimante valide !\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "List of printers:\n"
+msgstr "Liste d'imprimantes :\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "Paramètres manquants !\n"
+
+#: ../src/gnome-web-photo.c:1095
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "Trop de paramètres !\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "Largeur maximale"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "Largeur maximale de la fenêtre hors écran"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "Hauteur maximale"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "Hauteur maximale de la fenêtre hors écran"
