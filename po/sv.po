@@ -1,16 +1,17 @@
 # Swedish translation for gnome-web-photo.
-# Copyright (C) 2007-2009 Free Software Foundation, Inc.
+# Copyright (C) 2007-2011 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gnome-web-photo package.
-# Daniel Nylander <po@danielnylander.se>, 2007, 2009.
+# Daniel Nylander <po@danielnylander.se>, 2007, 2009, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-web-photo\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-02-20 13:56+0100\n"
-"PO-Revision-Date: 2009-02-20 13:59+0100\n"
+"POT-Creation-Date: 2011-03-14 08:36+0100\n"
+"PO-Revision-Date: 2011-03-14 08:44+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -47,81 +48,262 @@ msgstr "Huruvida skapandet av miniatyrbilder för XHTML-filer ska aktiveras"
 msgid "Whether to enable thumbnailing of XHTML files."
 msgstr "Huruvida skapandet av miniatyrbilder för XHTML-filer ska aktiveras."
 
-#: ../src/main.cpp:146
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:369
+#: ../src/gnome-web-photo.c:384
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Fel vid när \"%s\" sparades: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:437
+#: ../src/gnome-web-photo.c:480
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Fel när miniatyrbild av \"%s\" skapades: %s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:514
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Fel vid utskrift av \"%s\" på \"%s\": %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:534
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Fel vid utskrift av \"%s\": %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:604
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Fel vid inläsning av \"%s\": %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:663
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr "Tidsgräns överstegs vid inläsning av \"%s\". Skriver ut aktuell vy...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:670
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr "Tidsgräns överstegs vid inläsning av \"%s\". Ingenting att skriva ut...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:676
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "TIdsgräns överstegs vid inläsning av \"%s\".\n"
+
+#: ../src/gnome-web-photo.c:780
 #, c-format
 msgid "Unknown mode '%s'"
 msgstr "Okänt läge \"%s\""
 
-#: ../src/main.cpp:171
-#, c-format
-msgid "Unknown format '%s'"
-msgstr "Okänt format \"%s\""
-
-#: ../src/main.cpp:439
+#: ../src/gnome-web-photo.c:793
 #, c-format
 msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
 msgstr "Användning: %s [--mode=photo|thumbnail|print] [...]\n"
 
-#: ../src/main.cpp:443
+#: ../src/gnome-web-photo.c:797
 #, c-format
-msgid "Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|FILE OUTFILE [...]\n"
-msgstr "Användning: %s [-t TIDSGRÄNS] [--force] [--format FORMAT] [-w BREDD] [--files] URI|FIL UTFIL [...]\n"
+msgid "Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE OUTFILE\n"
+msgstr "Användning: %s [-c CSS-FIL] [-t TIDSGRÄNS] [--force] [-w BREDD] [--file] URI|FIL UTFIL\n"
 
-#: ../src/main.cpp:446
+#: ../src/gnome-web-photo.c:800
 #, c-format
-msgid "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE OUTFILE [...]\n"
-msgstr "Användning: %s [-t TIDSGRÄNS] [--force] [-w BREDD] -s STORLEK [--files] URI|FIL UTFIL [...]\n"
+msgid "Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
+msgstr "Användning: %s [-c CSS-FIL] [-t TIDSGRÄNS] [--force] [-w BREDD] [-s MINIATYRBILDSSTORLEK] [--file] URI|FIL UTFIL\n"
 
-#: ../src/main.cpp:449
+#: ../src/gnome-web-photo.c:804
 #, c-format
-msgid "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] URI|FILE OUTFILE [...]\n"
-msgstr "Användning: %s [-t TIDSGRÄNS] [--force] [-w BREDD] [--print-background] [--files] URI|FIL UTFIL [...]\n"
+msgid "Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
+msgstr "Användning: %s [-c CSS-FIL] [-t TIDSGRÄNS] [--force] [-w BREDD] [--print-background] [--file] URI|FIL UTFIL|--printer=SKRIVARE\n"
 
-#: ../src/main.cpp:468
+#: ../src/gnome-web-photo.c:806
+#, c-format
+msgid "Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE\n"
+msgstr "Användning: %s [-c CSS-FIL] [-t TIDSGRÄNS] [--force] [-w BREDD] [--print-background] [--file] URI|FIL UTFIL\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:846
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:851
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (inte aktiv)\n"
+
+#: ../src/gnome-web-photo.c:881
 msgid "Operation mode [photo|thumbnail|print]"
 msgstr "Åtgärdsläge [photo|thumbnail|print]"
 
-#: ../src/main.cpp:470
-msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
-msgstr "Tidsgränsen i sekunder, eller 0 för att inaktivera tidsgräns (standard: 60)"
+#: ../src/gnome-web-photo.c:883
+msgid "User style sheet to use for the page (default: "
+msgstr "Användarstilmall att använda för sidan (standard: "
 
-#: ../src/main.cpp:472
-msgid "Force output when timeout expires, even if the page isn't loaded fully"
-msgstr "Tvinga utdata när tidsgränsen nås, även om sidan inte helt har lästs in"
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:885
+msgid "CSSFILE"
+msgstr "CSS-FIL"
 
-#: ../src/main.cpp:474
-msgid "The desired width of the image (default: 1024)"
-msgstr "Önskad bredd för bilden (standard: 1024)"
+#: ../src/gnome-web-photo.c:887
+msgid "Timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr "Tidsgräns i sekunder, eller 0 för att inaktivera tidsgräns (standard: 60)"
 
-#: ../src/main.cpp:476
-msgid "The thumbnail size (default: 256)"
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:889
+msgid "T"
+msgstr "T"
+
+#: ../src/gnome-web-photo.c:891
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr "Tvinga utdata när tidsgränsen uppnås, även om sidan inte helt har lästs in"
+
+#: ../src/gnome-web-photo.c:893
+msgid "Desired width of the web page (default: 1024)"
+msgstr "Önskad bredd för webbsidan (standard: 1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:895
+msgid "W"
+msgstr "B"
+
+#: ../src/gnome-web-photo.c:897
+msgid "Thumbnail size (default: 256)"
 msgstr "Storlek för miniatyrbild (standard: 256)"
 
-#: ../src/main.cpp:478
-msgid "File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
-msgstr "Filformat för utdata. Format som stöds är \"png\", \"jpeg\" och \"ppm\" (standard:png)"
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:899
+msgid "S"
+msgstr "S"
 
-#: ../src/main.cpp:478
-msgid "FORMAT"
-msgstr "FORMAT"
+#: ../src/gnome-web-photo.c:902
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr "Skriv ut sida på SKRIVARE (standard: none, spara som PDF)"
 
-#: ../src/main.cpp:480
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:904
+msgid "PRINTER"
+msgstr "SKRIVARE"
+
+#: ../src/gnome-web-photo.c:907
 msgid "Print background images and colours (default: false)"
 msgstr "Skriv ut bakgrundsbilder och färger (standard: false)"
 
-#: ../src/main.cpp:490
-msgid "The desired quality of the JPEG image (1 .. 100)"
-msgstr "Önskad kvalitet för JPEG-bilden (1 .. 100)"
+#: ../src/gnome-web-photo.c:909
+msgid "Argument is a file and not a URI"
+msgstr "Argument är en fil och inte en URI"
 
-#: ../src/main.cpp:490
-msgid "QUALITY"
-msgstr "KVALITET"
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:974
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "Angiven användarstilmall (\"%s\") finns inte!\n"
 
-#: ../src/main.cpp:515
-msgid "JPEG options:"
-msgstr "JPEG-alternativ:"
+#: ../src/gnome-web-photo.c:995
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--timeout får inte vara negativ!\n"
 
-#: ../src/main.cpp:516
-msgid "JPEG options"
-msgstr "JPEG-alternativ"
+#: ../src/gnome-web-photo.c:1010
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--size får endast vara 32, 64, 96, 128 eller 256!\n"
+
+#: ../src/gnome-web-photo.c:1014
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "--size är endast tillgänglig i miniatyrbildsläge!\n"
+
+#: ../src/gnome-web-photo.c:1023
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--width utanför gränserna; måste vara mellan %d och %d!\n"
+
+#: ../src/gnome-web-photo.c:1028
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "--width måste vara en multipel av 32 i miniatyrbildsläge!\n"
+
+#: ../src/gnome-web-photo.c:1036
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--print-background är endast tillgänglig i utskriftsläge!\n"
+
+#: ../src/gnome-web-photo.c:1044
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--printer är endast tillgänglig i utskriftsläge!\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1053
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "\"%s\" är inte en giltig skrivare!\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "List of printers:\n"
+msgstr "Lista över skrivare:\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "Saknar argument!\n"
+
+#: ../src/gnome-web-photo.c:1095
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "För många argument!\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "Maximal bredd"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "Maximal bredd för offscreen-fönstret"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "Maximal höjd"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "Maximal höjd för offscreen-fönstret"
+
+#~ msgid "Unknown format '%s'"
+#~ msgstr "Okänt format \"%s\""
+#~ msgid ""
+#~ "Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] "
+#~ "URI|FILE OUTFILE [...]\n"
+#~ msgstr ""
+#~ "Användning: %s [-t TIDSGRÄNS] [--force] [--format FORMAT] [-w BREDD] [--"
+#~ "files] URI|FIL UTFIL [...]\n"
+#~ msgid ""
+#~ "File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:"
+#~ "png)"
+#~ msgstr ""
+#~ "Filformat för utdata. Format som stöds är \"png\", \"jpeg\" och \"ppm"
+#~ "\" (standard:png)"
+#~ msgid "FORMAT"
+#~ msgstr "FORMAT"
+#~ msgid "The desired quality of the JPEG image (1 .. 100)"
+#~ msgstr "Önskad kvalitet för JPEG-bilden (1 .. 100)"
+#~ msgid "QUALITY"
+#~ msgstr "KVALITET"
+#~ msgid "JPEG options:"
+#~ msgstr "JPEG-alternativ:"
+#~ msgid "JPEG options"
+#~ msgstr "JPEG-alternativ"
 
