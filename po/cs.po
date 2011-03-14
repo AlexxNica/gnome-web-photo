@@ -1,21 +1,21 @@
 # Czech translation for gnome-web-photo.
 # Copyright (C) 2009 gnome-web-photo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-web-photo package.
-# Marek Černocký <marek@manet.cz>, 2009.
+# Marek Černocký <marek@manet.cz>, 2009, 2011.
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-web-photo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-07 09:14+0000\n"
-"PO-Revision-Date: 2009-11-08 15:16+0100\n"
+"POT-Creation-Date: 2011-02-16 19:30+0000\n"
+"PO-Revision-Date: 2011-03-14 10:52+0100\n"
 "Last-Translator: Marek Černocký <marek@manet.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
+"Language: cs\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Poedit-Language: Czech\n"
-"X-Poedit-SourceCharset: utf-8\n"
 
 #: ../data/thumbnailer.schemas.in.h:1
 msgid "The command to thumbnail HTML files"
@@ -49,98 +49,307 @@ msgstr "Zda povolit vytváření náhledů souborů XHTML"
 msgid "Whether to enable thumbnailing of XHTML files."
 msgstr "Zda povolit vytváření náhledů souborů XHTML."
 
-#: ../src/main.cpp:146
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:369 ../src/gnome-web-photo.c:384
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Chyba při ukládání „%s“: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:437 ../src/gnome-web-photo.c:480
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Chyba při vytváření náhledu „%s“: %s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:514
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Chyba při tisku „%s“ na „%s“: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:534
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Chyba při tisku „%s“: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:604
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Chyba při načítání „%s“: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:663
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr ""
+"Vypršel časový limit při načítání „%s“. Pro výstup se použije současné "
+"zobrazení…\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:670
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr ""
+"Vypršel časový limit při načítání „%s“. Není nic k dispozici pro výstup…\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:676
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "Vypršel časový limit při načítání „%s“.\n"
+
+#: ../src/gnome-web-photo.c:780
 #, c-format
 msgid "Unknown mode '%s'"
 msgstr "Neznámý režim „%s“"
 
-#: ../src/main.cpp:171
-#, c-format
-msgid "Unknown format '%s'"
-msgstr "Neznámý formát „%s“"
-
-#: ../src/main.cpp:439
+#: ../src/gnome-web-photo.c:793
 #, c-format
 msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
 msgstr "Použití: %s [--mode=photo|thumbnail|print] […]\n"
 
-#: ../src/main.cpp:443
+#: ../src/gnome-web-photo.c:797
 #, c-format
+#| msgid ""
+#| "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+#| "OUTFILE [...]\n"
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
-"FILE OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE "
+"OUTFILE\n"
 msgstr ""
-"Použití: %s [-t ČASOVÝ_LIMIT] [--force] [--format FORMÁT] [-w ŠÍŘKA] [--"
-"files] URI|SOUBOR VÝSTUPNÍ_SOUBOR […]\n"
+"Použití: %s [-c SOUBOR_CSS] [-t ČASOVÝ_LIMIT] [--force] [-w ŠÍŘKA] [--file] "
+"URI|SOUBOR VÝSTUPNÍ_SOUBOR\n"
 
-#: ../src/main.cpp:446
+#: ../src/gnome-web-photo.c:800
 #, c-format
+#| msgid ""
+#| "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+#| "OUTFILE [...]\n"
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
-"OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] "
+"[--file] URI|FILE OUTFILE\n"
 msgstr ""
-"Použití: %s [-t ČASOVÝ_LIMIT] [--force] [-w ŠÍŘKA] -s VELIKOST [--files] URI|"
-"SOUBOR VÝSTUPNÍ_SOUBOR […]\n"
+"Použití: %s [-c SOUBOR_CSS] [-t ČASOVÝ_LIMIT] [--force] [-w ŠÍŘKA] [-s "
+"VELIKOST_NÁHLEDU] [--file] URI|SOUBOR VÝSTUPNÍ_SOUBOR\n"
 
-#: ../src/main.cpp:449
+#: ../src/gnome-web-photo.c:804
 #, c-format
+#| msgid ""
+#| "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--"
+#| "files] URI|FILE OUTFILE [...]\n"
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
-"URI|FILE OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
 msgstr ""
-"Použití: %s [-t ČASOVÝ_LIMIT] [--force] [-w ŠÍŘKA] [--print-background] [--"
-"files] URI|SOUBOR VÝSTUPNÍ_SOUBOR […]\n"
+"Použití: %s [-c SOUBOR_CSS] [-t ČASOVÝ_LIMIT] [--force] [-w ŠÍŘKA] [--print-"
+"background] [--file] URI|SOUBOR VÝSTUPNÍ_SOUBOR|--printer=TISKARNA\n"
 
-#: ../src/main.cpp:468
+#: ../src/gnome-web-photo.c:806
+#, c-format
+#| msgid ""
+#| "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--"
+#| "files] URI|FILE OUTFILE [...]\n"
+msgid ""
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"Použití: %s [-c SOUBOR_CSS] [-t ČASOVÝ_LIMIT] [--force] [-w ŠÍŘKA] [--print-"
+"background] [--file] URI|SOUBOR VÝSTUPNÍ_SOUBOR\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:846
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:851
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (neaktivní)\n"
+
+#: ../src/gnome-web-photo.c:881
 msgid "Operation mode [photo|thumbnail|print]"
 msgstr "Režim práce [photo|thumbnail|print] (tzn. fotka, náhled, tisk)"
 
-#: ../src/main.cpp:470
-msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+#: ../src/gnome-web-photo.c:883
+#| msgid "The desired width of the image (default: 1024)"
+msgid "User style sheet to use for the page (default: "
+msgstr "Uživatelský stylopis pro stránku (výchozí: "
+
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:885
+msgid "CSSFILE"
+msgstr "SOUBOR_CSS"
+
+#: ../src/gnome-web-photo.c:887
+#| msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgid "Timeout in seconds, or 0 to disable timeout (default: 60)"
 msgstr ""
 "Časový limit v sekundách nebo 0 pro vypnutí časového limitu (výchozí: 60)"
 
-#: ../src/main.cpp:472
-msgid "Force output when timeout expires, even if the page isn't loaded fully"
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:889
+msgid "T"
+msgstr "ČL"
+
+#: ../src/gnome-web-photo.c:891
+#| msgid ""
+#| "Force output when timeout expires, even if the page isn't loaded fully"
+msgid "Force output when timeout expires, even if the page is not fully loaded"
 msgstr ""
 "Přinutit k výstupu po vypršení časového limitu, i když není stránka zcela "
 "načtená"
 
-#: ../src/main.cpp:474
-msgid "The desired width of the image (default: 1024)"
-msgstr "Požadovaná šířka obrázku (výchozí: 1024)"
+#: ../src/gnome-web-photo.c:893
+#| msgid "The desired width of the image (default: 1024)"
+msgid "Desired width of the web page (default: 1024)"
+msgstr "Požadovaná šířka webové stránky (výchozí: 1024)"
 
-#: ../src/main.cpp:476
-msgid "The thumbnail size (default: 256)"
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:895
+msgid "W"
+msgstr "Š"
+
+#: ../src/gnome-web-photo.c:897
+#| msgid "The thumbnail size (default: 256)"
+msgid "Thumbnail size (default: 256)"
 msgstr "Velikost náhledu (výchozí: 256)"
 
-#: ../src/main.cpp:478
-msgid ""
-"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:899
+msgid "S"
+msgstr "V"
+
+#: ../src/gnome-web-photo.c:902
+msgid "Print page on PRINTER (default: none, save as PDF)"
 msgstr ""
-"Formát souboru výstupu. Podporované jsou „png“, „jpeg“ a „ppm“ (výchozí: png)"
+"Vytisknout stránku na tiskárně TISKÁRNA (výchozí: nic, uloží se jako PDF)"
 
-#: ../src/main.cpp:478
-msgid "FORMAT"
-msgstr "FORMÁT"
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:904
+msgid "PRINTER"
+msgstr "TISKÁRNA"
 
-#: ../src/main.cpp:480
+#: ../src/gnome-web-photo.c:907
 msgid "Print background images and colours (default: false)"
 msgstr "Tisknout obrázky a barvy pozadí (výchozí: ne)"
 
-#: ../src/main.cpp:490
-msgid "The desired quality of the JPEG image (1 .. 100)"
-msgstr "Požadovaná kvalita obrázku JPEG (1..100)"
+#: ../src/gnome-web-photo.c:909
+msgid "Argument is a file and not a URI"
+msgstr "Argument je soubor a ne adresa URI"
 
-#: ../src/main.cpp:490
-msgid "QUALITY"
-msgstr "KVALITA"
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:974
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "Určený uživatelský stylopis („%s“) neexistuje!\n"
 
-#: ../src/main.cpp:515
-msgid "JPEG options:"
-msgstr "Volby JPEG:"
+#: ../src/gnome-web-photo.c:995
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--timeout nemůže být záporný!\n"
 
-#: ../src/main.cpp:516
-msgid "JPEG options"
-msgstr "Volby JPEG"
+#: ../src/gnome-web-photo.c:1010
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--size může být pouze 32, 64, 96, 128 nebo 256!\n"
 
+#: ../src/gnome-web-photo.c:1014
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "--size je k dispozici pouze v režimu náhledu!\n"
+
+#: ../src/gnome-web-photo.c:1023
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--width je mimo povolené meze; musí být mezi %d a %d!\n"
+
+#: ../src/gnome-web-photo.c:1028
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "--width musí být násobkem 32 v režimu náhledu!\n"
+
+#: ../src/gnome-web-photo.c:1036
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--print-background je k dispozici pouze v tiskovém režimu!\n"
+
+#: ../src/gnome-web-photo.c:1044
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--printer je k dispozici pouze v tiskovém režimu!\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1053
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "„%s“ není platná tiskárna!\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "List of printers:\n"
+msgstr "Seznam tiskáren:\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "Schází argumenty!\n"
+
+#: ../src/gnome-web-photo.c:1095
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "Příliš mnoho argumentů.\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "Maximální šířka"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "Maximální šířka okna vytvářeného v paměti"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "Maximální výška"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "Maximální výška okna vytvářeného v paměti"
+
+#~ msgid "Unknown format '%s'"
+#~ msgstr "Neznámý formát „%s“"
+
+#~ msgid ""
+#~ "Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] "
+#~ "URI|FILE OUTFILE [...]\n"
+#~ msgstr ""
+#~ "Použití: %s [-t ČASOVÝ_LIMIT] [--force] [--format FORMÁT] [-w ŠÍŘKA] [--"
+#~ "files] URI|SOUBOR VÝSTUPNÍ_SOUBOR […]\n"
+
+#~ msgid ""
+#~ "File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:"
+#~ "png)"
+#~ msgstr ""
+#~ "Formát souboru výstupu. Podporované jsou „png“, „jpeg“ a „ppm“ (výchozí: "
+#~ "png)"
+
+#~ msgid "FORMAT"
+#~ msgstr "FORMÁT"
+
+#~ msgid "The desired quality of the JPEG image (1 .. 100)"
+#~ msgstr "Požadovaná kvalita obrázku JPEG (1..100)"
+
+#~ msgid "QUALITY"
+#~ msgstr "KVALITA"
+
+#~ msgid "JPEG options:"
+#~ msgstr "Volby JPEG:"
+
+#~ msgid "JPEG options"
+#~ msgstr "Volby JPEG"
