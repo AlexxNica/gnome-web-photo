@@ -1,4 +1,4 @@
-# Slovenian translation for gnome-web-photo.
+# Slovenian translations for gnome-web-photo.
 # Copyright (C) 2009 gnome-web-photo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-web-photo package.
 #
@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-web-photo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-02 11:06+0000\n"
-"PO-Revision-Date: 2010-04-24 19:27+0100\n"
+"POT-Creation-Date: 2011-03-14 21:54+0000\n"
+"PO-Revision-Date: 2011-03-15 21:52+0100\n"
 "Last-Translator: Matej Urbančič <mateju@svn.gnome.org>\n"
 "Language-Team: Slovenian GNOME Translation Team <gnome-si@googlegroups.com>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -52,81 +53,275 @@ msgstr "Ali naj se omogoči izdelovanje sličic za datoteke XHTML"
 msgid "Whether to enable thumbnailing of XHTML files."
 msgstr "Ali naj se omogoči izdelovanje sličic za datoteke XHTML."
 
-#: ../src/main.cpp:146
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:369
+#: ../src/gnome-web-photo.c:384
+#, fuzzy, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Napaka med shranjevanjem zajete slike"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:437
+#: ../src/gnome-web-photo.c:480
+#, fuzzy, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Napaka med zapisovanjem."
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:514
+#, fuzzy, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Prišlo je do napake med tiskanjem"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:534
+#, fuzzy, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Prišlo je do napake med tiskanjem"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:604
+#, fuzzy, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Napaka med nalaganjem %s"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:663
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr ""
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:670
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr ""
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:676
+#, fuzzy, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "Napaka med nalaganjem projekta."
+
+#: ../src/gnome-web-photo.c:780
 #, c-format
 msgid "Unknown mode '%s'"
 msgstr "Neznan način '%s'"
 
-#: ../src/main.cpp:171
-#, c-format
-msgid "Unknown format '%s'"
-msgstr "Neznan zapis: '%s'"
-
-#: ../src/main.cpp:439
+#: ../src/gnome-web-photo.c:793
 #, c-format
 msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
 msgstr "Uporaba: %s [--mode=photo|thumbnail|print] [...]\n"
 
-#: ../src/main.cpp:443
-#, c-format
-msgid "Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|FILE OUTFILE [...]\n"
+#: ../src/gnome-web-photo.c:797
+#, fuzzy, c-format
+msgid "Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE OUTFILE\n"
 msgstr "Uporaba: %s [-t ZAKASNITEV] [--force] [--format ZAPIS] [-w ŠIRINA] [--files] URI|DATOTEKA DATOTEKAIZPISA [...]\n"
 
-#: ../src/main.cpp:446
-#, c-format
-msgid "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE OUTFILE [...]\n"
-msgstr "Uporaba: %s [-t ZAKASNITEV] [--force] [-w ŠIRINA] -s VELIKOST [--files] URI|DATOTEKA DATOTEKA-IZPISA [...]\n"
+#: ../src/gnome-web-photo.c:800
+#, fuzzy, c-format
+msgid "Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
+msgstr "Uporaba: %s [-t ZAKASNITEV] [--force] [--format ZAPIS] [-w ŠIRINA] [--files] URI|DATOTEKA DATOTEKAIZPISA [...]\n"
 
-#: ../src/main.cpp:449
-#, c-format
-msgid "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] URI|FILE OUTFILE [...]\n"
+#: ../src/gnome-web-photo.c:804
+#, fuzzy, c-format
+msgid "Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
 msgstr "Uporaba: %s [-t ZAKASNITEV] [--force] [-w ŠIRINA] [--print-background] [--files] URI|DATOTEKA DATOTEKA-IZPISA [...]\n"
 
-#: ../src/main.cpp:468
+#: ../src/gnome-web-photo.c:806
+#, fuzzy, c-format
+msgid "Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE\n"
+msgstr "Uporaba: %s [-t ZAKASNITEV] [--force] [-w ŠIRINA] [--print-background] [--files] URI|DATOTEKA DATOTEKAIZPISA [...]\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:846
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:851
+#, fuzzy, c-format
+msgid "  %s (not active)\n"
+msgstr "Ni dejavno"
+
+#: ../src/gnome-web-photo.c:881
 msgid "Operation mode [photo|thumbnail|print]"
 msgstr "Način delovanja [photo (fotografija)|thumbnail (sličica)|print (tisk)]"
 
-#: ../src/main.cpp:470
-msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
-msgstr "Časovna zakasnitev izražena v sekundah. Vrednost 0 onemogoči zakasnitev (privzeto: 60)"
-
-#: ../src/main.cpp:472
-msgid "Force output when timeout expires, even if the page isn't loaded fully"
-msgstr "Vsili izpis, ko je zakasnitev pretekla, čeprav se stran še ni popolnoma naložila"
-
-#: ../src/main.cpp:474
-msgid "The desired width of the image (default: 1024)"
+#: ../src/gnome-web-photo.c:883
+#, fuzzy
+msgid "User style sheet to use for the page (default: "
 msgstr "Želena širina slike (privzeto: 1024)"
 
-#: ../src/main.cpp:476
-msgid "The thumbnail size (default: 256)"
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:885
+msgid "CSSFILE"
+msgstr "CSS-DATOTEKA"
+
+#: ../src/gnome-web-photo.c:887
+#, fuzzy
+msgid "Timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr "Zakasnitev izražena v sekundah. Vrednost 0 onemogoči zakasnitev (privzeto: 60)"
+
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:889
+#, fuzzy
+msgid "T"
+msgstr "T"
+
+#: ../src/gnome-web-photo.c:891
+#, fuzzy
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr "Vsili izpis, ko je zakasnitev pretekla, čeprav se stran še ni popolnoma naložila"
+
+#: ../src/gnome-web-photo.c:893
+#, fuzzy
+msgid "Desired width of the web page (default: 1024)"
+msgstr "Želena širina slike (privzeto: 1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:895
+msgid "W"
+msgstr ""
+
+#: ../src/gnome-web-photo.c:897
+#, fuzzy
+msgid "Thumbnail size (default: 256)"
 msgstr "Velikost sličice (privzeto: 256)"
 
-#: ../src/main.cpp:478
-msgid "File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
-msgstr "Vrsta zapisa datoteke. Podprti zapisi so  'png', 'jpeg' in 'ppm' (privzeto: png)"
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:899
+#, fuzzy
+msgid "S"
+msgstr "S"
 
-#: ../src/main.cpp:478
-msgid "FORMAT"
-msgstr "Zapis"
+#: ../src/gnome-web-photo.c:902
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr ""
 
-#: ../src/main.cpp:480
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:904
+#, fuzzy
+msgid "PRINTER"
+msgstr "Tiskalnik"
+
+#: ../src/gnome-web-photo.c:907
 msgid "Print background images and colours (default: false)"
 msgstr "Natisni slike ozadja in barve (privzeto: onemogočeno)"
 
-#: ../src/main.cpp:490
-msgid "The desired quality of the JPEG image (1 .. 100)"
-msgstr "Želena kakovost slike (1 .. 100)"
+#: ../src/gnome-web-photo.c:909
+#, fuzzy
+msgid "Argument is a file and not a URI"
+msgstr "URI '%s' pri uporabi \"datotečne\" sheme ni absoluten"
 
-#: ../src/main.cpp:490
-msgid "QUALITY"
-msgstr "Kakovost"
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:974
+#, fuzzy, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "Ne obstaja na izbranem mestu."
 
-#: ../src/main.cpp:515
-msgid "JPEG options:"
-msgstr "Možnosti JPEG:"
+#: ../src/gnome-web-photo.c:995
+#, fuzzy, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "Pogona ni mogoče zakleniti (%s)"
 
-#: ../src/main.cpp:516
-msgid "JPEG options"
-msgstr "Možnosti JPEG"
+#: ../src/gnome-web-photo.c:1010
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr ""
+
+#: ../src/gnome-web-photo.c:1014
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr ""
+
+#: ../src/gnome-web-photo.c:1023
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr ""
+
+#: ../src/gnome-web-photo.c:1028
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr ""
+
+#: ../src/gnome-web-photo.c:1036
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr ""
+
+#: ../src/gnome-web-photo.c:1044
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr ""
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1053
+#, fuzzy, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "\"%s\" ni veljaven naslov URI"
+
+#: ../src/gnome-web-photo.c:1055
+#, fuzzy, c-format
+msgid "List of printers:\n"
+msgstr "Pogled tiskalnikov"
+
+#: ../src/gnome-web-photo.c:1089
+#, fuzzy, c-format
+msgid "Missing arguments!\n"
+msgstr "Manjkajo argumenti"
+
+#: ../src/gnome-web-photo.c:1095
+#, fuzzy, c-format
+msgid "Too many arguments!\n"
+msgstr "Rreveč argumentov\n"
+
+#: ../src/photo-offscreen-window.c:164
+#, fuzzy
+msgid "Maximum width"
+msgstr "Največja širina"
+
+#: ../src/photo-offscreen-window.c:165
+#, fuzzy
+msgid "Maximum width of the offscreen window"
+msgstr "Širina okna \"urejevalnika filtrov\""
+
+#: ../src/photo-offscreen-window.c:182
+#, fuzzy
+msgid "Maximum height"
+msgstr "Največja višina"
+
+#: ../src/photo-offscreen-window.c:183
+#, fuzzy
+msgid "Maximum height of the offscreen window"
+msgstr "Višina okna \"urejevalnika filtrov\""
+
+#~ msgid "Unknown format '%s'"
+#~ msgstr "Neznan zapis: '%s'"
+#~ msgid ""
+#~ "Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] "
+#~ "URI|FILE OUTFILE [...]\n"
+#~ msgstr ""
+#~ "Uporaba: %s [-t ZAKASNITEV] [--force] [--format ZAPIS] [-w ŠIRINA] [--"
+#~ "files] URI|DATOTEKA DATOTEKAIZPISA [...]\n"
+#~ msgid ""
+#~ "File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:"
+#~ "png)"
+#~ msgstr ""
+#~ "Vrsta zapisa datoteke. Podprti zapisi so  'png', 'jpeg' in "
+#~ "'ppm' (privzeto: png)"
+#~ msgid "FORMAT"
+#~ msgstr "Zapis"
+#~ msgid "The desired quality of the JPEG image (1 .. 100)"
+#~ msgstr "Želena kakovost slike (1 .. 100)"
+#~ msgid "QUALITY"
+#~ msgstr "Kakovost"
+#~ msgid "JPEG options:"
+#~ msgstr "Možnosti JPEG:"
+#~ msgid "JPEG options"
+#~ msgstr "Možnosti JPEG"
 
