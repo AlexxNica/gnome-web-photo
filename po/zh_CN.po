@@ -2,14 +2,15 @@
 # Copyright (C) 2009 gnome-web-photo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-web-photo package.
 # 运强 苏 <wzssyqa@gmail.com>, 2009.
+# Edison Zhao <edison0354@gmail.com>, 2011.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-web-photo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-14 21:55+0000\n"
-"PO-Revision-Date: 2009-12-17 12:58+0800\n"
-"Last-Translator: 苏运强 <wzssyqa@gmail.com>\n"
+"POT-Creation-Date: 2011-03-17 19:02+0000\n"
+"PO-Revision-Date: 2011-03-29 16:51+0000\n"
+"Last-Translator: Edison Zhao <edison0354@gmail.com>\n"
 "Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,107 +34,264 @@ msgstr "此命令用以对 XHTML 文件进行缩略"
 
 #: ../data/thumbnailer.schemas.in.h:5
 msgid "Whether to enable thumbnailing of HTML files"
-msgstr "是否启用对 HTML 文件的缩略图"
+msgstr "是否生成 HTML 文件的缩略图"
 
 #: ../data/thumbnailer.schemas.in.h:6
 msgid "Whether to enable thumbnailing of HTML files."
-msgstr "是否启用对 HTML 文件的缩略图"
+msgstr "是否生成 HTML 文件的缩略图"
 
 #: ../data/thumbnailer.schemas.in.h:7
 msgid "Whether to enable thumbnailing of XHTML files"
-msgstr "是否启用对 XHTML 文件的缩略图"
+msgstr "是否生成 XHTML 文件的缩略图"
 
 #: ../data/thumbnailer.schemas.in.h:8
 msgid "Whether to enable thumbnailing of XHTML files."
-msgstr "是否启用对 XHTML 文件的缩略图"
+msgstr "是否生成 XHTML 文件的缩略图"
 
-#: ../src/main.cpp:146
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:369 ../src/gnome-web-photo.c:384
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "保存“%s”时出错：%s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:437 ../src/gnome-web-photo.c:480
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "为“%s”生成缩略图时出错：%s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:514
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "在 %1$s 上打印 %2$s 时出错：%3$s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:534
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "打印“%s”时出错：%s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:604
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "载入“%s”时出错：%s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:663
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr "载入“%s”超时，输出当前视图...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:670
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr "载入“%s”超时，没有任何输出...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:676
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "载入“%s”超时。\n"
+
+#: ../src/gnome-web-photo.c:780
 #, c-format
 msgid "Unknown mode '%s'"
 msgstr "未知模式 '%s'"
 
-#: ../src/main.cpp:171
-#, c-format
-msgid "Unknown format '%s'"
-msgstr "未知格式 '%s'"
-
-#: ../src/main.cpp:439
+#: ../src/gnome-web-photo.c:793
 #, c-format
 msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
 msgstr "用法：%s [--mode=photo|thumbnail|print] [...]\n"
 
-#: ../src/main.cpp:443
+#: ../src/gnome-web-photo.c:797
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
-"FILE OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE "
+"OUTFILE\n"
 msgstr ""
-"用法：%s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
-"FILE OUTFILE [...]\n"
-
-#: ../src/main.cpp:446
-#, c-format
-msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
-"OUTFILE [...]\n"
-msgstr ""
-"用法：%s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+"用法：%s [-t 超时时间] [--force] [-w 宽度] -s SIZE [--files] URI|FILE "
 "OUTFILE [...]\n"
 
-#: ../src/main.cpp:449
+#: ../src/gnome-web-photo.c:800
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
-"URI|FILE OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] "
+"[--file] URI|FILE OUTFILE\n"
 msgstr ""
-"用法： %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
+"用法：%s [-t 超时时间] [--force] [-w 宽度] -s SIZE [--files] URI|FILE "
+"OUTFILE [...]\n"
+
+#: ../src/gnome-web-photo.c:804
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
+msgstr ""
+"用法： %s [-t 超时时间] [--force] [-w 宽度] [--print-background] [--files] "
 "URI|FILE OUTFILE [...]\n"
 
-#: ../src/main.cpp:468
+#: ../src/gnome-web-photo.c:806
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"用法：%s [-c CSSFILE] [-t 超时时间] [--force] [-w 宽度] [--print-background] "
+"[--file] URI|FILE OUTFILE\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:846
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:851
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (不活跃的)\n"
+
+#: ../src/gnome-web-photo.c:881
 msgid "Operation mode [photo|thumbnail|print]"
 msgstr "操作模式 [photo|thumbnail|print]"
 
-#: ../src/main.cpp:470
-msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
-msgstr "此倒计时以秒为单位，或者 0 表示禁用倒计时 (默认：60)"
+#: ../src/gnome-web-photo.c:883
+msgid "User style sheet to use for the page (default: "
+msgstr "此页应使用的样式表(默认："
 
-#: ../src/main.cpp:472
-msgid "Force output when timeout expires, even if the page isn't loaded fully"
-msgstr "倒计时到期时强制输出，即使页面没有完全加载"
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:885
+msgid "CSSFILE"
+msgstr "CSS 文件"
 
-#: ../src/main.cpp:474
-msgid "The desired width of the image (default: 1024)"
-msgstr "此图片希望的宽度(默认：1024)"
+#: ../src/gnome-web-photo.c:887
+msgid "Timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr "倒计时(秒)，0 表示禁用(默认：60)"
 
-#: ../src/main.cpp:476
-msgid "The thumbnail size (default: 256)"
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:889
+msgid "T"
+msgstr "时长"
+
+#: ../src/gnome-web-photo.c:891
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr "倒计时结束时强制输出，即使页面没有完全加载"
+
+#: ../src/gnome-web-photo.c:893
+msgid "Desired width of the web page (default: 1024)"
+msgstr "此图片的期望宽度(默认：1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:895
+msgid "W"
+msgstr "宽度"
+
+#: ../src/gnome-web-photo.c:897
+msgid "Thumbnail size (default: 256)"
 msgstr "缩略图大小(默认：256)"
 
-#: ../src/main.cpp:478
-msgid ""
-"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
-msgstr "用于输出的文件格式。支持 'png', 'jpeg' and 'ppm' (默认：png)"
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:899
+msgid "S"
+msgstr "大小"
 
-#: ../src/main.cpp:478
-msgid "FORMAT"
-msgstr "格式"
+#: ../src/gnome-web-photo.c:902
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr "打印此页(默认为保存到 PDF 文件)"
 
-#: ../src/main.cpp:480
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:904
+msgid "PRINTER"
+msgstr "打印机"
+
+#: ../src/gnome-web-photo.c:907
 msgid "Print background images and colours (default: false)"
-msgstr "打印背景图片和颜色 (默认: false)"
+msgstr "打印背景图片及背景色(默认: false)"
 
-#: ../src/main.cpp:490
-msgid "The desired quality of the JPEG image (1 .. 100)"
-msgstr "JPEG 希望的质量 (1 ... 100)"
+#: ../src/gnome-web-photo.c:909
+msgid "Argument is a file and not a URI"
+msgstr "参数为文件而非 URI"
 
-#: ../src/main.cpp:490
-msgid "QUALITY"
-msgstr "质量"
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:974
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "所选的用户样式表(%s)不存在！\n"
 
-#: ../src/main.cpp:515
-msgid "JPEG options:"
-msgstr "JPEG 选项："
+#: ../src/gnome-web-photo.c:995
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--timeout 超时长度不能为空！\n"
 
-#: ../src/main.cpp:516
-msgid "JPEG options"
-msgstr "JPEG 选项"
+#: ../src/gnome-web-photo.c:1010
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--size 大小只能为 32、64、96、128 或 256！\n"
+
+#: ../src/gnome-web-photo.c:1014
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "--size 大小只在缩略图模式下有效！\n"
+
+#: ../src/gnome-web-photo.c:1023
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--width 宽度超出允许范围；只能在 %d 与 %d 之间取值！\n"
+
+#: ../src/gnome-web-photo.c:1028
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "--width 在缩略图模式中宽度必须为 32 的倍数！\n"
+
+#: ../src/gnome-web-photo.c:1036
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--print-background 只在打印模式下有效！\n"
+
+#: ../src/gnome-web-photo.c:1044
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--printer 只在打印模式下有效！\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1053
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "“%s” 不是有效的打印机！\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "List of printers:\n"
+msgstr "打印机列表：\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "缺失参数！\n"
+
+#: ../src/gnome-web-photo.c:1095
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "参数过多！\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "最大宽度"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "屏幕外窗口的最大宽度"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "最大高度"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "屏幕外窗口的最大高度"
