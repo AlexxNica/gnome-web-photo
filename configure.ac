@@ -16,7 +16,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
 
-AC_INIT([GNOME Web Photo],[0.10.2],[mailto:epiphany-list@gnome.org],[gnome-web-photo])
+AC_INIT([GNOME Web Photo],[0.10.2],[http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-web-photo],[gnome-web-photo])
 
 GNOME_COMMON_INIT
 
