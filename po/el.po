@@ -1,0 +1,305 @@
+# Greek translation for gnome-web-photo.
+# Copyright (C) 2011 gnome-web-photo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-web-photo package.
+# Evangelos Vafeiadis <vagvaf@gmail.com>, 2011.
+# Evangelos Vafeiadis <vagvaf@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-web-photo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-02 17:22+0000\n"
+"PO-Revision-Date: 2011-05-07 17:16+0200\n"
+"Last-Translator: Evangelos Vafeiadis <vagvaf@gmail.com>\n"
+"Language-Team: Greek <team@gnome.gr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "The command to thumbnail HTML files"
+msgstr "Εντολής μικρογράφησης αρχείων HTML"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "The command to thumbnail HTML files."
+msgstr "Εντολής μικρογράφησης αρχείων HTML."
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail XHTML files"
+msgstr "Εντολής μικρογράφησης αρχείων ΧHTML"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail XHTML files."
+msgstr "Εντολής μικρογράφησης αρχείων ΧHTML."
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "Για το αν θα ενεργοποιηθεί η δυνατότητα μικρογράφησης αρχείων HTML"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "Για το αν θα ενεργοποιηθεί η δυνατότητα μικρογράφησης αρχείων HTML."
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "Για το αν θα ενεργοποιηθεί η δυνατότητα μικρογράφησης αρχείων ΧHTML"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "Για το αν θα ενεργοποιηθεί η δυνατότητα μικρογράφησης αρχείων ΧHTML."
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:369 ../src/gnome-web-photo.c:384
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Σφάλμα κατά την αποθήκευση «%s»: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:437 ../src/gnome-web-photo.c:480
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Σφάλμα κατά τη μικρογράφηση «%s»: %s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:514
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Σφάλμα κατά την εκτύπωση «%s» σε «%s»: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:534
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Σφάλμα κατά την εκτύπωση «%s»: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:604
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Σφάλμα κατά τη φόρτωση «%s»: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:663
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr ""
+"Εξαντλήθηκε το χρονικό όριο φόρτωσης «%s». Εξάγεται η τρέχουσα προβολή...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:670
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr "Εξαντλήθηκε το χρονικό όριο φόρτωσης «%s». Δεν εξάγεται τίποτα...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:676
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "Εξαντληθηκε το χρονικό όριο φόρτωσης «%s».\n"
+
+#: ../src/gnome-web-photo.c:780
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Άγνωστη κατάσταση «%s»"
+
+#: ../src/gnome-web-photo.c:793
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "Χρήση: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/gnome-web-photo.c:797
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE "
+"OUTFILE\n"
+msgstr ""
+"Χρήση: %s [-c CSSFILE] [-t ΧΡΟΝΙΚΟΟΡΙΟ] [--force] [-w ΠΛΑΤΟΣ] [--file] URI|ΑΡΧΕΙΟ "
+"ΑΡΧΕΙΟΕΞΟΔΟΥ\n"
+
+#: ../src/gnome-web-photo.c:800
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] "
+"[--file] URI|FILE OUTFILE\n"
+msgstr ""
+"Χρήση: %s [-c CSSFILE] [-t ΧΡΟΝΙΚΟΟΡΙΟ] [--force] [-w ΠΛΑΤΟΣ] [-s ΜΕΓΕΘΟΣΜΙΚΡΟΓΡΑΦΙΑΣ] "
+"[--file] URI|ΑΡΧΕΙΟ ΑΡΧΕΙΟΕΞΟΔΟΥ\n"
+
+#: ../src/gnome-web-photo.c:804
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
+msgstr ""
+"Χρήση: %s [-c CSSFILE] [-t ΧΡΟΝΙΚΟΟΡΙΟ] [--force] [-w ΠΛΑΤΟΣ] [--print-"
+"background] [--file] URI|ΑΡΧΕΙΟ ΑΡΧΕΙΟΕΞΟΔΟΥ|--printer=ΕΚΤΥΠΩΤΗΣ\n"
+
+#: ../src/gnome-web-photo.c:806
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"Χρήση: %s [-c CSSFILE] [-t ΧΡΟΝΙΚΟΟΡΙΟ] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|ΑΡΧΕΙΟ ΑΡΧΕΙΟΕΞΟΔΟΥ\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:846
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:851
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (ανενεργό)\n"
+
+#: ../src/gnome-web-photo.c:881
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "Κατάσταση λειτουργίας [photo(φωτογραφία)|thumbnail(μικρογραφία)|print(εκτύπωση)]"
+
+#: ../src/gnome-web-photo.c:883
+msgid "User style sheet to use for the page (default: "
+msgstr ""
+"Φύλλο στυλ του χρήστη που θα χρησιμοποιηθεί για την σελίδα (προεπιλογή: "
+
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:885
+msgid "CSSFILE"
+msgstr "ΑΡΧΕΙΟCSS"
+
+#: ../src/gnome-web-photo.c:887
+msgid "Timeout in seconds, or 0 to disable timeout (default: 60)"
+msgstr ""
+"Χρονικό όριο επίτευξης σύνδεσης σε δευτερόλεπτα, ή 0 για να την "
+"απενεργοποίηση του. (προεπιλογή: 60)"
+
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:889
+msgid "T"
+msgstr "Τ"
+
+#: ../src/gnome-web-photo.c:891
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr ""
+"Αναγκαστική εξαγωγή όταν λήξει το χρονικό όριο σύνδεσης, ακόμα και αν η "
+"ιστοσελίδα δεν είναι πλήρως φορτωμένη."
+
+#: ../src/gnome-web-photo.c:893
+msgid "Desired width of the web page (default: 1024)"
+msgstr "Επιθυμητό πλάτος της ιστοσελίδας (προεπιλογή: 1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:895
+msgid "W"
+msgstr "W"
+
+#: ../src/gnome-web-photo.c:897
+msgid "Thumbnail size (default: 256)"
+msgstr "Μέγεθος μικρογραφιών (προεπιλογή: 256)"
+
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:899
+msgid "S"
+msgstr "S"
+
+#: ../src/gnome-web-photo.c:902
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr ""
+"Εκτύπωση σελίδας στον ΕΚΤΥΠΩΤΗ (προεπιλογή: κανένας, αποθήκευση ως PDF)"
+
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:904
+msgid "PRINTER"
+msgstr "ΕΚΤΥΠΩΤΗΣ"
+
+#: ../src/gnome-web-photo.c:907
+msgid "Print background images and colours (default: false)"
+msgstr "Εκτύπωση εικόνων και χρωμάτων του παρασκηνίου (προεπιλογή: ψευδές)"
+
+#: ../src/gnome-web-photo.c:909
+msgid "Argument is a file and not a URI"
+msgstr "Το όρισμα είναι αρχείο και όχι URI"
+
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:974
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "Δεν υπάρχει το φύλλο στυλ («%s») που ορίστηκε από τον χρήστη!\n"
+
+#: ../src/gnome-web-photo.c:995
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--timeout δεν μπορεί να είναι αρνητικό!\n"
+
+#: ../src/gnome-web-photo.c:1010
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--size μπορεί να πάρει μόνο τις τιμές 32, 64, 96, 128 ή 256!\n"
+
+#: ../src/gnome-web-photo.c:1014
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "-- είναι μόνο διαθέσιμο στη λειτουργία μικρογραφίας!\n"
+
+#: ../src/gnome-web-photo.c:1023
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--width εκτός ορίων. Πρέπει να βρίσκεται μεταξύ %d και %d!\n"
+
+#: ../src/gnome-web-photo.c:1028
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr ""
+"--width πρέπει να είναι πολλαπλάσιο του 32 στη λειτουργία μικρογραφίας!\n"
+
+#: ../src/gnome-web-photo.c:1036
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--print-background είναι μόνο διαθέσιμο στη λειτουργία εκτύπωσης!\n"
+
+#: ../src/gnome-web-photo.c:1044
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--printer είναι μόνο διαθέσιμος στη λειτουργία εκτύπωσης!\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1053
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "Ο εκτυπωτής «%s» δεν υπάρχει!\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "List of printers:\n"
+msgstr "Λίστα εκτυπωτών:\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "Ελλιπή ορίσματα!\n"
+
+#: ../src/gnome-web-photo.c:1095
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "Πάρα πολλά ορίσματα!\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "Μέγιστο πλάτος"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "Μέγιστο πλάτος του παραθύρου εκτός οθόνης"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "Μέγιστο ύψος"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "Μέγιστο ύψος του παραθύρου εκτός οθόνης"
