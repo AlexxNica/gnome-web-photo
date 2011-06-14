@@ -18,50 +18,33 @@
 
 AC_INIT([GNOME Web Photo],[0.10.2],[http://bugzilla.gnome.org/enter_bug.cgi?product=gnome-web-photo],[gnome-web-photo])
 
-GNOME_COMMON_INIT
-
 AC_PREREQ([2.59])
 
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([configure.ac])
 AC_CONFIG_MACRO_DIR([m4])
 
-AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip])
+AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip tar-ustar])
 
 m4_ifdef([AM_SILENT_RULES],[AM_SILENT_RULES([yes])])
 
-IT_PROG_INTLTOOL([0.35.0])
+IT_PROG_INTLTOOL([0.40.6])
 
 GLIB_REQUIRED=2.14.0
 GTK2_REQUIRED=2.20.0
 GTK3_REQUIRED=2.99.3
 WEBKIT_REQUIRED=1.1.23
 
-AC_ENABLE_SHARED([yes])
-AC_ENABLE_STATIC([no])
-
-AC_LIBTOOL_DLOPEN
-AM_PROG_LIBTOOL
-
-AC_ISC_POSIX
-
 AC_PROG_LN_S
 AC_PROG_CC
-AM_PROG_CC_STDC
-AC_HEADER_STDC
 
-AC_C_BIGENDIAN
-
-GNOME_DEBUG_CHECK
 GNOME_COMPILE_WARNINGS([maximum])
+GNOME_MAINTAINER_MODE_DEFINES
 
-MORE_WARN_FLAGS=
 DEPRECATION_FLAGS=
 
 if test "x$enable_maintainer_mode" = "xyes"; then
-	AC_DEFINE([MAINTAINER_MODE],[1],[Define to enable 'maintainer-only' behaviour])
-	enable_debug=yes
-        DEPRECATION_FLAGS="-DG_DISABLE_DEPRECATED -DGDK_DISABLE_DEPRECATED -DGDK_PIXBUF_DISABLE_DEPRECATED -DGCONF_DISABLE_DEPRECATED -DGNOME_VFS_DISABLE_DEPRECATED -DBONOBO_UI_DISABLE_DEPRECATED -DBONOBO_DISABLE_DEPRECATED -DLIBGLADE_DISABLE_DEPRECATED -DPANGO_DISABLE_DEPRECATED -DGTK_DISABLE_DEPRECATED -DGNOME_DISABLE_DEPRECATED"
+        DEPRECATION_FLAGS="$DISABLE_DEPRECATED"
 fi
 
 AC_MSG_CHECKING([which gtk+ version to compile against])
@@ -116,41 +99,14 @@ fi
 
 AM_GCONF_SOURCE_2
 
-# ******************
-# Portability checks
-# ******************
-
-if test "x$enable_maintainer_mode" = "xyes"; then
-
-	AC_LANG_PUSH([C])
-	FLAGS="-Wdeclaration-after-statement"
-	_SAVE_CFLAGS=$CFLAGS
-	CFLAGS="$CFLAGS $AM_CFLAGS"
-
-	AC_CACHE_CHECK([for compiler $FLAGS option],
-		ac_cv_have_declaration_after_statement,
-		[AC_COMPILE_IFELSE(
-			[AC_LANG_SOURCE([[int main () { return 0; }]])],
-			[ac_cv_have_declaration_after_statement="yes"],
-			[ac_cv_have_declaration_after_statement="no"],
-			[ac_cv_have_declaration_after_statement="maybe"])])
-	
-	if test "x$ac_cv_have_declaration_after_statement" = "xyes"; then
-		MORE_WARN_FLAGS="$MORE_WARN_FLAGS $FLAGS"
-	fi
-	CFLAGS="$_SAVE_CFLAGS"
-	AC_LANG_POP([C])
-fi
-
 # *****************
 # Add warning flags
 # *****************
 
 AM_CPPFLAGS="$AM_CPPFLAGS $DEPRECATION_FLAGS"
-AM_CFLAGS="$AM_CFLAGS $WARN_CFLAGS $MORE_WARN_FLAGS"
+AM_CFLAGS="$AM_CFLAGS $WARN_CFLAGS"
 AC_SUBST([AM_CPPFLAGS])
 AC_SUBST([AM_CFLAGS])
-AC_SUBST([AM_LDFLAGS])
 
 # ********************
 # Internationalisation
