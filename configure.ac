@@ -95,9 +95,8 @@ if test "$with_gtk" == 2.0; then
     AC_MSG_ERROR([gconftool-2 not found])
   fi
 
+  AM_GCONF_SOURCE_2
 fi
-
-AM_GCONF_SOURCE_2
 
 # *****************
 # Add warning flags
