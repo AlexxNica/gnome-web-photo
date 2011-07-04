@@ -96,6 +96,8 @@ if test "$with_gtk" == 2.0; then
   fi
 
   AM_GCONF_SOURCE_2
+else
+  AM_CONDITIONAL(GCONF_SCHEMAS_INSTALL, false)
 fi
 
 # *****************
