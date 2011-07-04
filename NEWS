@@ -1,4 +1,19 @@
 ==============
+Version 0.10.2
+==============
+
+  Misc
+
+	* Modernize build system a bit (Vincent)
+	* Do not check for gconftool-2 if we build against GTK+ 3 (Vincent)
+
+  Translators
+
+	* Evangelos Vafeiadis (el)
+	* Takeshi AIHANA (ja)
+	* Gabriel Speckhahn (pt_BR)
+
+==============
 Version 0.10.1
 ==============
 
