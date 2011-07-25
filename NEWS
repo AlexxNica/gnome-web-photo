@@ -1,4 +1,13 @@
 ==============
+Version 0.10.3
+==============
+
+  Features
+
+	* Add --delay option, to specify wait time between rendering and
+	  capturing
+
+==============
 Version 0.10.2
 ==============
 
