@@ -102,6 +102,7 @@ typedef struct {
   gboolean       print_background;
   char          *printer;
 
+  int            delay;
   int            timeout;
   gboolean       force;
 
@@ -110,6 +111,7 @@ typedef struct {
   GtkWidget     *window;
   WebKitWebView *webview;
   guint          idle_id;
+  guint          delay_id;
   guint          timeout_id;
 } PhotoData;
 
@@ -588,6 +590,17 @@ _do_action (PhotoData *data)
 }
 
 static gboolean
+_on_delay (PhotoData *data)
+{
+  data->delay_id = 0;
+
+  _do_action (data);
+  gtk_main_quit ();
+
+  return FALSE;
+}
+
+static gboolean
 _on_web_view_load_error (WebKitWebView  *webview,
                          WebKitWebFrame *frame,
                          const char     *uri,
@@ -617,9 +630,11 @@ _web_view_loaded_idle (PhotoData *data)
     data->timeout_id = 0;
   }
 
-  _do_action (data);
-
-  gtk_main_quit ();
+  if (data->delay > 0)
+    data->delay_id = g_timeout_add_seconds (data->delay,
+                                            (GSourceFunc) _on_delay, data);
+  else
+    _on_delay (data);
 
   return FALSE;
 }
@@ -649,6 +664,8 @@ _on_web_view_load_status (WebKitWebView *webview,
 static gboolean
 _on_timeout (PhotoData *data)
 {
+  gboolean quit = TRUE;
+
   data->timeout_id = 0;
   if (data->idle_id > 0) {
     g_source_remove (data->idle_id);
@@ -661,7 +678,14 @@ _on_timeout (PhotoData *data)
       case WEBKIT_LOAD_FINISHED:
         /* Translators: first %s is a URI */
         g_printerr (_("Timed out while loading '%s'. Outputting current view...\n"), data->uri);
-        _do_action (data);
+
+        if (data->delay > 0) {
+          quit = FALSE;
+          data->delay_id = g_timeout_add_seconds (data->delay,
+                                                  (GSourceFunc) _on_delay, data);
+        } else
+          _do_action (data);
+
         break;
 
       default:
@@ -679,7 +703,8 @@ _on_timeout (PhotoData *data)
   /* We have to do it after checking the load status */
   webkit_web_view_stop_loading (data->webview);
 
-  gtk_main_quit ();
+  if (quit)
+    gtk_main_quit ();
 
   return FALSE;
 }
@@ -794,16 +819,16 @@ _print_synopsis (void)
 
   switch (parsed_mode) {
     case MODE_PHOTO:
-      g_print (_("Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE OUTFILE\n"), name);
+      g_print (_("Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE OUTFILE\n"), name);
       break;
     case MODE_THUMBNAIL:
-      g_print (_("Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"), name);
+      g_print (_("Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"), name);
       break;
     case MODE_PRINT:
 #ifdef HAVE_GTK_UNIX_PRINT
-      g_print (_("Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"), name);
+      g_print (_("Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"), name);
 #else
-      g_print (_("Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE\n"), name);
+      g_print (_("Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--file] URI|FILE OUTFILE\n"), name);
 #endif
       break;
     default:
@@ -871,9 +896,9 @@ main (int    argc,
                      /* thumbnail_size set to -1 to be able to check if option
                       * was passed or not */
                      NULL, DEFAULT_WIDTH, -1, FALSE, NULL,
-                     60, FALSE,
+                     0, 60, FALSE,
                      FALSE,
-                     NULL, NULL, 0, 0 };
+                     NULL, NULL, 0, 0, 0 };
 
   const GOptionEntry main_options[] =
   {
@@ -883,8 +908,12 @@ main (int    argc,
       N_("User style sheet to use for the page (default: " PKGDATADIR "/style.css)"),
       /* Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE */
       N_("CSSFILE") },
+    { "delay", 'd', 0, G_OPTION_ARG_INT, &data.delay,
+      N_("Delay in seconds to wait after page is loaded, or 0 to disable delay (default: 0)"),
+      /* Translators: T will appear in the help, as in: --delay=D */
+      N_("D") },
     { "timeout", 't', 0, G_OPTION_ARG_INT, &data.timeout,
-      N_("Timeout in seconds, or 0 to disable timeout (default: 60)"),
+      N_("Timeout in seconds to wait to load the page, or 0 to disable timeout (default: 60)"),
       /* Translators: T will appear in the help, as in: --timeout=T */
       N_("T") },
     { "force", 'f', 0, G_OPTION_ARG_NONE, &data.force,
@@ -988,6 +1017,13 @@ main (int    argc,
     data.user_css = g_file_get_uri (file);
     g_free (path);
     g_object_unref (file);
+  }
+
+  /* Check delay */
+  if (data.delay < 0) {
+    g_printerr (_("--delay cannot be negative!\n"));
+    _print_synopsis ();
+    return 1;
   }
 
   /* Check timeout */
