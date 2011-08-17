@@ -100,6 +100,7 @@ typedef struct {
   int            width;
   int            thumbnail_size;
   gboolean       print_background;
+  gboolean       disable_plugins;
   char          *printer;
 
   int            delay;
@@ -239,7 +240,8 @@ _parse_font (const char  *font_descr,
 static void
 _prepare_web_settings (WebKitWebSettings *settings,
                        const char        *user_css,
-                       gboolean           print_background)
+                       gboolean           print_background,
+                       gboolean           disable_plugins)
 {
 #ifdef HAVE_GNOME3
   GSettings *gsettings;
@@ -255,6 +257,8 @@ _prepare_web_settings (WebKitWebSettings *settings,
   g_object_set (G_OBJECT (settings),
                 /* printing settings */
                 "print-backgrounds", print_background,
+                /* enable/disable plugins */
+                "enable-plugins", !disable_plugins,
                 /* don't save anything from this to the global history */
                 "enable-private-browsing", TRUE,
                 /* shouldn't be needed */
@@ -336,7 +340,8 @@ static void
 _prepare_webkit (WebKitWebView     *webview,
                  WebKitWebSettings *settings,
                  const char        *user_css,
-                 gboolean           print_background)
+                 gboolean           print_background,
+                 gboolean           disable_plugins)
 {
   SoupSession* session = webkit_get_default_session();
 
@@ -344,7 +349,7 @@ _prepare_webkit (WebKitWebView     *webview,
   soup_session_remove_feature_by_type (session, WEBKIT_TYPE_SOUP_AUTH_DIALOG);
 
   _prepare_web_view (webview);
-  _prepare_web_settings (settings, user_css, print_background);
+  _prepare_web_settings (settings, user_css, print_background, disable_plugins);
 }
 
 
@@ -753,7 +758,9 @@ _create_web_window (PhotoData *data)
   settings = webkit_web_settings_new ();
 
   _prepare_webkit (data->webview, settings,
-                   data->user_css, data->print_background);
+                   data->user_css,
+                   data->print_background,
+                   data->disable_plugins);
 
   webkit_web_view_set_settings (data->webview, settings);
 
@@ -895,7 +902,7 @@ main (int    argc,
                      MODE_INVALID,
                      /* thumbnail_size set to -1 to be able to check if option
                       * was passed or not */
-                     NULL, DEFAULT_WIDTH, -1, FALSE, NULL,
+                     NULL, DEFAULT_WIDTH, -1, FALSE, FALSE, NULL,
                      0, 60, FALSE,
                      FALSE,
                      NULL, NULL, 0, 0, 0 };
@@ -934,6 +941,8 @@ main (int    argc,
 #endif
     { "print-background", 0, 0, G_OPTION_ARG_NONE, &data.print_background,
       N_("Print background images and colours (default: false)"), NULL },
+    { "disable-plugins", 0, 0, G_OPTION_ARG_NONE, &data.disable_plugins,
+      N_("Disable embedded plugins in the rendering engine (default: enable plugins)"), NULL },
     { "file", 0, 0, G_OPTION_ARG_NONE, &is_file,
       N_("Argument is a file and not a URI"), NULL },
     { G_OPTION_REMAINING, 0, 0, G_OPTION_ARG_FILENAME_ARRAY, &arguments, "", NULL },
