@@ -1,4 +1,21 @@
 ==============
+Version 0.10.4
+==============
+
+  Features
+
+	* Add a --disable-plugins option to disable plugins (raptium)
+
+  Translators
+
+	* Gil Forcada (ca)
+	* Marek Černocký (cs)
+	* Mario Blättermann (de)
+	* Daniel Mustieles (es)
+	* Yuri Myasoedov (ru)
+	* Andrej Žnidaršič (sl)
+
+==============
 Version 0.10.3
 ==============
 
