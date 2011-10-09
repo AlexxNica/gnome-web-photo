@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-web-photo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-04-19 10:50+0900\n"
-"PO-Revision-Date: 2011-04-19 10:50+0900\n"
+"POT-Creation-Date: 2011-10-10 00:19+0900\n"
+"PO-Revision-Date: 2011-10-10 00:19+0900\n"
 "Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
 "Language: ja\n"
@@ -17,136 +17,136 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/thumbnailer.schemas.in.h:1
-msgid "The command to thumbnail HTML files"
-msgstr "HTML ファイルのサムネイルを生成するコマンド"
-
-#: ../data/thumbnailer.schemas.in.h:2
-msgid "The command to thumbnail HTML files."
-msgstr "HTML ファイルのサムネイルを生成する際に使用するコマンドです。"
-
-#: ../data/thumbnailer.schemas.in.h:3
-msgid "The command to thumbnail XHTML files"
-msgstr "XHTML ファイルのサムネイルを生成するコマンド"
-
-#: ../data/thumbnailer.schemas.in.h:4
-msgid "The command to thumbnail XHTML files."
-msgstr "XHTML ファイルのサムネイルを生成する際に使用するコマンドです。"
-
-#: ../data/thumbnailer.schemas.in.h:5
 msgid "Whether to enable thumbnailing of HTML files"
 msgstr "HTML ファイルをサムネイル化するかどうか"
 
-#: ../data/thumbnailer.schemas.in.h:6
+#: ../data/thumbnailer.schemas.in.h:2
 msgid "Whether to enable thumbnailing of HTML files."
 msgstr "HTML ファイルのサムネイル生成を有効にするかどうかです。"
 
-#: ../data/thumbnailer.schemas.in.h:7
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail HTML files"
+msgstr "HTML ファイルのサムネイルを生成するコマンド"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail HTML files."
+msgstr "HTML ファイルのサムネイルを生成する際に使用するコマンドです。"
+
+#: ../data/thumbnailer.schemas.in.h:5
 msgid "Whether to enable thumbnailing of XHTML files"
 msgstr "XHTML ファイルをサムネイル化するかどうか"
 
-#: ../data/thumbnailer.schemas.in.h:8
+#: ../data/thumbnailer.schemas.in.h:6
 msgid "Whether to enable thumbnailing of XHTML files."
 msgstr "XHTML ファイルのサムネイル生成を有効にするかどうかです。"
 
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "The command to thumbnail XHTML files"
+msgstr "XHTML ファイルのサムネイルを生成するコマンド"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "The command to thumbnail XHTML files."
+msgstr "XHTML ファイルのサムネイルを生成する際に使用するコマンドです。"
+
 #. Translators: first %s is a URI
-#: ../src/gnome-web-photo.c:369 ../src/gnome-web-photo.c:384
+#: ../src/gnome-web-photo.c:376 ../src/gnome-web-photo.c:391
 #, c-format
 msgid "Error while saving '%s': %s\n"
 msgstr "'%s' の保存中にエラーが発生しました: %s\n"
 
 #. Translators: first %s is a URI
-#: ../src/gnome-web-photo.c:437 ../src/gnome-web-photo.c:480
+#: ../src/gnome-web-photo.c:444 ../src/gnome-web-photo.c:487
 #, c-format
 msgid "Error while thumbnailing '%s': %s\n"
 msgstr "'%s' のサムネイル中にエラーが発生しました: %s\n"
 
 #. Translators: first %s is a URI, second %s is a printer name
-#: ../src/gnome-web-photo.c:514
+#: ../src/gnome-web-photo.c:521
 #, c-format
 msgid "Error while printing '%s' on '%s': %s\n"
 msgstr "'%s' を '%s' で印刷中にエラーが発生しました: %s\n"
 
 #. Translators: first %s is a URI
-#: ../src/gnome-web-photo.c:534
+#: ../src/gnome-web-photo.c:541
 #, c-format
 msgid "Error while printing '%s': %s\n"
 msgstr "'%s' の印刷中にエラーが発生しました: %s\n"
 
 #. Translators: first %s is a URI
-#: ../src/gnome-web-photo.c:604
+#: ../src/gnome-web-photo.c:622
 #, c-format
 msgid "Error while loading '%s': %s\n"
 msgstr "'%s' の読み込み中にエラーが発生しました: %s\n"
 
 #. Translators: first %s is a URI
-#: ../src/gnome-web-photo.c:663
+#: ../src/gnome-web-photo.c:685
 #, c-format
 msgid "Timed out while loading '%s'. Outputting current view...\n"
 msgstr ""
 "'%s' の読み込み中にタイムアウトしました (ここまでの内容を出力します...)\n"
 
 #. Translators: first %s is a URI
-#: ../src/gnome-web-photo.c:670
+#: ../src/gnome-web-photo.c:699
 #, c-format
 msgid "Timed out while loading '%s'. Nothing to output...\n"
 msgstr ""
 "'%s' の読み込み中にタイムアウトしました (出力できるものはありません...)\n"
 
 #. Translators: first %s is a URI
-#: ../src/gnome-web-photo.c:676
+#: ../src/gnome-web-photo.c:705
 #, c-format
 msgid "Timed out while loading '%s'.\n"
 msgstr "'%s' の読み込み中にタイムアウトしました\n"
 
-#: ../src/gnome-web-photo.c:780
+#: ../src/gnome-web-photo.c:812
 #, c-format
 msgid "Unknown mode '%s'"
 msgstr "不明なモードです: %s"
 
-#: ../src/gnome-web-photo.c:793
+#: ../src/gnome-web-photo.c:825
 #, c-format
 msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
 msgstr "用法: %s [--mode=photo|thumbnail|print] [...]\n"
 
-#: ../src/gnome-web-photo.c:797
+#: ../src/gnome-web-photo.c:829
 #, c-format
 msgid ""
-"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--file] URI|FILE "
-"OUTFILE\n"
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--file] "
+"URI|FILE OUTFILE\n"
 msgstr ""
-"用法: %s [-c CSSファイル] [-t 時間] [--force] [-w 幅] [--file] URI|ファイル "
-"出力先\n"
+"用法: %s [-c CSSファイル] [-d 時間] [-t 時間] [--force] [-w 幅] [--file] URI|"
+"ファイル 出力先\n"
 
-#: ../src/gnome-web-photo.c:800
+#: ../src/gnome-web-photo.c:832
 #, c-format
 msgid ""
-"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [-s THUMBNAILSIZE] "
-"[--file] URI|FILE OUTFILE\n"
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-s "
+"THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
 msgstr ""
-"用法: %s [-c CSSファイル] [-t 時間] [--force] [-w 幅] [-s サイズ] [--file] "
-"URI|ファイル 出力先\n"
+"用法: %s [-c CSSファイル] [-d 時間] [-t 時間] [--force] [-w 幅] [-s サイズ] "
+"[--file] URI|ファイル 出力先\n"
 
-#: ../src/gnome-web-photo.c:804
+#: ../src/gnome-web-photo.c:836
 #, c-format
 msgid ""
-"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
 "background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
 msgstr ""
-"用法: %s [-c CSSファイル] [-t 時間] [--force] [-w 幅] [--print-background] "
-"[--file] URI|ファイル 出力先|--printer=プリンタ\n"
+"用法: %s [-c CSSファイル] [-d 時間] [-t 時間] [--force] [-w 幅] [--print-"
+"background] [--file] URI|ファイル 出力先|--printer=プリンタ\n"
 
-#: ../src/gnome-web-photo.c:806
+#: ../src/gnome-web-photo.c:838
 #, c-format
 msgid ""
-"Usage: %s [-c CSSFILE] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
 "background] [--file] URI|FILE OUTFILE\n"
 msgstr ""
-"用法: %s [-c CSSファイル] [-t 時間] [--force] [-w 幅] [--print-background] "
-"[--file] URI|ファイル 出力先\n"
+"用法: %s [-c CSSファイル] [-d 時間] [-t 時間] [--force] [-w 幅] [--print-"
+"background] [--file] URI|ファイル 出力先\n"
 
 #. Translators: the leading spaces are a way to add tabulation in some text
 #. * printed on the terminal; %s is the name of a printer.
-#: ../src/gnome-web-photo.c:846
+#: ../src/gnome-web-photo.c:878
 #, c-format
 msgid "  %s\n"
 msgstr "  %s\n"
@@ -154,134 +154,160 @@ msgstr "  %s\n"
 #. Translators: the leading spaces are a way to add tabulation in some text
 #. * printed on the terminal; %s is the name of a printer; "active" applies
 #. * to the printer.
-#: ../src/gnome-web-photo.c:851
+#: ../src/gnome-web-photo.c:883
 #, c-format
 msgid "  %s (not active)\n"
 msgstr "  %s (利用不可)\n"
 
-#: ../src/gnome-web-photo.c:881
+#: ../src/gnome-web-photo.c:913
 msgid "Operation mode [photo|thumbnail|print]"
 msgstr "操作モードを指定する (指定可能なモード: [photo|thumbnail|print])"
 
-#: ../src/gnome-web-photo.c:883
+#: ../src/gnome-web-photo.c:915
 msgid "User style sheet to use for the page (default: "
 msgstr "スタイル・シートを指定する (デフォルト: "
 
 #. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
-#: ../src/gnome-web-photo.c:885
+#: ../src/gnome-web-photo.c:917
 msgid "CSSFILE"
 msgstr "CSSファイル"
 
-#: ../src/gnome-web-photo.c:887
-msgid "Timeout in seconds, or 0 to disable timeout (default: 60)"
+#: ../src/gnome-web-photo.c:919
+msgid ""
+"Delay in seconds to wait after page is loaded, or 0 to disable delay "
+"(default: 0)"
 msgstr ""
-"タイムアウトの時間 (単位は秒)、またはタイムアウトを無効にする場合は 0 (デフォ"
-"ルト: 60)"
+"ページを読み込んだ後に待機する時間 (単位は秒)、または遅延を無効にする場合は "
+"0 (デフォルト: 0)"
+
+#. Translators: T will appear in the help, as in: --delay=D
+#: ../src/gnome-web-photo.c:921
+msgid "D"
+msgstr "時間"
+
+#: ../src/gnome-web-photo.c:923
+msgid ""
+"Timeout in seconds to wait to load the page, or 0 to disable timeout "
+"(default: 60)"
+msgstr ""
+"ページの読み込みを開始するまでの時間 (単位は秒)、またはタイムアウトを無効にす"
+"る場合は 0 (デフォルト: 60)"
 
 #. Translators: T will appear in the help, as in: --timeout=T
-#: ../src/gnome-web-photo.c:889
+#: ../src/gnome-web-photo.c:925
 msgid "T"
 msgstr "時間"
 
-#: ../src/gnome-web-photo.c:891
+#: ../src/gnome-web-photo.c:927
 msgid "Force output when timeout expires, even if the page is not fully loaded"
 msgstr ""
 "ページが完全に読み込まれていない場合でもタイムアウト後に強制的に出力する"
 
-#: ../src/gnome-web-photo.c:893
+#: ../src/gnome-web-photo.c:929
 msgid "Desired width of the web page (default: 1024)"
 msgstr "ウェブページの幅 (希望値) を指定する (デフォルト: 1024)"
 
 #. Translators: W will appear in the help, as in: --width=W
-#: ../src/gnome-web-photo.c:895
+#: ../src/gnome-web-photo.c:931
 msgid "W"
 msgstr "幅"
 
-#: ../src/gnome-web-photo.c:897
+#: ../src/gnome-web-photo.c:933
 msgid "Thumbnail size (default: 256)"
 msgstr "サムネイルのサイズを指定する (デフォルト: 256)"
 
 #. Translators: S will appear in the help, as in: --thumbnail-size=S
-#: ../src/gnome-web-photo.c:899
+#: ../src/gnome-web-photo.c:935
 msgid "S"
 msgstr "サイズ"
 
-#: ../src/gnome-web-photo.c:902
+#: ../src/gnome-web-photo.c:938
 msgid "Print page on PRINTER (default: none, save as PDF)"
 msgstr ""
 "ページを印刷するプリンタを指定する (デフォルト: なし/PDF形式で保存する)"
 
 #. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
-#: ../src/gnome-web-photo.c:904
+#: ../src/gnome-web-photo.c:940
 msgid "PRINTER"
 msgstr "プリンタ"
 
-#: ../src/gnome-web-photo.c:907
+#: ../src/gnome-web-photo.c:943
 msgid "Print background images and colours (default: false)"
 msgstr "背景の画像と色を出力する (デフォルト: 無効)"
 
-#: ../src/gnome-web-photo.c:909
+#: ../src/gnome-web-photo.c:945
+msgid ""
+"Disable embedded plugins in the rendering engine (default: enable plugins)"
+msgstr ""
+"描画エンジンに組み込まれているプラグインを無効にする (デフォルト: 有効)"
+
+#: ../src/gnome-web-photo.c:947
 msgid "Argument is a file and not a URI"
 msgstr "引数は URI ではなくファイルにして下さい"
 
 #. Translators: %s is a filename or a URI
-#: ../src/gnome-web-photo.c:974
+#: ../src/gnome-web-photo.c:1012
 #, c-format
 msgid "Specified user stylesheet ('%s') does not exist!\n"
 msgstr "指定したスタイル・シートが見つかりませんでした: %s\n"
 
-#: ../src/gnome-web-photo.c:995
+#: ../src/gnome-web-photo.c:1033
+#, c-format
+msgid "--delay cannot be negative!\n"
+msgstr "--delay には負の値は指定できません\n"
+
+#: ../src/gnome-web-photo.c:1040
 #, c-format
 msgid "--timeout cannot be negative!\n"
 msgstr "--timeout には負の値は指定できません\n"
 
-#: ../src/gnome-web-photo.c:1010
+#: ../src/gnome-web-photo.c:1055
 #, c-format
 msgid "--size can only be 32, 64, 96, 128 or 256!\n"
 msgstr "--size には 32、64、96、128、256 のいずれかを指定して下さい\n"
 
-#: ../src/gnome-web-photo.c:1014
+#: ../src/gnome-web-photo.c:1059
 #, c-format
 msgid "--size is only available in thumbnail mode!\n"
 msgstr "--size は thumbnail モードでのみ指定できます\n"
 
-#: ../src/gnome-web-photo.c:1023
+#: ../src/gnome-web-photo.c:1068
 #, c-format
 msgid "--width out of bounds; must be between %d and %d!\n"
 msgstr "--width の上限値を越えました (%d <= 幅 <= %d にして下さい)\n"
 
-#: ../src/gnome-web-photo.c:1028
+#: ../src/gnome-web-photo.c:1073
 #, c-format
 msgid "--width must be a multiple of 32 in thumbnail mode!\n"
 msgstr "--width は thumbnail モードで 32 の倍数にして下さい\n"
 
-#: ../src/gnome-web-photo.c:1036
+#: ../src/gnome-web-photo.c:1081
 #, c-format
 msgid "--print-background is only available in print mode!\n"
 msgstr "--print-background は print モードでのみ指定できます\n"
 
-#: ../src/gnome-web-photo.c:1044
+#: ../src/gnome-web-photo.c:1089
 #, c-format
 msgid "--printer is only available in print mode!\n"
 msgstr "--printer は print モードでのみ指定できます\n"
 
 #. Translators: %s is the name of a printer
-#: ../src/gnome-web-photo.c:1053
+#: ../src/gnome-web-photo.c:1098
 #, c-format
 msgid "'%s' is not a valid printer!\n"
 msgstr "'%s' は妥当なプリンタではありませんでした\n"
 
-#: ../src/gnome-web-photo.c:1055
+#: ../src/gnome-web-photo.c:1100
 #, c-format
 msgid "List of printers:\n"
 msgstr "プリンタの一覧:\n"
 
-#: ../src/gnome-web-photo.c:1089
+#: ../src/gnome-web-photo.c:1134
 #, c-format
 msgid "Missing arguments!\n"
 msgstr "引数が足りません\n"
 
-#: ../src/gnome-web-photo.c:1095
+#: ../src/gnome-web-photo.c:1140
 #, c-format
 msgid "Too many arguments!\n"
 msgstr "引数が多すぎます\n"
