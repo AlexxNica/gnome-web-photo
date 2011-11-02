@@ -1,0 +1,318 @@
+# Hungarian translation of gnome-web-photo 
+# Copyright (C) 2011. Free Software Foundation, Inc.
+# This file is distributed under the same license as the gnome-web-photo package.
+#
+# Zoltan Mezi <mezi dot zoltan at gmail dot com>, 2011.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-web-photo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-10-09 15:21+0000\n"
+"PO-Revision-Date: 2011-11-02 20:15+0100\n"
+"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Hungarian\n"
+"X-Poedit-Country: HUNGARY\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "The command to thumbnail HTML files"
+msgstr "Parancs a HTML fájlok bélyegképeinek elkészítéséhez"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "The command to thumbnail HTML files."
+msgstr "Parancs a HTML fájlok bélyegképeinek elkészítéséhez."
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail XHTML files"
+msgstr "Parancs az XHTML fájlok bélyegképeinek elkészítéséhez"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail XHTML files."
+msgstr "Parancs az XHTML fájlok bélyegképeinek elkészítéséhez."
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "Bélyegképek készítése HTML fájlokról"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "Bélyegképek készítése HTML fájlokról."
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "Bélyegképek készítése XHTML fájlokról"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "Bélyegképek készítése XHTML fájlokról."
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:376 ../src/gnome-web-photo.c:391
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Hiba „%s” mentése közben: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:444 ../src/gnome-web-photo.c:487
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Hiba „%s” bélyegképének elkészítése közben: %s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:521
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Hiba „%s” nyomtatása közben ezen: „%s”: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:541
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Hiba „%s” nyomtatása közben: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:622
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Hiba „%s” betöltése közben: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:685
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr "Időtúllépés „%s” betöltése közben. Az aktuális nézet kiírása…\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:699
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr "Időtúllépés „%s” betöltése közben. Nincs mit kiírni…\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:705
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "Időtúllépés „%s” betöltése közben.\n"
+
+#: ../src/gnome-web-photo.c:812
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Ismeretlen mód: „%s”"
+
+#: ../src/gnome-web-photo.c:825
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "Használat: %s [--mode=photo|thumbnail|print] […]\n"
+
+#: ../src/gnome-web-photo.c:829
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--file] "
+"URI|FILE OUTFILE\n"
+msgstr "Használat: %s [-c CSSFÁJL] [-d KÉSLELTETÉS] [-t IDŐKORLÁT] [--force] [-w WIDTH] [--file] URI|FÁJL KIMENETIFÁJL\n"
+
+#: ../src/gnome-web-photo.c:832
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-s "
+"THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
+msgstr "Használat: %s [-c CSSFÁJL] [-d KÉSLELTETÉS] [-t IDŐKORLÁT] [--force] [-w WIDTH] [-s BÉLYEGKÉPMÉRET] [--file] URI|FÁJL KIMENETIFÁJL\n"
+
+#: ../src/gnome-web-photo.c:836
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
+msgstr "Használat: %s [-c CSSFÁJL] [-d KÉSLELTETÉS] [-t IDŐKORLÁT] [--force] [-w WIDTH] [--print-background] [--file] URI|FÁJL KIMENETIFÁJL|--printer=NYOMTATÓ\n"
+
+#: ../src/gnome-web-photo.c:838
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr "Használat: %s [-c CSSFÁJL] [-d KÉSLELTETÉS] [-t IDŐKORLÁT] [--force] [-w WIDTH] [--print-background] [--file] URI|FÁJL KIMENETIFÁJL\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:878
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:883
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (nem aktív)\n"
+
+#: ../src/gnome-web-photo.c:913
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "Működési mód [photo|thumbnail|print]"
+
+#: ../src/gnome-web-photo.c:915
+msgid "User style sheet to use for the page (default: "
+msgstr "Felhasználó stíluslap használata az oldalhoz (alapértelmezés: "
+
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:917
+msgid "CSSFILE"
+msgstr "CSSFÁJL"
+
+#: ../src/gnome-web-photo.c:919
+msgid ""
+"Delay in seconds to wait after page is loaded, or 0 to disable delay "
+"(default: 0)"
+msgstr "Késleltetés másodpercben az oldal betöltése után, vagy 0 a késleltetés kikapcsolásához (alapértelmezés: 0)"
+
+#. Translators: T will appear in the help, as in: --delay=D
+#: ../src/gnome-web-photo.c:921
+msgid "D"
+msgstr "K"
+
+#: ../src/gnome-web-photo.c:923
+msgid ""
+"Timeout in seconds to wait to load the page, or 0 to disable timeout "
+"(default: 60)"
+msgstr ""
+"Az oldal betöltésére várakozás időkorlátja másodpercben, vagy 0 az "
+"időkorlát kikapcsolásához (alapértelmezés: 60)"
+
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:925
+msgid "T"
+msgstr "I"
+
+#: ../src/gnome-web-photo.c:927
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr "Erőltetett kilépés az időkorlát túllépésekor akkor is, ha az oldal nincs teljesen betöltve"
+
+#: ../src/gnome-web-photo.c:929
+msgid "Desired width of the web page (default: 1024)"
+msgstr "A weblap kívánt szélessége (alapértelmezés: 1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:931
+msgid "W"
+msgstr "SZ"
+
+#: ../src/gnome-web-photo.c:933
+msgid "Thumbnail size (default: 256)"
+msgstr "Bélyegkép mérete (alapértelmezés: 256)"
+
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:935
+msgid "S"
+msgstr "M"
+
+#: ../src/gnome-web-photo.c:938
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr "Oldal nyomtatása a NYOMTATÓN (alapértelmezés: nincs, PDF-be ment)"
+
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:940
+msgid "PRINTER"
+msgstr "NYOMTATÓ"
+
+#: ../src/gnome-web-photo.c:943
+msgid "Print background images and colours (default: false)"
+msgstr "Háttérképek és -színek nyomtatása (alapértelmezés: false)"
+
+#: ../src/gnome-web-photo.c:945
+msgid "Disable embedded plugins in the rendering engine (default: enable plugins)"
+msgstr "A renderelő motor beágyazott bővítményeinek letiltása (alapértelmezés: bővítmények engedélyezve)"
+
+#: ../src/gnome-web-photo.c:947
+msgid "Argument is a file and not a URI"
+msgstr "Az argumentum egy fájlt, nem pedig URI"
+
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:1012
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "A megadott felhasználói stíluslap („%s”) nem létezik!\n"
+
+#: ../src/gnome-web-photo.c:1033
+#, c-format
+msgid "--delay cannot be negative!\n"
+msgstr "a --delay nem lehet negatív!\n"
+
+#: ../src/gnome-web-photo.c:1040
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "a --timeout nem lehet negatív!\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "a --size értéke csak a következők egyike lehet: 32, 64, 128 vagy 256!\n"
+
+#: ../src/gnome-web-photo.c:1059
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "a --size csak bélyegkép módban használható!\n"
+
+#: ../src/gnome-web-photo.c:1068
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "a --width kívül esik a határokon; %d és %d között kell lennie!\n"
+
+#: ../src/gnome-web-photo.c:1073
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "a --width értékének 32 többszörösének kell lennie bélyegkép módban!\n"
+
+#: ../src/gnome-web-photo.c:1081
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "a --print-background csak nyomtatási módban használható!\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "a --printer csak nyomtatási módban használható!\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1098
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "A(z) „%s” nem érvényes nyomtató!\n"
+
+#: ../src/gnome-web-photo.c:1100
+#, c-format
+msgid "List of printers:\n"
+msgstr "Nyomtatók listája:\n"
+
+#: ../src/gnome-web-photo.c:1134
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "Hiányzó argumentumok!\n"
+
+#: ../src/gnome-web-photo.c:1140
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "Túl sok argumentum!\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "Maximális szélesség"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "Képernyőn kívüli ablak maximális szélessége"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "Maximális magasság"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "Képernyőn kívüli ablak maximális magassága"
+
