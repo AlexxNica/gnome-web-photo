@@ -2,21 +2,24 @@
 # Galician translation for gnome-web-photo.
 # Copyright (C) 2010 gnome-web-photo's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gnome-web-photo package.
+# 
+# Antón Méixome <meixome@certima.net>, 20, 2011.
+# Fran Dieguez <frandieguez@gnome.org>, 2011.
 #
-# Antón Méixome <meixome@certima.net>, 2010.
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-web-photo.po.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-12-31 21:00+0000\n"
-"PO-Revision-Date: 2010-02-28 13:02+0100\n"
-"Last-Translator: Antón Méixome <meixome@certima.net>\n"
-"Language-Team: Galician <proxecto@trasno.net>\n"
+"POT-Creation-Date: 2011-11-06 17:26+0100\n"
+"PO-Revision-Date: 2011-11-06 17:26+0100\n"
+"Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
+"Language-Team: Galician <gnome-l10n-gl@gnome.org>\n"
+"Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
 
 #: ../data/thumbnailer.schemas.in.h:1
 msgid "The command to thumbnail HTML files"
@@ -36,114 +39,329 @@ msgstr "A orde para miniaturizar ficheiros XHTML."
 
 #: ../data/thumbnailer.schemas.in.h:5
 msgid "Whether to enable thumbnailing of HTML files"
-msgstr "Momento para activar a miniaturización de ficheiros HTML"
+msgstr "Indica se se debe activar a miniaturización de ficheiros HTML"
 
 #: ../data/thumbnailer.schemas.in.h:6
 msgid "Whether to enable thumbnailing of HTML files."
-msgstr "Momento para activar a miniaturización de ficheiros HTML."
+msgstr "Indica se se debe activar a miniaturización de ficheiros HTML."
 
 #: ../data/thumbnailer.schemas.in.h:7
 msgid "Whether to enable thumbnailing of XHTML files"
-msgstr "Momento para activar a miniaturización de ficheiros XHTML"
+msgstr "Indica se se debe activar a miniaturización de ficheiros XHTML"
 
 #: ../data/thumbnailer.schemas.in.h:8
 msgid "Whether to enable thumbnailing of XHTML files."
-msgstr "Momento para activar a miniaturización de ficheiros XHTML."
+msgstr "Indica se se debe activar a miniaturización de ficheiros XHTML."
 
-#: ../src/main.cpp:146
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:376 ../src/gnome-web-photo.c:391
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Produciuse un erro ao gardar '%s': %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:444 ../src/gnome-web-photo.c:487
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Produciuse un erro ao miniaturizar '%s': %s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:521
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Produciuse un erro ao imprimir '%s' en '%s': %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:541
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Produciuse un erro ao imprimir '%s': %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:622
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Produciuse un erro ao cargar '%s': %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:685
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr ""
+"Tempo de espera excedido ao cargar '%s'. Xerando visualización actual...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:699
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr "Tempo de espera excedido ao cargar '%s'. Nada que mostrar...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:705
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "Tempo de espera excedido ao cargar '%s'.\n"
+
+#: ../src/gnome-web-photo.c:812
 #, c-format
 msgid "Unknown mode '%s'"
 msgstr "Modo descoñecido '%s'"
 
-#: ../src/main.cpp:171
-#, c-format
-msgid "Unknown format '%s'"
-msgstr "Formato descoñecido '%s'"
-
-#: ../src/main.cpp:439
+#: ../src/gnome-web-photo.c:825
 #, c-format
 msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
 msgstr "Uso: %s [--mode=photo|thumbnail|print] [...]\n"
 
-#: ../src/main.cpp:443
+#: ../src/gnome-web-photo.c:829
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
-"FILE OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--file] "
+"URI|FILE OUTFILE\n"
 msgstr ""
-"Uso: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
-"FILE OUTFILE [...]\n"
+"Usage: %s [-c FICHEIRO_CSS] [-d RETRASO] [-t TEMPO_ESPERA] [--force] [-w "
+"ANCHO] [--file] URI|FICHEIRO FICHEIRO_SAIDA\n"
 
-#: ../src/main.cpp:446
+#: ../src/gnome-web-photo.c:832
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
-"OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-s "
+"THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
 msgstr ""
-"Uso: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE OUTFILE "
-"[...]\n"
+"Usage: %s [-c FICHEIRO_SAIDA] [-d RETRASO] [-t TEMPO_ESPERA] [--force] [-w "
+"ANCHO] [-s TAMAÑO_MINIATURA] [--file] URI|FICHEIRO FICHEIRO_SAIDA\n"
 
-#: ../src/main.cpp:449
+#: ../src/gnome-web-photo.c:836
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
-"URI|FILE OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
 msgstr ""
-"Uso: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] URI|"
-"FILE OUTFILE [...]\n"
+"Usage: %s [-c FICHEIRO_CSS] [-d RETRASO] [-t TEMPO_ESPERA] [--force] [-w "
+"ANCHO] [--print-background] [--file] URI|FICHEIRO FICHEIRO_SAIDA|--"
+"printer=IMPRESORA\n"
 
-#: ../src/main.cpp:468
+#: ../src/gnome-web-photo.c:838
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"Uso: %s [-t TEMPO_ESPERA] [--force] [-w ANCHO] [--print-background] [--"
+"files] URI|FICHEIRO FICHEIRO_SAIDA [...]\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:878
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:883
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (non activo)\n"
+
+#: ../src/gnome-web-photo.c:913
 msgid "Operation mode [photo|thumbnail|print]"
 msgstr "Modo de operación [photo|thumbnail|print]"
 
-#: ../src/main.cpp:470
-msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
-msgstr ""
-"O tempo de expiración en segundos, ou 0 para desactivar o tempo de "
-"expiración (predefinido: 60)"
+#: ../src/gnome-web-photo.c:915
+msgid "User style sheet to use for the page (default: "
+msgstr "Folla de estilo do usuario para aplicar na páxina (predeterminado):"
 
-#: ../src/main.cpp:472
-msgid "Force output when timeout expires, even if the page isn't loaded fully"
-msgstr ""
-"Forzar a saída cando o tempo de expiración caduca, mesmo se a páxina non foi "
-"cargada totalmente"
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:917
+msgid "CSSFILE"
+msgstr "FICHEIRO CSS"
 
-#: ../src/main.cpp:474
-msgid "The desired width of the image (default: 1024)"
-msgstr "A largura desexada da imaxe (predefinido: 1024)"
-
-#: ../src/main.cpp:476
-msgid "The thumbnail size (default: 256)"
-msgstr "O tamaño da miniatura (predefinido: 256)"
-
-#: ../src/main.cpp:478
+#: ../src/gnome-web-photo.c:919
 msgid ""
-"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+"Delay in seconds to wait after page is loaded, or 0 to disable delay "
+"(default: 0)"
 msgstr ""
-"O formato do ficheiro para a saída. Os compatíbeis son 'png', 'jpeg' e "
-"'ppm' (default:png)"
+"O atraso en segundos a agardar despois de que páxina se cargue, ou 0 para "
+"desactivar o atraso (predefinido: 0)"
 
-#: ../src/main.cpp:478
-msgid "FORMAT"
-msgstr "FORMATO"
+#. Translators: T will appear in the help, as in: --delay=D
+#: ../src/gnome-web-photo.c:921
+msgid "D"
+msgstr "A"
 
-#: ../src/main.cpp:480
+#: ../src/gnome-web-photo.c:923
+msgid ""
+"Timeout in seconds to wait to load the page, or 0 to disable timeout "
+"(default: 60)"
+msgstr ""
+"O tempo de espera en segundos para agardar pola carga da páxina, ou 0 para "
+"desactivar o tempo de espera (por omisión: 60)"
+
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:925
+msgid "T"
+msgstr "T"
+
+#: ../src/gnome-web-photo.c:927
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr ""
+"Forzar a saída cando o tempo de espera caduca, mesmo se a páxina non foi "
+"cargada completamente"
+
+#: ../src/gnome-web-photo.c:929
+msgid "Desired width of the web page (default: 1024)"
+msgstr "A anchura desexada da páxina web (por omisión: 1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:931
+msgid "W"
+msgstr "L"
+
+#: ../src/gnome-web-photo.c:933
+msgid "Thumbnail size (default: 256)"
+msgstr "Tamaño da miniatura (por omisión: 256)"
+
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:935
+msgid "S"
+msgstr "M"
+
+#: ../src/gnome-web-photo.c:938
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr "Imprimir páxina en IMPRESORA (por omisión: ningún, gardar como PDF)"
+
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:940
+msgid "PRINTER"
+msgstr "IMPRESORA"
+
+#: ../src/gnome-web-photo.c:943
 msgid "Print background images and colours (default: false)"
-msgstr "Imprimir as imaxes de fondo e cores (predefinido: falso)"
+msgstr "Imprimir as imaxes de fondo e cores (por omisión: falso)"
 
-#: ../src/main.cpp:490
-msgid "The desired quality of the JPEG image (1 .. 100)"
-msgstr "A calidade desexada da imaxe JPEG (1 .. 100)"
+#: ../src/gnome-web-photo.c:945
+msgid ""
+"Disable embedded plugins in the rendering engine (default: enable plugins)"
+msgstr ""
+"Desactivar os engadidos no motor de renderizado (por omisión: activar "
+"engadidos)"
 
-#: ../src/main.cpp:490
-msgid "QUALITY"
-msgstr "CALIDADE"
+#: ../src/gnome-web-photo.c:947
+msgid "Argument is a file and not a URI"
+msgstr "O argumento é un ficheiro e non un URI"
 
-#: ../src/main.cpp:515
-msgid "JPEG options:"
-msgstr "Opcións de JPEG:"
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:1012
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "A folla de estilo especificada ('%s') non existe.\n"
 
-#: ../src/main.cpp:516
-msgid "JPEG options"
-msgstr "Opcións de JPEG"
+#: ../src/gnome-web-photo.c:1033
+#, c-format
+msgid "--delay cannot be negative!\n"
+msgstr "--o atraso non pode ser negativo.\n"
 
+#: ../src/gnome-web-photo.c:1040
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--o tempo de espera non pode ser negativo.\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--o tamaño só pode ser 32, 64, 96, 128 or 256.\n"
+
+#: ../src/gnome-web-photo.c:1059
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "--o tamaño só está dispoñíbel no modo miniaturizar.\n"
+
+#: ../src/gnome-web-photo.c:1068
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--largura fóra dos límites; debe estar entre %d e %d.\n"
+
+#: ../src/gnome-web-photo.c:1073
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "--a largura debe ser un múltiplo de 32 en modo miniaturizar.\n"
+
+#: ../src/gnome-web-photo.c:1081
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--imprimir fondo só está dispoñíbel en modo imprimir.\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--a impresora só está dispoñíbel en modo imprimir.\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1098
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "'%s' non é unha impresora válida.\n"
+
+#: ../src/gnome-web-photo.c:1100
+#, c-format
+msgid "List of printers:\n"
+msgstr "Lista de impresoras:\n"
+
+#: ../src/gnome-web-photo.c:1134
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "Faltan argumentos.\n"
+
+#: ../src/gnome-web-photo.c:1140
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "Demasiados argumentos.\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "Anchura máxima"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "Anchura máxima da xanela fóra de pantalla"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "Altura máxima"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "Altura máxima da xanela fóra de pantalla"
+
+#~ msgid "Unknown format '%s'"
+#~ msgstr "Formato descoñecido '%s'"
+
+#~ msgid ""
+#~ "Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] "
+#~ "URI|FILE OUTFILE [...]\n"
+#~ msgstr ""
+#~ "Uso: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
+#~ "FILE OUTFILE [...]\n"
+
+#~ msgid ""
+#~ "File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:"
+#~ "png)"
+#~ msgstr ""
+#~ "O formato do ficheiro para a saída. Os compatíbeis son 'png', 'jpeg' e "
+#~ "'ppm' (default:png)"
+
+#~ msgid "FORMAT"
+#~ msgstr "FORMATO"
+
+#~ msgid "The desired quality of the JPEG image (1 .. 100)"
+#~ msgstr "A calidade desexada da imaxe JPEG (1 .. 100)"
+
+#~ msgid "QUALITY"
+#~ msgstr "CALIDADE"
+
+#~ msgid "JPEG options:"
+#~ msgstr "Opcións de JPEG:"
+
+#~ msgid "JPEG options"
+#~ msgstr "Opcións de JPEG"
