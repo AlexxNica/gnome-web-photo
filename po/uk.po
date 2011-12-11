@@ -1,0 +1,334 @@
+# Ukrainian translation for gnome-web-photo.
+# Copyright (C) 2011 gnome-web-photo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-web-photo package.
+# AlexandrToorchyn <ilex@mail.ua>, 2011.
+# Alexandr Toorchyn <ilex@mail.ua>, 2011.
+# Korostil Daniel <ted.korostiled@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-web-photo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-12-11 15:18+0200\n"
+"PO-Revision-Date: 2011-12-11 15:19+0300\n"
+"Last-Translator: Korostil Daniel <ted.korostiled@gmail.com>\n"
+"Language-Team: translation@linux.org.ua\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Virtaal 0.6.1\n"
+"X-Project-Style: gnome\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "The command to thumbnail HTML files"
+msgstr "Команда для створення мініатюри файлів HTML"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "The command to thumbnail HTML files."
+msgstr "Команда для створення мініатюри файлів HTML."
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail XHTML files"
+msgstr "Команда для створення мініатюри файлів XHTML."
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail XHTML files."
+msgstr "Команда для створення мініатюри файлів XHTML."
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "Чи слід вмикати ескізи файлів HTML"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "Чи слід вмикати ескізи файлів HTML."
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "Чи слід вмикати ескізи файлів XHTML"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "Чи слід вмикати ескізи файлів XHTML."
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:376 ../src/gnome-web-photo.c:391
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Помилка збереження «%s»: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:444 ../src/gnome-web-photo.c:487
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Помилка створення мініатюри «%s»: %s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:521
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Помилка друкування «%s» на «%s»: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:541
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Помилка друкування «%s»: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:622
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Помилка завантаження «%s»: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:685
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr ""
+"Перевищено час очікування завантаження «%s». Висновок поточного перегляду…\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:699
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr ""
+"Перевищено час очікування завантаження «%s». Немає нічого для показу…\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:705
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "Перевищено час очікування завантаження «%s».\n"
+
+#: ../src/gnome-web-photo.c:812
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Невідомий режим «%s»"
+
+#: ../src/gnome-web-photo.c:825
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "Використання: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/gnome-web-photo.c:829
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--file] "
+"URI|FILE OUTFILE\n"
+msgstr ""
+"Використання: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] "
+"[--file] URI|FILE OUTFILE\n"
+
+#: ../src/gnome-web-photo.c:832
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-s "
+"THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"Використання: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-"
+"s THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
+
+#: ../src/gnome-web-photo.c:836
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
+msgstr ""
+"Використання: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] "
+"[--print-background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
+
+#: ../src/gnome-web-photo.c:838
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"Використання:%s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--"
+"print-background] [--file] URI|FILE OUTFILE\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:878
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:883
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (не ввімкнено)\n"
+
+#: ../src/gnome-web-photo.c:913
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "Режим роботи [photo|thumbnail|print]"
+
+#: ../src/gnome-web-photo.c:915
+msgid "User style sheet to use for the page (default: "
+msgstr "Таблиця стилів, яка використовується для сторінки (типові:"
+
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:917
+msgid "CSSFILE"
+msgstr "CSSFILE"
+
+#: ../src/gnome-web-photo.c:919
+msgid ""
+"Delay in seconds to wait after page is loaded, or 0 to disable delay "
+"(default: 0)"
+msgstr ""
+"Затримка в секундах для очікування після завантаження сторінки; 0 — вимкнути "
+"(типово: 0)"
+
+#. Translators: T will appear in the help, as in: --delay=D
+#: ../src/gnome-web-photo.c:921
+msgid "D"
+msgstr "D"
+
+#: ../src/gnome-web-photo.c:923
+msgid ""
+"Timeout in seconds to wait to load the page, or 0 to disable timeout "
+"(default: 60)"
+msgstr ""
+"Обмеження за часом в секундах для завантаження сторінки; 0 — вимкнути "
+"(типово: 60)"
+
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:925
+msgid "T"
+msgstr "T"
+
+#: ../src/gnome-web-photo.c:927
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr ""
+"Примусово виводити за перевищення ліміту часу, навіть якщо сторінку "
+"завантажено не повністю"
+
+#: ../src/gnome-web-photo.c:929
+msgid "Desired width of the web page (default: 1024)"
+msgstr "Бажана ширина сторінки (типово: 1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:931
+msgid "W"
+msgstr "W"
+
+#: ../src/gnome-web-photo.c:933
+msgid "Thumbnail size (default: 256)"
+msgstr "Розмір мініатюри (типово: 256)"
+
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:935
+msgid "S"
+msgstr "S"
+
+#: ../src/gnome-web-photo.c:938
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr "Надрукувати сторінку на принтері (типово: ні, зберегти як PDF)"
+
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:940
+msgid "PRINTER"
+msgstr "Принтер"
+
+#: ../src/gnome-web-photo.c:943
+msgid "Print background images and colours (default: false)"
+msgstr "Друк фонових зображень і кольорів (типово: ні)"
+
+#: ../src/gnome-web-photo.c:945
+msgid ""
+"Disable embedded plugins in the rendering engine (default: enable plugins)"
+msgstr ""
+"Вимкнути вбудовані додатки у рушії відтворення (типово: ввімкнути додатки)"
+
+#: ../src/gnome-web-photo.c:947
+msgid "Argument is a file and not a URI"
+msgstr "Аргумент є файлом, а не URI"
+
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:1012
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "Зазначена таблиця стилів ('%s') не існує!\n"
+
+#: ../src/gnome-web-photo.c:1033
+#, c-format
+msgid "--delay cannot be negative!\n"
+msgstr "--delay не може мати від'ємне значення!\n"
+
+#: ../src/gnome-web-photo.c:1040
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--timeout не може мати від'ємне значення!\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--size може бути тільки 32, 64, 96, 128 чи 256!\n"
+
+#: ../src/gnome-web-photo.c:1059
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "--size доступний тільки в режимі ескізів!\n"
+
+#: ../src/gnome-web-photo.c:1068
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--width виходить за межі,значення повинні бути між %d and %d!\n"
+
+#: ../src/gnome-web-photo.c:1073
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "--width повинна бути кратна 32 в режимі ескізів!\n"
+
+#: ../src/gnome-web-photo.c:1081
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--print-background доступний тільки в режимі друкування!\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--printer доступний тільки в режимі друкування!\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1098
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "«%s» не є правильним принтером!\n"
+
+#: ../src/gnome-web-photo.c:1100
+#, c-format
+msgid "List of printers:\n"
+msgstr "Список принтерів:\n"
+
+#: ../src/gnome-web-photo.c:1134
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "Немає аргументів!\n"
+
+#: ../src/gnome-web-photo.c:1140
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "Надто багато аргументів!\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "Максимальна ширина"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "Максимальна ширина закадрового вікна"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "Максимальна висота"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "Максимальна висота закадрового вікна"
