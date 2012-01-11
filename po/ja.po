@@ -7,46 +7,46 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnome-web-photo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-10-10 00:19+0900\n"
-"PO-Revision-Date: 2011-10-10 00:19+0900\n"
-"Last-Translator: Takeshi AIHANA <takeshi.aihana@gmail.com>\n"
+"POT-Creation-Date: 2011-12-20 08:46+0000\n"
+"PO-Revision-Date: 2012-01-01 19:55+0900\n"
+"Last-Translator: Jiro Matsuzawa <jmatsuzawa@src.gnome.org>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
-"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: ja\n"
 
 #: ../data/thumbnailer.schemas.in.h:1
-msgid "Whether to enable thumbnailing of HTML files"
-msgstr "HTML ファイルをサムネイル化するかどうか"
-
-#: ../data/thumbnailer.schemas.in.h:2
-msgid "Whether to enable thumbnailing of HTML files."
-msgstr "HTML ファイルのサムネイル生成を有効にするかどうかです。"
-
-#: ../data/thumbnailer.schemas.in.h:3
 msgid "The command to thumbnail HTML files"
 msgstr "HTML ファイルのサムネイルを生成するコマンド"
 
-#: ../data/thumbnailer.schemas.in.h:4
+#: ../data/thumbnailer.schemas.in.h:2
 msgid "The command to thumbnail HTML files."
 msgstr "HTML ファイルのサムネイルを生成する際に使用するコマンドです。"
 
-#: ../data/thumbnailer.schemas.in.h:5
-msgid "Whether to enable thumbnailing of XHTML files"
-msgstr "XHTML ファイルをサムネイル化するかどうか"
-
-#: ../data/thumbnailer.schemas.in.h:6
-msgid "Whether to enable thumbnailing of XHTML files."
-msgstr "XHTML ファイルのサムネイル生成を有効にするかどうかです。"
-
-#: ../data/thumbnailer.schemas.in.h:7
+#: ../data/thumbnailer.schemas.in.h:3
 msgid "The command to thumbnail XHTML files"
 msgstr "XHTML ファイルのサムネイルを生成するコマンド"
 
-#: ../data/thumbnailer.schemas.in.h:8
+#: ../data/thumbnailer.schemas.in.h:4
 msgid "The command to thumbnail XHTML files."
 msgstr "XHTML ファイルのサムネイルを生成する際に使用するコマンドです。"
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "HTML ファイルをサムネイル化するかどうか"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "HTML ファイルのサムネイル生成を有効にするかどうかです。"
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "XHTML ファイルをサムネイル化するかどうか"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "XHTML ファイルのサムネイル生成を有効にするかどうかです。"
 
 #. Translators: first %s is a URI
 #: ../src/gnome-web-photo.c:376 ../src/gnome-web-photo.c:391
@@ -133,7 +133,7 @@ msgid ""
 "background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
 msgstr ""
 "用法: %s [-c CSSファイル] [-d 時間] [-t 時間] [--force] [-w 幅] [--print-"
-"background] [--file] URI|ファイル 出力先|--printer=プリンタ\n"
+"background] [--file] URI|ファイル 出力先|--printer=プリンター\n"
 
 #: ../src/gnome-web-photo.c:838
 #, c-format
@@ -224,12 +224,12 @@ msgstr "サイズ"
 #: ../src/gnome-web-photo.c:938
 msgid "Print page on PRINTER (default: none, save as PDF)"
 msgstr ""
-"ページを印刷するプリンタを指定する (デフォルト: なし/PDF形式で保存する)"
+"ページを印刷するプリンターを指定する (デフォルト: なし/PDF形式で保存する)"
 
 #. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
 #: ../src/gnome-web-photo.c:940
 msgid "PRINTER"
-msgstr "プリンタ"
+msgstr "プリンター"
 
 #: ../src/gnome-web-photo.c:943
 msgid "Print background images and colours (default: false)"
@@ -295,12 +295,12 @@ msgstr "--printer は print モードでのみ指定できます\n"
 #: ../src/gnome-web-photo.c:1098
 #, c-format
 msgid "'%s' is not a valid printer!\n"
-msgstr "'%s' は妥当なプリンタではありませんでした\n"
+msgstr "'%s' は妥当なプリンターではありませんでした\n"
 
 #: ../src/gnome-web-photo.c:1100
 #, c-format
 msgid "List of printers:\n"
-msgstr "プリンタの一覧:\n"
+msgstr "プリンターの一覧:\n"
 
 #: ../src/gnome-web-photo.c:1134
 #, c-format
