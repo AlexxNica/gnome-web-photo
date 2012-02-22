@@ -46,4 +46,5 @@ ChangeLog:
 
 .PHONY: ChangeLog
 
+GITIGNOREFILES = $(PACKAGE)-\*.tar.{gz,bz2,xz}
 -include $(top_srcdir)/git.mk
