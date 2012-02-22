@@ -1,8 +1,8 @@
-=== No ChangeLog ===
+=== ChangeLog discontinued ===
 
- Since this module is using git, we rely on commit messages to provide change
- history. Please write commit messages in the format described at
- http://live.gnome.org/Git/CommitMessages
+ With the move to git, this module is switching from a ChangeLog file to
+ relying on commit messages to provide change history. Please write commit
+ messages in the format described at http://live.gnome.org/Git/CommitMessages
 
  Below is a copy of this format:
 
