@@ -1,0 +1,325 @@
+# Korean translation for gnome-web-photo.
+# Copyright (C) 2012 gnome-web-photo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-web-photo package.
+# Seong-ho Cho <darkcircle.0426@gmail.com>, 2012.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-web-photo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-03-29 10:23+0000\n"
+"PO-Revision-Date: 2012-04-05 01:33+0900\n"
+"Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
+"Language-Team: Korean <gnome-kr@googlegroups.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "HTML 파일 섬네일을 활성화 할지에 대한 여부"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "HTML 파일 섬네일을 활성화 할지에 대한 여부입니다."
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail HTML files"
+msgstr "HTML 파일을 섬네일 하는 명령"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail HTML files."
+msgstr "HTML 파일을 섬네일 하는 명령입니다."
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "XHTML 파일 섬네일을 활성화 할지에 대한 여부"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "XHTML 파일 섬네일을 활성화 할지에 대한 여부입니다."
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "The command to thumbnail XHTML files"
+msgstr "XHTML 파일을 섬네일 하는 명령"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "The command to thumbnail XHTML files."
+msgstr "XHTML 파일을 섬네일 하는 명령입니다."
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:376 ../src/gnome-web-photo.c:391
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "'%s'을(를) 저장하는데 오류: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:444 ../src/gnome-web-photo.c:487
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "'%s'을(를) 섬네일 하는데 오류: %s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:521
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "'%s'을(를) '%s'에서 인쇄하는데 오류: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:541
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "'%s'을(를) 인쇄하는데 오류: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:622
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "'%s'을(를) 불러오는데 오류: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:685
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr "'%s'을(를) 불러오는데 시간을 초과했습니다. 현재 모습 인쇄중...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:699
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr "'%s'을(를) 불러오는데 시간을 초과했습니다. 인쇄할 내용이 없습니다...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:705
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "'%s'을(를) 불러오는데 시간을 초과했습니다.\n"
+
+#: ../src/gnome-web-photo.c:812
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "알 수 없는 모드 '%s'"
+
+#: ../src/gnome-web-photo.c:825
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "사용법: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/gnome-web-photo.c:829
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--file] "
+"URI|FILE OUTFILE\n"
+msgstr ""
+"사용법: %s [-c <CSS파일>] [-d <지연시간>] [-t <제한시간>] [--force] [-w <픽"
+"셀 폭>] [--file] <URI>|<파일> <출력파일>\n"
+
+#: ../src/gnome-web-photo.c:832
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-s "
+"THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"사용법: %s [-c <CSS파일>] [-d <지연시간>] [-t <제한시간>] [--force] [-w <픽"
+"셀 폭>] [-s <섬네일 크기>] [--file] <URI>|<파일> <출력파일>\n"
+
+#: ../src/gnome-web-photo.c:836
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
+msgstr ""
+"사용법: %s [-c <CSS파일>] [-d <지연시간>] [-t <제한시간>] [--force] [-w <픽"
+"셀 폭>] [--print-background] [--file] <URI>|<파일> <출력파일>|--printer=<프린"
+"터>\n"
+
+#: ../src/gnome-web-photo.c:838
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"사용법: %s [-c <CSS파일>] [-d <지연시간>] [-t <제한시간>] [--force] [-w <픽"
+"셀 폭>] [--print-background] [--file] <URI>|<파일> <출력파일>\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:878
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:883
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (비활성)\n"
+
+#: ../src/gnome-web-photo.c:913
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "처리 방식 [photo|thumbnail|print]"
+
+#: ../src/gnome-web-photo.c:915
+msgid "User style sheet to use for the page (default: "
+msgstr "페이지에서 사용할 사용자 스타일 시트 (기본: "
+
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:917
+msgid "CSSFILE"
+msgstr "<CSS파일>"
+
+#: ../src/gnome-web-photo.c:919
+msgid ""
+"Delay in seconds to wait after page is loaded, or 0 to disable delay "
+"(default: 0)"
+msgstr ""
+"다음 페이지를 불러오는데 기다릴 지연시간, 또는 지연시간을 없애기 위한 0값 (기"
+"본값: 0)"
+
+#. Translators: T will appear in the help, as in: --delay=D
+#: ../src/gnome-web-photo.c:921
+msgid "D"
+msgstr "D"
+
+#: ../src/gnome-web-photo.c:923
+msgid ""
+"Timeout in seconds to wait to load the page, or 0 to disable timeout "
+"(default: 60)"
+msgstr ""
+"불러올 페이지를 기다릴 초 단위 제한시간, 또는 제한시간을 없애기 위한 0값 (기"
+"본값: 60)"
+
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:925
+msgid "T"
+msgstr "T"
+
+#: ../src/gnome-web-photo.c:927
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr "페이지를 완전히 불러오지 못하더라도 시간을 초과하면 강제로 출력합니다."
+
+#: ../src/gnome-web-photo.c:929
+msgid "Desired width of the web page (default: 1024)"
+msgstr "웹 페이지 결정 폭 (기본값: 1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:931
+msgid "W"
+msgstr "W"
+
+#: ../src/gnome-web-photo.c:933
+msgid "Thumbnail size (default: 256)"
+msgstr "섬네일 크기 (기본값: 256)"
+
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:935
+msgid "S"
+msgstr "S"
+
+#: ../src/gnome-web-photo.c:938
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr "<프린터>에 페이지 인쇄 (기본값: 안함, PDF로 저장) "
+
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:940
+msgid "PRINTER"
+msgstr "<프린터>"
+
+#: ../src/gnome-web-photo.c:943
+msgid "Print background images and colours (default: false)"
+msgstr "배경 그림과 색을 인쇄 (기본값: 아니오)"
+
+#: ../src/gnome-web-photo.c:945
+msgid ""
+"Disable embedded plugins in the rendering engine (default: enable plugins)"
+msgstr "렌더링 엔진에서 내장 플러그인 비활성화 (기본값: 플러그인 활성)"
+
+#: ../src/gnome-web-photo.c:947
+msgid "Argument is a file and not a URI"
+msgstr "인자가 URI가 아닌 파일입니다"
+
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:1012
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "지정한 사용자 스타일시트('%s')이(가) 존재하지 않습니다\n"
+
+#: ../src/gnome-web-photo.c:1033
+#, c-format
+msgid "--delay cannot be negative!\n"
+msgstr "--delay는 음수가 될 수 없습니다!\n"
+
+#: ../src/gnome-web-photo.c:1040
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--timeout은 음수가 될 수 없습니다!\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--size는 32, 64, 96, 128 또는 256값만 될 수 있습니다!\n"
+
+#: ../src/gnome-web-photo.c:1059
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "--size는 섬네일 모드에서만 사용할 수 있습니다!\n"
+
+#: ../src/gnome-web-photo.c:1068
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--width 한계값을 넘었습니다 %d부터 %d 사이여야 합니다!\n"
+
+#: ../src/gnome-web-photo.c:1073
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "--width는 섬네일 모드에서 32의 배수가 되어야 합니다!\n"
+
+#: ../src/gnome-web-photo.c:1081
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--print-background는 인쇄 모드에서만 사용할 수 있습니다!\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--printer는 인쇄 모드에서만 사용할 수 있습니다!\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1098
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "'%s'은(는) 올바른 프린터가 아닙니다!\n"
+
+#: ../src/gnome-web-photo.c:1100
+#, c-format
+msgid "List of printers:\n"
+msgstr "프린터 목록:\n"
+
+#: ../src/gnome-web-photo.c:1134
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "인자가 빠졌습니다!\n"
+
+#: ../src/gnome-web-photo.c:1140
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "인자가 너무 많습니다!\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "최대 너비"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "오프스크린 창의 최대 너비"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "최대 높이"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "오프스크린 창의 최대 높이"
