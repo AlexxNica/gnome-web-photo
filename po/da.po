@@ -1,143 +1,328 @@
 # Danish translation for gnome-web-photo.
-# Copyright (C) 2009 gnome-web-photos & Joe Hansen.
+# Copyright (C) 2012 gnome-web-photos & Joe Hansen.
 # This file is distributed under the same license as the gnome-web-photo package.
-# Joe Hansen (joedalton2@yahoo.dk), 2009.
+# Joe Hansen (joedalton2@yahoo.dk), 2009, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gnome-web-photo master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-11-07 10:13+0100\n"
-"PO-Revision-Date: 2009-10-31 23:07+0200\n"
+"POT-Creation-Date: 2012-04-25 09:53+0200\n"
+"PO-Revision-Date: 2012-04-21 23:07+0200\n"
 "Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
 "Language-Team: Dansk-gruppen <dansk@dansk-gruppen.dk>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../data/thumbnailer.schemas.in.h:1
-msgid "The command to thumbnail HTML files"
-msgstr "Kommandoen til HTML-filer i miniatureformat"
-
-#: ../data/thumbnailer.schemas.in.h:2
-msgid "The command to thumbnail HTML files."
-msgstr "Kommandoen til HTML-filer i miniatureformat."
-
-#: ../data/thumbnailer.schemas.in.h:3
-msgid "The command to thumbnail XHTML files"
-msgstr "Kommandoen til XHTML-filer i miniatureformat"
-
-#: ../data/thumbnailer.schemas.in.h:4
-msgid "The command to thumbnail XHTML files."
-msgstr "Kommandoen til XHTML-filer i miniatureformat."
-
-#: ../data/thumbnailer.schemas.in.h:5
 msgid "Whether to enable thumbnailing of HTML files"
 msgstr "Hvorvidt oprettelse af HTML-filer i miniatureformat skal slås til"
 
-#: ../data/thumbnailer.schemas.in.h:6
+#: ../data/thumbnailer.schemas.in.h:2
 msgid "Whether to enable thumbnailing of HTML files."
 msgstr "Hvorvidt oprettelse af HTML-filer i miniatureformat skal slås til."
 
-#: ../data/thumbnailer.schemas.in.h:7
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail HTML files"
+msgstr "Kommandoen til HTML-filer i miniatureformat"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail HTML files."
+msgstr "Kommandoen til HTML-filer i miniatureformat."
+
+#: ../data/thumbnailer.schemas.in.h:5
 msgid "Whether to enable thumbnailing of XHTML files"
 msgstr "Hvorvidt oprettelse af XHTML-filer i miniatureformat skal slås til"
 
-#: ../data/thumbnailer.schemas.in.h:8
+#: ../data/thumbnailer.schemas.in.h:6
 msgid "Whether to enable thumbnailing of XHTML files."
 msgstr "Hvorvidt oprettelse af XHTML-filer i miniatureformat skal slås til."
 
-#: ../src/main.cpp:146
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "The command to thumbnail XHTML files"
+msgstr "Kommandoen til XHTML-filer i miniatureformat"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "The command to thumbnail XHTML files."
+msgstr "Kommandoen til XHTML-filer i miniatureformat."
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:376 ../src/gnome-web-photo.c:391
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Fejl under lagring af \"%s\": %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:444 ../src/gnome-web-photo.c:487
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Fejl under udarbejdelse af miniaturebillede for \"%s\": %s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:521
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Fejl under udskrivning af \"%s\" på \"%s\": %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:541
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Fejl under udskrivning af \"%s\": %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:622
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Fejl under indlæsning af \"%s\": %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:685
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr "Fik tidsudløb under indlæsning af \"%s\". Viser aktuelt indhold ...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:699
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr "Fik tidsudløb under indlæsning af \"%s\". Intet at vise ...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:705
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "Fik tidsudløb under indlæsning af \"%s\".\n"
+
+#: ../src/gnome-web-photo.c:812
 #, c-format
 msgid "Unknown mode '%s'"
-msgstr "Ukendt tilstand '%s'"
+msgstr "Ukendt tilstand \"%s\""
 
-#: ../src/main.cpp:171
-#, c-format
-msgid "Unknown format '%s'"
-msgstr "Ukendt format '%s'"
-
-#: ../src/main.cpp:439
+#: ../src/gnome-web-photo.c:825
 #, c-format
 msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
-msgstr "Brug: %s [--tilstand=foto|miniaturebillede|udskriv] [...]\n"
+msgstr "Brug: %s [--mode=photo|thumbnail|print] [...]\n"
 
-# outfil; nyfil, uddatafil, resultatfil?
-#: ../src/main.cpp:443
+#: ../src/gnome-web-photo.c:829
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] URI|"
-"FILE OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--file] "
+"URI|FILE OUTFILE\n"
 msgstr ""
-"Brug: %s [-t TIDSUDLØB] [--force] [--format FORMAT] [-w BREDDE] [--files] "
-"URI|FIL UDDATAFIL [...]\n"
+"Brug: %s [-c CSS-FIL] [-d FORSINKELSE] [-t TIDSUDLØB] [--force] [-w BREDDE] "
+"[--file] URI|FIL UDDATAFIL\n"
 
-#: ../src/main.cpp:446
+#: ../src/gnome-web-photo.c:832
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
-"OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-s "
+"THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
 msgstr ""
-"Brug: %s [-t TIDSUDLØB] [--force] [-w BREDDE] -s STØRRELSE [--files] URI|FIL "
-"UDDATAFIL [...]\n"
+"Brug: %s [-c CSSFIL] [-d FORSINKELSE] [-t TIDSUDLØB] [--force] [-w BREDDE] [-"
+"s MINIATURESTØRRELSE] [--file] URI|FIL UDDATAFIL\n"
 
-#: ../src/main.cpp:449
+#: ../src/gnome-web-photo.c:836
 #, c-format
 msgid ""
-"Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--files] "
-"URI|FILE OUTFILE [...]\n"
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
 msgstr ""
-"Brug: %s [-t TIDSUDLØB] [--force] [-w BREDDE] [--print-background] [--files] "
-"URI|FIL UDDATAFIL [...]\n"
+"Brug: %s [-c CSS-FIL] [-d FORSINKELSE][-t TIDSUDLØB] [--force] [-w BREDDE] "
+"[--print-background] [--file] URI|FIL UDDATAFIL|--printer=PRINTER\n"
 
-#: ../src/main.cpp:468
+#: ../src/gnome-web-photo.c:838
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"Brug: %s [-c CSS-FIL] [-d FORSINKELSE] [-t TIDSUDLØB] [--force] [-w BREDDE] "
+"[--print-background] [--file] URI|FIL UDDATAFIL\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:878
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:883
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (ikke aktiv)\n"
+
+#: ../src/gnome-web-photo.c:913
 msgid "Operation mode [photo|thumbnail|print]"
 msgstr "Operationsstilstand [foto|miniaturebillede|udskriv]"
 
-#: ../src/main.cpp:470
-msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
-msgstr "Tidsudløb i sekunder, eller 0 for at slå tidsudløb fra (standard: 60)"
+#: ../src/gnome-web-photo.c:915
+msgid "User style sheet to use for the page (default: "
+msgstr "Brugerstilark at bruge for siden (standard: "
 
-#: ../src/main.cpp:472
-msgid "Force output when timeout expires, even if the page isn't loaded fully"
-msgstr ""
-"Fremtving uddata hvis tidsudløb udløber, selv om siden ikke er fuldt indlæst"
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:917
+msgid "CSSFILE"
+msgstr "CSSFIL"
 
-#: ../src/main.cpp:474
-msgid "The desired width of the image (default: 1024)"
-msgstr "Den ønskede bredde på billedet (standard: 1024)"
-
-#: ../src/main.cpp:476
-msgid "The thumbnail size (default: 256)"
-msgstr "Størrelse på miniaturebilledet (standard: 256)"
-
-#: ../src/main.cpp:478
+#: ../src/gnome-web-photo.c:919
 msgid ""
-"File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:png)"
+"Delay in seconds to wait after page is loaded, or 0 to disable delay "
+"(default: 0)"
 msgstr ""
-"Filformat for uddata. Understøttet er 'png', 'jpeg' og 'ppm' (standard:png)"
+"Tidsudløb i sekunder at vente for indlæsning af siden, eller 0 for at slå "
+"tidsudløb fra (standard: 0)"
 
-#: ../src/main.cpp:478
-msgid "FORMAT"
-msgstr "FORMAT"
+#. Translators: T will appear in the help, as in: --delay=D
+#: ../src/gnome-web-photo.c:921
+msgid "D"
+msgstr "F"
 
-#: ../src/main.cpp:480
+#: ../src/gnome-web-photo.c:923
+msgid ""
+"Timeout in seconds to wait to load the page, or 0 to disable timeout "
+"(default: 60)"
+msgstr ""
+"Tidsudløb i sekunder at vente for indlæsning af siden, eller 0 for at slå "
+"tidsudløb fra (standard: 60)"
+
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:925
+msgid "T"
+msgstr "T"
+
+#: ../src/gnome-web-photo.c:927
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr ""
+"Fremtving uddata hvis tiden udløber, selv om siden ikke er fuldt indlæst"
+
+#: ../src/gnome-web-photo.c:929
+msgid "Desired width of the web page (default: 1024)"
+msgstr "Ønsket bredde på billedet (standard: 1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:931
+msgid "W"
+msgstr "B"
+
+#: ../src/gnome-web-photo.c:933
+msgid "Thumbnail size (default: 256)"
+msgstr "Størrelse på miniaturebillede (standard: 256)"
+
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:935
+msgid "S"
+msgstr "S"
+
+#: ../src/gnome-web-photo.c:938
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr "Udskriv side på PRINTER (standard: ingen, gem som PDF)"
+
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:940
+msgid "PRINTER"
+msgstr "PRINTER"
+
+#: ../src/gnome-web-photo.c:943
 msgid "Print background images and colours (default: false)"
 msgstr "Udskriv baggrundsbilleder og farver (standard: falsk)"
 
-#: ../src/main.cpp:490
-msgid "The desired quality of the JPEG image (1 .. 100)"
-msgstr "Den ønskede kvalitet på JPEG-billedet (1 .. 100)"
+#: ../src/gnome-web-photo.c:945
+msgid ""
+"Disable embedded plugins in the rendering engine (default: enable plugins)"
+msgstr ""
+"Deaktiver indlejrede udvidelsesmoduler i optegningsmotoren (standard: "
+"aktiver udvidelsesmoduler)"
 
-#: ../src/main.cpp:490
-msgid "QUALITY"
-msgstr "KVALITET"
+#: ../src/gnome-web-photo.c:947
+msgid "Argument is a file and not a URI"
+msgstr "Argument er en fil og ikke en URI"
 
-#: ../src/main.cpp:515
-msgid "JPEG options:"
-msgstr "JPEG-indstillinger:"
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:1012
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "Angivet brugerstilark (\"%s\") findes ikke!\n"
 
-#: ../src/main.cpp:516
-msgid "JPEG options"
-msgstr "JPEG-indstillinger"
+#: ../src/gnome-web-photo.c:1033
+#, c-format
+msgid "--delay cannot be negative!\n"
+msgstr "--delay kan ikke være negativ!\n"
+
+#: ../src/gnome-web-photo.c:1040
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--timeout kan ikke være negativ!\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--size kan kun være 32, 64, 96, 128 eller 256!\n"
+
+#: ../src/gnome-web-photo.c:1059
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "--size er kun tilgængelig i miniaturetilstand!\n"
+
+#: ../src/gnome-web-photo.c:1068
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--width uden for grænser; skal være mellem %d og %d!\n"
+
+#: ../src/gnome-web-photo.c:1073
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "--width skal være et multiplum af 32 i miniaturetilstand!\n"
+
+#: ../src/gnome-web-photo.c:1081
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--print-background er kun tilgængelig i udskrivningstilstand!\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--printer er kun tilgængelig i udskrivningstilstand!\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1098
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "\"%s\" er ikke en gyldig printer!\n"
+
+#: ../src/gnome-web-photo.c:1100
+#, c-format
+msgid "List of printers:\n"
+msgstr "Liste af printere:\n"
+
+#: ../src/gnome-web-photo.c:1134
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "Manglende argumenter!\n"
+
+#: ../src/gnome-web-photo.c:1140
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "For mange argumenter!\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "Maksimal bredde"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "Maksimal bredde for offscreen-vinduet"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "Maksimal højde"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "Maksimal højde for offscreen-vinduet"
