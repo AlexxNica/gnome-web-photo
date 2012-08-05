@@ -1,0 +1,381 @@
+# Romanian translation for gnome-web-photo.
+# Copyright (C) 2010 gnome-web-photo's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gnome-web-photo package.
+# Nicolae Antonio <anto.nicolae@gmail.com>, 2010.
+# Daniel Șerbănescu <daniel@serbanescu.dk>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-web-photo master\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-07-26 09:14+0000\n"
+"PO-Revision-Date: 2012-08-05 20:18+0200\n"
+"Last-Translator: Daniel Șerbănescu <daniel@serbanescu.dk>\n"
+"Language-Team: Gnome Romanian Translation Team\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
+"20)) ? 1 : 2);;\n"
+"X-Generator: Virtaal 0.7.0\n"
+"X-Project-Style: gnome\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "Dacă să se activeze transformarea fișierelor HTML în miniaturi"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "Dacă să se activeze transformarea fișierelor HTML în miniaturi."
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail HTML files"
+msgstr "Comanda pentru a transforma fișiere HTML în miniaturi"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail HTML files."
+msgstr "Comanda pentru a transforma fișiere HTML în miniaturi."
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "Dacă să se activeze transformarea fișierelor XHTML în miniaturi"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "Dacă să se activeze transformarea fișierelor XHTML în miniaturi."
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "The command to thumbnail XHTML files"
+msgstr "Comanda pentru a transforma fișiere XHTML în miniaturi"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "The command to thumbnail XHTML files."
+msgstr "Comanda pentru a transforma fișiere XHTML în miniaturi."
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:376 ../src/gnome-web-photo.c:391
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Eroare la salvarea „%s”: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:444 ../src/gnome-web-photo.c:487
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Eroare la miniaturizarea „%s”: %s\n"
+
+#. Translators: first %s is a URI, second %s is a printer name
+#: ../src/gnome-web-photo.c:521
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Eroare la tipărirea „%s” pe „%s”: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:541
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Eroare la tipărirea „%s”: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:622
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Eroare la încărcarea „%s”: %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:685
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr "Timpul alocat a expirat în timp ce „%s” se încărca. Se produce vizualizarea "
+"curentă...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:699
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr "Timpul alocat a expirat în timp ce „%s” se încărca. Nimic de produs...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:705
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "Timpul alocat a expirat în timp ce „%s” se încărca.\n"
+
+#: ../src/gnome-web-photo.c:812
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Mod necunoscut „%s”"
+
+#: ../src/gnome-web-photo.c:825
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "Utilizare: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/gnome-web-photo.c:829
+#, c-format
+#| msgid ""
+#| "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+#| "OUTFILE [...]\n"
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--file] "
+"URI|FILE OUTFILE\n"
+msgstr "Utilizare: %s [-c FIȘIER CSS] [-d ÎNTÂRZIERE] [-t LIMITĂ DE TIMP] [--force] "
+"[-w LĂȚIME] [--file] URI|FILE FIȘIER DE IEȘIRE\n"
+
+#: ../src/gnome-web-photo.c:832
+#, c-format
+#| msgid ""
+#| "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] -s SIZE [--files] URI|FILE "
+#| "OUTFILE [...]\n"
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-s "
+"THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
+msgstr "Utilizare: %s [-c FIȘIER CSS] [-d ÎNTÂRZIERE] [-t LIMITĂ DE TIMP] [--force] "
+"[-w LĂȚIME] [-s DIMENSIUNE MINIATURĂ] [--file] URI|FILE FIȘIER DE IEȘIRE\n"
+
+#: ../src/gnome-web-photo.c:836
+#, c-format
+#| msgid ""
+#| "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--"
+#| "files] URI|FILE OUTFILE [...]\n"
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
+msgstr "Utilizare: %s [-c FIȘIER CSS] [-d ÎNTÂRZIERE] [-t LIMITĂ DE TIMP] [--force] "
+"[-w LĂȚIME] [--file] URI|FILE FIȘIER DE IEȘIRE|--printer=IMPRIMANTĂ\n"
+
+#: ../src/gnome-web-photo.c:838
+#, c-format
+#| msgid ""
+#| "Usage: %s [-t TIMEOUT] [--force] [-w WIDTH] [--print-background] [--"
+#| "files] URI|FILE OUTFILE [...]\n"
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr "Utilizare: %s [-c FIȘIER CSS] [-d ÎNTÂRZIERE] [-t LIMITĂ DE TIMP] [--force] "
+"[-w LĂȚIME] [--print-background] [--files] URI|FIȘIER DE IEȘIRE [...]\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer.
+#: ../src/gnome-web-photo.c:878
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the name of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:883
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (inactiv)\n"
+
+#: ../src/gnome-web-photo.c:913
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "Mod de funcționare [photo|thumbnail|print]"
+
+#: ../src/gnome-web-photo.c:915
+#| msgid "The desired width of the image (default: 1024)"
+msgid "User style sheet to use for the page (default: "
+msgstr "Stilul foii utilizatorului de utilizat pentru pagină (implicit: "
+
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:917
+msgid "CSSFILE"
+msgstr "FIȘIER CSS"
+
+#: ../src/gnome-web-photo.c:919
+#| msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgid ""
+"Delay in seconds to wait after page is loaded, or 0 to disable delay "
+"(default: 0)"
+msgstr ""
+"Întârziere în secunde, de așteptat după ce pagina este încărcată, sau 0 "
+"pentru a dezactiva întârzierea (implicit: 0)"
+
+#. Translators: T will appear in the help, as in: --delay=D
+#: ../src/gnome-web-photo.c:921
+msgid "D"
+msgstr "D"
+
+#: ../src/gnome-web-photo.c:923
+#| msgid "The timeout in seconds, or 0 to disable timeout (default: 60)"
+msgid ""
+"Timeout in seconds to wait to load the page, or 0 to disable timeout "
+"(default: 60)"
+msgstr ""
+"Limita de timp în secunde, de așteptat pentru a încărca pagina, sau 0 pentru "
+"a dezactiva limita de timp (implicit: 60)"
+
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:925
+msgid "T"
+msgstr "T"
+
+#: ../src/gnome-web-photo.c:927
+#| msgid ""
+#| "Force output when timeout expires, even if the page isn't loaded fully"
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr ""
+"Forțează ieșirea când limita de timp expiră, chiar dacă pagina nu este "
+"încărcată complet"
+
+#: ../src/gnome-web-photo.c:929
+#| msgid "The desired width of the image (default: 1024)"
+msgid "Desired width of the web page (default: 1024)"
+msgstr "Lățimea dorită a paginii web (implicit: 1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:931
+msgid "W"
+msgstr "W"
+
+#: ../src/gnome-web-photo.c:933
+#| msgid "The thumbnail size (default: 256)"
+msgid "Thumbnail size (default: 256)"
+msgstr "Dimensiunea miniaturii (implicit: 256)"
+
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:935
+msgid "S"
+msgstr "S"
+
+#: ../src/gnome-web-photo.c:938
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr ""
+"Tipărește pagina la IMPRIMANTĂ (implicit: nespecificată, salvează ca PDF)"
+
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:940
+msgid "PRINTER"
+msgstr "IMPRIMANTĂ"
+
+#: ../src/gnome-web-photo.c:943
+msgid "Print background images and colours (default: false)"
+msgstr "Tipărește imagini de fundal și culori (implicit: fals)"
+
+#: ../src/gnome-web-photo.c:945
+msgid ""
+"Disable embedded plugins in the rendering engine (default: enable plugins)"
+msgstr ""
+"Dezactivează modulele înglobate în motorul de randare (implicit: module "
+"activate)"
+
+#: ../src/gnome-web-photo.c:947
+msgid "Argument is a file and not a URI"
+msgstr "Argumentul este un fișier nu un URI"
+
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:1012
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "Stilul foii („%s”) pentru utilizator nu există!\n"
+
+#: ../src/gnome-web-photo.c:1033
+#, c-format
+msgid "--delay cannot be negative!\n"
+msgstr "--delay nu poate fi negativ!\n"
+
+#: ../src/gnome-web-photo.c:1040
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--timeout nu poate fi negativ!\n"
+
+#: ../src/gnome-web-photo.c:1055
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--size poate fi doar 32, 64, 96, 128 sau 256!\n"
+
+#: ../src/gnome-web-photo.c:1059
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "--size ede disponibilă doar în modul miniatură!\n"
+
+#: ../src/gnome-web-photo.c:1068
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--width în afara limitelor; trebuie să fie între %d și %d!\n"
+
+#: ../src/gnome-web-photo.c:1073
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "--width trebuie să fie un multiplu de 32 în modul miniatură!\n"
+
+#: ../src/gnome-web-photo.c:1081
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--print-background este disponibilă numai în modul tipărire!\n"
+
+#: ../src/gnome-web-photo.c:1089
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--printer este disponibilă numai în modul tipărire!\n"
+
+#. Translators: %s is the name of a printer
+#: ../src/gnome-web-photo.c:1098
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "„%s” nu este un parametru valid!\n"
+
+#: ../src/gnome-web-photo.c:1100
+#, c-format
+msgid "List of printers:\n"
+msgstr "Lista imprimantelor:\n"
+
+#: ../src/gnome-web-photo.c:1134
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "Lipsesc argumente!\n"
+
+#: ../src/gnome-web-photo.c:1140
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "Prea multe argumente!\n"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width"
+msgstr "Lățime maximă"
+
+#: ../src/photo-offscreen-window.c:165
+msgid "Maximum width of the offscreen window"
+msgstr "Lățimea maxima a ferestrei din afara ecranului"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height"
+msgstr "Înălțime maximă"
+
+#: ../src/photo-offscreen-window.c:183
+msgid "Maximum height of the offscreen window"
+msgstr "Înălțimea maximă a ferestrei din afara ecranului"
+
+#~ msgid "Unknown format '%s'"
+#~ msgstr "Format necunoscut „%s”"
+
+#~ msgid ""
+#~ "Usage: %s [-t TIMEOUT] [--force] [--format FORMAT] [-w WIDTH] [--files] "
+#~ "URI|FILE OUTFILE [...]\n"
+#~ msgstr ""
+#~ "Utilizare: %s  [-t LIMITĂ DE TIMP] [--force] [--format FORMAT] [-w "
+#~ "LĂȚIME] [--files] URI|FIȘIER DE IEȘIRE [...]\n"
+
+#~ msgid ""
+#~ "File format for output. Supported are 'png', 'jpeg' and 'ppm' (default:"
+#~ "png)"
+#~ msgstr ""
+#~ "Formatul fișierului de ieşire. Suportate sunt „png”, „jpeg” și "
+#~ "„ppm” (implicit: PNG)"
+
+#~ msgid "FORMAT"
+#~ msgstr "FORMAT"
+
+#~ msgid "The desired quality of the JPEG image (1 .. 100)"
+#~ msgstr "Calitatea dorită a imaginii JPEG (1 .. 100)"
+
+#~ msgid "QUALITY"
+#~ msgstr "CALITATE"
+
+#~ msgid "JPEG options:"
+#~ msgstr "Opțiuni JPEG:"
+
+#~ msgid "JPEG options"
+#~ msgstr "Opțiuni JPEG"
