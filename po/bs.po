@@ -1,0 +1,328 @@
+# Bosnian translation for bosnianuniversetranslation
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the bosnianuniversetranslation package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: bosnianuniversetranslation\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-02-26 21:31+0000\n"
+"PO-Revision-Date: 2015-02-05 00:18+0000\n"
+"Last-Translator: Selma Glavić <sglavic1@etf.unsa.ba>\n"
+"Language-Team: Bosnian <bs@li.org>\n"
+"Language: bs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2015-02-05 07:01+0000\n"
+"X-Generator: Launchpad (build 17331)\n"
+
+#: ../data/thumbnailer.schemas.in.h:1
+msgid "Whether to enable thumbnailing of HTML files"
+msgstr "Da li omogućiti sličice HTML datoteka"
+
+#: ../data/thumbnailer.schemas.in.h:2
+msgid "Whether to enable thumbnailing of HTML files."
+msgstr "Da li omogućiti sličice HTML datoteka."
+
+#: ../data/thumbnailer.schemas.in.h:3
+msgid "The command to thumbnail HTML files"
+msgstr "Komanda za sličice HTML datoteka"
+
+#: ../data/thumbnailer.schemas.in.h:4
+msgid "The command to thumbnail HTML files."
+msgstr "Komanda za sličice HTML datoteka."
+
+#: ../data/thumbnailer.schemas.in.h:5
+msgid "Whether to enable thumbnailing of XHTML files"
+msgstr "Da li omogućiti sličice XHTML datoteka"
+
+#: ../data/thumbnailer.schemas.in.h:6
+msgid "Whether to enable thumbnailing of XHTML files."
+msgstr "Da li omogućiti sličice XHTML datoteka."
+
+#: ../data/thumbnailer.schemas.in.h:7
+msgid "The command to thumbnail XHTML files"
+msgstr "Komanda za sličice XHTML datoteka"
+
+#: ../data/thumbnailer.schemas.in.h:8
+msgid "The command to thumbnail XHTML files."
+msgstr "Komanda za sličice XHTML datoteka."
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:375 ../src/gnome-web-photo.c:390
+#, c-format
+msgid "Error while saving '%s': %s\n"
+msgstr "Greška pri spremanju '%s': %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:443 ../src/gnome-web-photo.c:486
+#, c-format
+msgid "Error while thumbnailing '%s': %s\n"
+msgstr "Greška pri postvljanju sličice '%s':%s\n"
+
+#. Translators: first %s is a URI, second %s is a printer nami
+#: ../src/gnome-web-photo.c:520
+#, c-format
+msgid "Error while printing '%s' on '%s': %s\n"
+msgstr "Greška pri printanju '%s' na '%s': %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:540
+#, c-format
+msgid "Error while printing '%s': %s\n"
+msgstr "Greška pri printanju '%s': %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:621
+#, c-format
+msgid "Error while loading '%s': %s\n"
+msgstr "Greška pri učitavanju '%s': %s\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:684
+#, c-format
+msgid "Timed out while loading '%s'. Outputting current view...\n"
+msgstr "Iteklo vrijeme učitavanja '%s'. Prikazivanje trenutnog stanja...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:698
+#, c-format
+msgid "Timed out while loading '%s'. Nothing to output...\n"
+msgstr "Iteklo vrijeme učitavanja '%s'. Nema ništa za prikaz...\n"
+
+#. Translators: first %s is a URI
+#: ../src/gnome-web-photo.c:704
+#, c-format
+msgid "Timed out while loading '%s'.\n"
+msgstr "Iteklo vrijeme učitavanja '%s'.\n"
+
+#: ../src/gnome-web-photo.c:811
+#, c-format
+msgid "Unknown mode '%s'"
+msgstr "Nepoznat mod '%s'"
+
+#: ../src/gnome-web-photo.c:824
+#, c-format
+msgid "Usage: %s [--mode=photo|thumbnail|print] [...]\n"
+msgstr "Upotreba: %s [--mode=photo|thumbnail|print] [...]\n"
+
+#: ../src/gnome-web-photo.c:828
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--file] "
+"URI|FILE OUTFILE\n"
+msgstr ""
+"Upotreba: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--"
+"file] URI|FILE OUTFILE\n"
+
+#: ../src/gnome-web-photo.c:831
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-s "
+"THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"Upotreba: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [-s "
+"THUMBNAILSIZE] [--file] URI|FILE OUTFILE\n"
+
+#: ../src/gnome-web-photo.c:835
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
+msgstr ""
+"Upotreba: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--"
+"print-background] [--file] URI|FILE OUTFILE|--printer=PRINTER\n"
+
+#: ../src/gnome-web-photo.c:837
+#, c-format
+msgid ""
+"Usage: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--print-"
+"background] [--file] URI|FILE OUTFILE\n"
+msgstr ""
+"Upotreba: %s [-c CSSFILE] [-d DELAY] [-t TIMEOUT] [--force] [-w WIDTH] [--"
+"print-background] [--file] URI|FILE OUTFILE\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the nami of a printer.
+#: ../src/gnome-web-photo.c:877
+#, c-format
+msgid "  %s\n"
+msgstr "  %s\n"
+
+#. Translators: the leading spaces are a way to add tabulation in some text
+#. * printed on the terminal; %s is the nami of a printer; "active" applies
+#. * to the printer.
+#: ../src/gnome-web-photo.c:882
+#, c-format
+msgid "  %s (not active)\n"
+msgstr "  %s (nije aktivan)\n"
+
+#: ../src/gnome-web-photo.c:912
+msgid "Operation mode [photo|thumbnail|print]"
+msgstr "Način rada [foto|sličica|štampanje]"
+
+#: ../src/gnome-web-photo.c:914
+msgid "User style sheet to use for the page (default: "
+msgstr "Korisnički stil liste za korištenje stranice (zadano: "
+
+#. Translators: CSSFILE will appear in the help, as in: --user-css=CSSFILE
+#: ../src/gnome-web-photo.c:916
+msgid "CSSFILE"
+msgstr "CSSFILE"
+
+#: ../src/gnome-web-photo.c:918
+msgid ""
+"Delay in seconds to wait after page is loaded, or 0 to disable delay "
+"(default: 0)"
+msgstr ""
+"Kašnjenje u sekundama nakon što je stranica učitana, ili 0 da onemogućite "
+"kašnjenje (zadano: 0)"
+
+#. Translators: T will appear in the help, as in: --delay=D
+#: ../src/gnome-web-photo.c:920
+msgid "D"
+msgstr "D"
+
+#: ../src/gnome-web-photo.c:922
+msgid ""
+"Timeout in seconds to wait to load the page, or 0 to disable timeout "
+"(default: 60)"
+msgstr ""
+"Stanka u sekundama za čekanje učitavanja stranice , ili 0 da onemogućite "
+"stanku (zadan : 60)"
+
+#. Translators: T will appear in the help, as in: --timeout=T
+#: ../src/gnome-web-photo.c:924
+msgid "T"
+msgstr "T"
+
+#: ../src/gnome-web-photo.c:926
+msgid "Force output when timeout expires, even if the page is not fully loaded"
+msgstr "Prisilni istek stanke, čak i ako stranica nije potpuno učitana"
+
+#: ../src/gnome-web-photo.c:928
+msgid "Desired width of the web page (default: 1024)"
+msgstr "Željena širina veb stranice (zadano: 1024)"
+
+#. Translators: W will appear in the help, as in: --width=W
+#: ../src/gnome-web-photo.c:930
+msgid "W"
+msgstr "W"
+
+#: ../src/gnome-web-photo.c:932
+msgid "Thumbnail size (default: 256)"
+msgstr "Veličina sličice (zadano: 256)"
+
+#. Translators: S will appear in the help, as in: --thumbnail-size=S
+#: ../src/gnome-web-photo.c:934
+msgid "S"
+msgstr "S"
+
+#: ../src/gnome-web-photo.c:937
+msgid "Print page on PRINTER (default: none, save as PDF)"
+msgstr "Štampanje stranice na PRINTER (zadano: ništa, spremi kao PDF)"
+
+#. Translators: PRINTER will appear in the help, as in: --printer=PRINTER
+#: ../src/gnome-web-photo.c:939
+msgid "PRINTER"
+msgstr "PRINTER"
+
+#: ../src/gnome-web-photo.c:942
+msgid "Print background images and colours (default: false)"
+msgstr "Štampanje pozadinske slike i boja (zadano: false)"
+
+#: ../src/gnome-web-photo.c:944
+msgid ""
+"Disable embedded plugins in the rendering engine (default: enable plugins)"
+msgstr ""
+"Onemogućiti ugrađene dodatne programe u iscrtavanju (zadano: omogući dodatne "
+"programe)"
+
+#: ../src/gnome-web-photo.c:946
+msgid "Argument is a file and not a URI"
+msgstr "Argument je datoteka i nije URI"
+
+#. Translators: %s is a filename or a URI
+#: ../src/gnome-web-photo.c:1011
+#, c-format
+msgid "Specified user stylesheet ('%s') does not exist!\n"
+msgstr "Određeni korisnički stil stranice ('%s') ne postoji!\n"
+
+#: ../src/gnome-web-photo.c:1032
+#, c-format
+msgid "--delay cannot be negative!\n"
+msgstr "--delay ne može biti negativan!\n"
+
+#: ../src/gnome-web-photo.c:1039
+#, c-format
+msgid "--timeout cannot be negative!\n"
+msgstr "--timeout ne može biti negativan!\n"
+
+#: ../src/gnome-web-photo.c:1054
+#, c-format
+msgid "--size can only be 32, 64, 96, 128 or 256!\n"
+msgstr "--size može samo biti 32, 64, 96, 128 ili 256!\n"
+
+#: ../src/gnome-web-photo.c:1058
+#, c-format
+msgid "--size is only available in thumbnail mode!\n"
+msgstr "--size je samo dostupan u obliku sličice!\n"
+
+#: ../src/gnome-web-photo.c:1067
+#, c-format
+msgid "--width out of bounds; must be between %d and %d!\n"
+msgstr "--width izvan granice; mora biti između %d i %d!\n"
+
+#: ../src/gnome-web-photo.c:1072
+#, c-format
+msgid "--width must be a multiple of 32 in thumbnail mode!\n"
+msgstr "--width mora biti više od 32 u obliku sličice!\n"
+
+#: ../src/gnome-web-photo.c:1080
+#, c-format
+msgid "--print-background is only available in print mode!\n"
+msgstr "--print-background je samo dostupna u modu štampanja!\n"
+
+#: ../src/gnome-web-photo.c:1088
+#, c-format
+msgid "--printer is only available in print mode!\n"
+msgstr "--printer je samo dostupan u modu štampanja!\n"
+
+#. Translators: %s is the nami of a printer
+#: ../src/gnome-web-photo.c:1097
+#, c-format
+msgid "'%s' is not a valid printer!\n"
+msgstr "'%s' nije ispravan štampač!\n"
+
+#: ../src/gnome-web-photo.c:1099
+#, c-format
+msgid "List of printers:\n"
+msgstr "Lista štampača:\n"
+
+#: ../src/gnome-web-photo.c:1133
+#, c-format
+msgid "Missing arguments!\n"
+msgstr "Nedostaju argumenti!\n"
+
+#: ../src/gnome-web-photo.c:1139
+#, c-format
+msgid "Too many arguments!\n"
+msgstr "Previše argumenta!\n"
+
+#: ../src/photo-offscreen-window.c:163
+msgid "Maximum width"
+msgstr "Najveća širina"
+
+#: ../src/photo-offscreen-window.c:164
+msgid "Maximum width of the offscreen window"
+msgstr "Najveća širina prozora izvan displeja"
+
+#: ../src/photo-offscreen-window.c:181
+msgid "Maximum height"
+msgstr "Najveća visina"
+
+#: ../src/photo-offscreen-window.c:182
+msgid "Maximum height of the offscreen window"
+msgstr "Najveca visina prozora izvan displeja"
